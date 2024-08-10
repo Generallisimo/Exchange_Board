@@ -338,7 +338,7 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             <input type="hidden" name="_token" value="ub2DzAIrgUnghVvu3l3KAbbq0UztNO8yfkrDNm6n">            </form>
             <div class="fixed-plugin">
-        <div class="dropdown show-dropdown">
+        <!-- <div class="dropdown show-dropdown">
             <a href="#" data-toggle="dropdown">
             <i class="fa fa-cog fa-2x"> </i>
             </a>
@@ -372,7 +372,7 @@
                 <a class="github-button" href="https://github.com/creativetimofficial/black-dashboard-laravel" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
             </li>
             </ul>
-        </div>
+        </div> -->
     </div>
     <script src="{{ asset('black') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('black') }}/js/core/popper.min.js"></script>

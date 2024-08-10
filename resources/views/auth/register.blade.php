@@ -47,7 +47,7 @@
                     @csrf
 
                     <div class="card-body">
-                        <div class="input-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                        <!-- <div class="input-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="tim-icons icon-single-02"></i>
@@ -55,8 +55,8 @@
                             </div>
                             <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}">
                             @include('alerts.feedback', ['field' => 'name'])
-                        </div>
-                        <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                        </div> -->
+                        <!-- <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="tim-icons icon-email-85"></i>
@@ -64,7 +64,7 @@
                             </div>
                             <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
                             @include('alerts.feedback', ['field' => 'email'])
-                        </div>
+                        </div> -->
                         <div class="input-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
