@@ -16,9 +16,15 @@ return new class extends Migration
             $table->string('hash_id');
             $table->string('details_market_to');
             $table->string('details_market_from');
+            $table->string('name_method');
+            $table->string('currency');
+    
+            
             $table->timestamps();
-
+            
             $table->foreign('hash_id')->references('hash_id')->on('markets')->onDelete('cascade');
+            $table->foreign('name_method')->references('name_method')->on('method_payments')->onDelete('cascade');
+            $table->foreign('currency')->references('currency')->on('method_payments')->onDelete('cascade');
         });
     }
 

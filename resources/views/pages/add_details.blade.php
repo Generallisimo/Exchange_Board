@@ -20,6 +20,15 @@
                             @endforeach
                         </select>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select market</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="name_method">        
+                            @foreach($methods as $method)
+                                <option value="{{$method->name_method}}">{{$method->name_method}} {{$method->currency}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     
                     <div class="form-group">

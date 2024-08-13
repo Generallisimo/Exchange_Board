@@ -54,6 +54,12 @@
                     <p>{{ __('Market Board') }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'withdrawal') class="active " @endif>
+                <a href="{{ route('withdrawal')  }}">
+                    <i class="tim-icons icon-money-coins"></i>
+                    <p>{{ __('Withdrawal') }}</p>
+                </a>
+            </li>
 
 
 

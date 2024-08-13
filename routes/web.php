@@ -21,7 +21,8 @@ Route::get('/', function () {
 
 
 
-
+Route::post('/login/custom', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@showLoginCustom']);
+Route::post('/login/custom/to_home', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@login']);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'role']);
 
@@ -41,8 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::put('users/update/change_details/view/update{id}', ['as' => 'user.update.change.details', 'uses' => 'App\Http\Controllers\UsersCheckController@changeWalletMarkets']);
 
 		Route::get('exchange', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
-		Route::get('market_board', ['as' => 'market.board', 'uses' => 'App\Http\Controllers\MarketBoardController@index']);
+		Route::post('exchange/confirm', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@requestChange']);
 		
+		Route::get('withdrawal', ['as' => 'withdrawal', 'uses' => 'App\Http\Controllers\WithdrawalController@index']);
+
+		Route::get('market_board', ['as' => 'market.board', 'uses' => 'App\Http\Controllers\MarketBoardController@index']);
 		
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
 		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);

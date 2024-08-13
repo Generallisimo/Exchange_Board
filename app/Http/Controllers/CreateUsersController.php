@@ -21,7 +21,7 @@ class CreateUsersController extends Controller
 
     public function registerNewUser(Request $request){
         $hash_id = $request->input('hash_id');
-        $password = $request->input('hash_id');
+        $password = $request->input('password');
         $role = $request->input('role');
         $details_to = $request->input('details_to');
         $details_from = $request->input('details_from');

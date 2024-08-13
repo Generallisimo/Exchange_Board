@@ -5,7 +5,7 @@
         <h3 class="mb-5">Log in to see how you can speed up your web development with out of the box CRUD for #User Management and more.</h3>
     </div>
     <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-        <form class="form" method="post" action="{{ route('login') }}">
+        <form class="form" method="post" action="{{ route('loginCustom') }}">
             @csrf
 
             <div class="card card-login card-white">
@@ -14,24 +14,24 @@
                     <h1 class="card-title">{{ __('Log in') }}</h1>
                 </div>
                 <div class="card-body">
-                    <!-- <p class="text-dark mb-2">Sign in with <strong>admin@black.com</strong> and the password <strong>secret</strong></p> -->
-                    <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+
+                    <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="tim-icons icon-email-85"></i>
                             </div>
                         </div>
-                        <input type="hash_id" name="hash_id" class="form-control{{ $errors->has('hash_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Hash ID') }}">
-                        @include('alerts.feedback', ['field' => 'hash_id'])
+                        <input type="hash_id" name="hash_id" class="form-control" placeholder="{{ __('Hash ID') }}">
+
                     </div>
-                    <div class="input-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                    <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="tim-icons icon-lock-circle"></i>
                             </div>
                         </div>
-                        <input type="password" placeholder="{{ __('Password') }}" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
-                        @include('alerts.feedback', ['field' => 'password'])
+                        <input type="password" placeholder="{{ __('Password') }}" name="password" class="form-control">
+
                     </div>
                 </div>
                 <div class="card-footer">
