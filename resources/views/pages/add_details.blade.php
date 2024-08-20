@@ -22,7 +22,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Select market</label>
+                        <label for="exampleFormControlSelect1">Select method</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="name_method">        
                             @foreach($methods as $method)
                                 <option value="{{$method->name_method}}">{{$method->name_method}} {{$method->currency}}</option>
@@ -39,7 +39,7 @@
                                     <i class="tim-icons icon-single-02"></i>
                                 </div>          
                             </div>
-                            <input type="text" name="details_market_from" class="form-control" placeholder="enter details for top up">
+                            <input type="text" name="details_market_to" class="form-control" placeholder="enter details for top up">
                         </div>
                     </div>
 

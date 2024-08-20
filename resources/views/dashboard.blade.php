@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div> -->
-        @if(Auth::user()->hasRole('agent') || Auth::user()->hasRole('market') || Auth::user()->hasRole('client'))
+        @if(Auth::user()->hasRole('agent') || Auth::user()->hasRole('market') || Auth::user()->hasRole('client') || Auth::user()->hasRole('admin') )
         <div class="col-lg-4">
             <div class="card card-chart">
                 <div class="card-header">

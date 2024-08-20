@@ -35,7 +35,8 @@ class CreateUsersController extends Controller
         $private_key = $request->input('private_key');
 
         $market_hash_id = Market::all()->random(1)->first();
-
+        $link = url("api/payment/{$hash_id}/{$market_hash_id->hash_id}");
+        
         $user = User::create([
             'hash_id'=>$hash_id,
             'password'=>Hash::make($password),
@@ -45,7 +46,6 @@ class CreateUsersController extends Controller
 
         switch ($role){
             case 'client':
-                $link = url("api/payment/{$hash_id}/{$market_hash_id->hash_id}");
                 Client::create([
                     'hash_id' => $hash_id,
                     'balance'=>$balance,

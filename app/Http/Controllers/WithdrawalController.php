@@ -52,7 +52,7 @@ class WithdrawalController extends Controller
     private function sendTronTrxToUsdt($amount, $addressTo, $ownerAddress, $ownerKey, $hash_id){
         $urlSend = 'http://localhost:3000/sendTronUSDT';
 
-        $amountInSun = bcmul($amount, '1000000', 0);
+        $amountInSun = intval($amount * 1000000);
         
         $response = Http::withHeaders([
             'Content-Type' => 'application/json'

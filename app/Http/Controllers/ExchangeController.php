@@ -140,7 +140,8 @@ class ExchangeController extends Controller
         $agent_id = $request->input('agent');
         $agent = Agent::where('hash_id', $agent_id)->first();
 
-        $exchange_id = '9QuyE4bzdz2J';
+        // $exchange_id = '9QuyE4bzdz2J';
+        $exchange_id = 'admin';
         $exchange = Platform::where('hash_id', $exchange_id)->first();
 
         $amountExchange = $request->input('amountExchange');

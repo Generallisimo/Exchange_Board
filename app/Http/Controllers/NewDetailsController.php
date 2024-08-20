@@ -26,6 +26,8 @@ class NewDetailsController extends Controller
         $name_method = $request->input('name_method');
         $comment = $request->input('comment');
 
+        // dd($request->all());
+
         $currencyMethod = MethodPayments::where('name_method', $name_method)->first();
         
         $currency = $currencyMethod->currency;
