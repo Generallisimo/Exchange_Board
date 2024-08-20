@@ -13,10 +13,10 @@ class AddMarketDetails extends Model
 
     protected $fillable = [
         'hash_id',
-        'details_market_from',
         'details_market_to',
         'name_method',
         'currency',
+        'comment',
     ];
 
     public function markets():BelongsTo

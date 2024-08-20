@@ -60,6 +60,7 @@ class UsersCheckController extends Controller
         $details_to = $request->input('details_to');
         $balance = $request->input('balance');
         $percent = $request->input('percent');
+        $private_key = $request->input('private_key');
 
 
 
@@ -70,6 +71,7 @@ class UsersCheckController extends Controller
                 'details_to'=> $details_to,
                 'balance'=> $balance,
                 'percent'=> $percent,
+                'private_key'=> $private_key,
             ]);
 
         }elseif($role->hasRole('agent')){
@@ -79,6 +81,7 @@ class UsersCheckController extends Controller
                 'details_to'=> $details_to,
                 'balance'=> $balance,
                 'percent'=> $percent,
+                'private_key'=> $private_key,
             ]);
 
         }elseif($role->hasRole('market')){
@@ -88,6 +91,7 @@ class UsersCheckController extends Controller
                 'details_to'=> $details_to,
                 'balance'=> $balance,
                 'percent'=> $percent,
+                'private_key'=> $private_key,
             ]);
 
         }
@@ -108,13 +112,9 @@ class UsersCheckController extends Controller
 
     public function changeWalletMarkets(Request $request, $id){
         $details_from = $request->input('details_from');
-        $details_to = $request->input('details_to');
-
-        // dd($details_from . " " . $details_to);
 
         AddMarketDetails::where('id', $id)->update([
             'details_market_from'=>$details_from,
-            'details_market_to'=>$details_to,
         ]);
 
         return redirect()->route('check.users');

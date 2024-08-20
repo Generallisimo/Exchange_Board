@@ -16,6 +16,8 @@ class Client extends Model
         'details_from',
         'details_to',
         'percent',
+        'private_key',
+        'api_link',
     ];
 
     public function users(): BelongsTo

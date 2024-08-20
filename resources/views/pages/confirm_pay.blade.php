@@ -27,43 +27,40 @@
         <div class="col-md-6" style="margin: 100px auto;">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title text-center">Confrim Payment</h5>
+                    <h5 class="title text-center">Status payment</h5>
                 </div>
-                <form method="post" action="{{route('exchange.success')}}" autocomplete="off">
-                    @method('PUT')
-                    @csrf
-                    <div class="card-body">
-
-                    <input name="exchange_id" class="form-control" value="{{$exchange_id}}" hidden>
-                    <input name="amountExchange" class="form-control" value="{{$amountExchange}}" hidden>
-                    <input name="amountAgent" class="form-control" value="{{$amountAgent}}" hidden>
-                    <input name="amountClient" class="form-control" value="{{$amountClient}}" hidden>
-                    <input name="client" class="form-control" value="{{$client->hash_id}}" hidden>
-                    <input name="market" class="form-control" value="{{$market->hash_id}}" hidden>
-                    <input name="agent" class="form-control" value="{{$agent->hash_id}}" hidden>
-
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Amount to send</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$responseUser}}" style="pointer-events: none;">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Send to address</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$wallet->details_market_to}}" style="pointer-events: none;">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Comment</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$wallet->comment}}" style="pointer-events: none;">
-                    </div>
-                        
-                        <div class="card-footer text-center">
-                            <button type="submit" class="btn btn-fill btn-primary">Next</button>
-                        </div>
-                    </div>
-                </form>
+                <div class="status">
+                    <h1 class="status-text text-center">Transaction await</h1>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const status = document.querySelector('.status-text');
+            function checkStatus(exchange){
+                fetch(`http://localhost:8000/api/payment/${exchange}`)
+                    .then(response=>response.json())
+                    .then(data => {
+                        if(data.status === 'success'){
+                            status.innerText = 'Transaction successful';
+                            // clearInterval(requestFetch);
+                        }else if(data.status === 'archive'){
+                            status.innerText = 'Transaction error, go to support';
+                            // clearInterval(requestFetch);
+                        }else if(data.status === 'await'){
+                            status.innerText = 'Transaction await';
+                            // clearInterval(requestFetch);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+            
+            const exchangeIdUser = '{{ $exchange_id_user }}';
+            const requestFetch = setInterval(() => checkStatus(exchangeIdUser), 5000);
+        })
+    </script>
+
     <script src="{{ asset('black') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('black') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('black') }}/js/core/bootstrap.min.js"></script>

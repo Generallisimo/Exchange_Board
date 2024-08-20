@@ -7,8 +7,11 @@
             <div class="card-header">
                 <h5 class="title">Withdrawal</h5>
             </div>
-            <form method="post" action="#" autocomplete="off">
+            <form method="post" action="{{route('withdrawal.check')}}" autocomplete="off">
+                @csrf
                 <div class="card-body">
+
+                    <input name="hash_id" value="{{$user->hash_id}}" hidden>
 
                     <div class="form-group">
                         <label>You have</label>
@@ -16,15 +19,21 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Withdrawal details</label>
+                        <input type="text" name="you_send_details" class="form-control" placeholder="enter amount" value="{{$user->details_to}}" style="pointer-events: none;">
+                    </div>
+
+                    <div class="form-group">
                         <label>Withdrawal amount</label>
                         <input type="text" name="you_send" class="form-control" placeholder="enter amount">
                     </div>
 
+
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Opinion currency</label>
-                        <select class="form-control" id="get_currency" name="get_currency">
+                        <select class="form-control" id="get_currency" name="currency_coin">
                             <option value="USDT">USDT</option>
-                            <option value="XMR">XMR</option>
+                            <!-- <option value="XMR">XMR</option> -->
                         </select>
                     </div>
                     

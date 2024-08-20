@@ -62,4 +62,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Agent::class);
     }
+    
+    
+    public function platform(): HasMany
+    {
+        return $this->hasMany(Platform::class);
+    }
 }

@@ -31,19 +31,7 @@
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="details_from" class="form-control" value="{{$market_details->details_market_from}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Details for withdrawal </label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
-                                    </div>          
-                                </div>
-                                <input type="text" name="details_to" class="form-control" value="{{$market_details->details_market_to}}">
+                                <input type="text" name="details_from" class="form-control" value="{{$market_details->details_market_to}}">
                             </div>
                         </div>
                     

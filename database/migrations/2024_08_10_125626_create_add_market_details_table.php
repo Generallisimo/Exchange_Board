@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('hash_id');
             $table->string('details_market_to');
-            $table->string('details_market_from');
             $table->string('name_method');
             $table->string('currency');
+            $table->string('comment');
+            
     
             
             $table->timestamps();

@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('method_payments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name_method')->unique();
-            $table->string('currency')->index();
-            $table->string('comment')->nullable();
-            $table->timestamps();
+        Schema::table('clients', function (Blueprint $table) {
+            $table->string('api_link');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('method_payments');
+        Schema::table('clients', function (Blueprint $table) {
+            //
+        });
     }
 };

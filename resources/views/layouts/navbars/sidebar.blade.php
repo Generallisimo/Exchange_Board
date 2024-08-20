@@ -5,61 +5,75 @@
             <a href="#" class="simple-text logo-normal">{{ __('Black Dashboard') }}</a>
         </div>
         <ul class="nav">
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('client') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent'))
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'exchange') class="active " @endif>
-                <a href="{{ route('exchange') }}">
-                    <i class="tim-icons icon-coins"></i>
-                    <p>{{ __('Exchange') }}</p>
-                </a>
-            </li>
+            @endif
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent'))
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="tim-icons icon-settings" ></i>
                     <span class="nav-link-text" >{{ __('Space') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
-
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
+                        @if(Auth::user()->hasRole('admin') ||  Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'create users') class="active " @endif>
                             <a href="{{ route('pages.create.users') }}">
                                 <i class="tim-icons icon-single-02"></i>
                                 <p>{{ __('Create Users') }}</p>
                             </a>
                         </li>
+                        @endif
+                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'add details') class="active " @endif>
                             <a href="{{ route('add.details') }}">
                                 <i class="tim-icons icon-wallet-43"></i>
                                 <p>{{ __('Add Details') }}</p>
                             </a>
                         </li>
+                        @endif
+                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'all users') class="active " @endif>
                             <a href="{{ route('check.users') }}">
                                 <i class="tim-icons icon-notes"></i>
                                 <p>{{ __('All Users') }}</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
-
+            @endif
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent') ||  Auth::user()->hasRole('support'))
             <li @if ($pageSlug == 'market board') class="active " @endif>
                 <a href="{{ route('market.board')  }}">
                     <i class="tim-icons icon-components"></i>
                     <p>{{ __('Market Board') }}</p>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market'))
+            <li @if ($pageSlug == 'top up') class="active " @endif>
+                <a href="{{ route('top_up')  }}">
+                    <i class="tim-icons icon-money-coins"></i>
+                    <p>{{ __('Top Up') }}</p>
+                </a>
+            </li>
+            @endif
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent') || Auth::user()->hasRole('client'))
             <li @if ($pageSlug == 'withdrawal') class="active " @endif>
                 <a href="{{ route('withdrawal')  }}">
-                    <i class="tim-icons icon-money-coins"></i>
+                    <i class="tim-icons icon-coins"></i>
                     <p>{{ __('Withdrawal') }}</p>
                 </a>
             </li>
+            @endif
 
 
 
@@ -80,12 +94,6 @@
                 <a href="{{ route('pages.notifications') }}">
                     <i class="tim-icons icon-bell-55"></i>
                     <p>{{ __('Notifications') }}</p>
-                </a>
-            </li> -->
-            <!-- <li @if ($pageSlug == 'tables') class="active " @endif>
-                <a href="{{ route('pages.tables') }}">
-                    <i class="tim-icons icon-puzzle-10"></i>
-                    <p>{{ __('Table List') }}</p>
                 </a>
             </li> -->
         </ul>

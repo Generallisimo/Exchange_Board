@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('platforms', function (Blueprint $table) {
+            
             $table->id();
             $table->string('hash_id');
             $table->string('balance')->nullable();
             $table->string('details_from')->unique();
             $table->string('private_key');
             $table->string('details_to')->unique();
-            $table->string('percent');
             $table->timestamps();
             
             $table->foreign('hash_id')->references('hash_id')->on('users')->onDelete('cascade');
+
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('platforms');
     }
 };

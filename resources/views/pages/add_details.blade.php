@@ -44,14 +44,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Details for withdrawal</label>
+                        <label>Comment for client</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                     <i class="tim-icons icon-single-02"></i>
                                 </div>          
                             </div>
-                            <input type="text" name="details_market_to" class="form-control" placeholder="enter details for withdrawal">
+                            <input type="text" name="comment" class="form-control" placeholder="enter comment">
                         </div>
                     </div>
                     

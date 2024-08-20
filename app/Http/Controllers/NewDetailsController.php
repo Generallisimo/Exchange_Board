@@ -22,9 +22,9 @@ class NewDetailsController extends Controller
     public function addWallets(Request $request){
         
         $hash_id = $request->input('hash_id');
-        $details_from = $request->input('details_market_from');
         $details_to = $request->input('details_market_to');
         $name_method = $request->input('name_method');
+        $comment = $request->input('comment');
 
         $currencyMethod = MethodPayments::where('name_method', $name_method)->first();
         
@@ -32,10 +32,10 @@ class NewDetailsController extends Controller
 
         AddMarketDetails::create([
             'hash_id' => $hash_id,
-            'details_market_from' => $details_from,
             'details_market_to' => $details_to,
             'name_method' => $name_method,
             'currency' => $currency,
+            'comment' => $comment,
         ]);
 
         return redirect()->back()->with('successful', 'Wallets has been created!');

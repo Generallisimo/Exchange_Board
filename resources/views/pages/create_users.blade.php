@@ -41,11 +41,14 @@
                             <option value="client">Client</option>
                             <option value="agent">Agent</option>
                             <option value="market">Market</option>
+                            <option value="support">Support</option>
                             @elseif(Auth::user()->hasRole('agent'))
                             <option value="market">Market</option>
                             @endif
                         </select>
                     </div>
+
+                    <div id="unsupport">
                     
                         <div class="form-group">
                             <label>Details for top up</label>
@@ -68,6 +71,18 @@
                                     </div>          
                                 </div>
                                 <input type="text" name="details_to" class="form-control" placeholder="enter details for withdrawal" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Private key for withdrawal </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                        <i class="tim-icons icon-single-02"></i>
+                                    </div>          
+                                </div>
+                                <input type="text" name="private_key" class="form-control" placeholder="enter private key for withdrawal" required>
                             </div>
                         </div>
 
@@ -103,7 +118,8 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        
+                    </div>
                     
                 </div>
                 <div class="card-footer">
@@ -118,6 +134,7 @@
     document.addEventListener('DOMContentLoaded', function(){
         const role = document.getElementById('role');
         const market = document.getElementById('market');
+        const support = document.getElementById('unsupport')
 
         role.addEventListener('change', function(){
             const selectedRole = role.value;
@@ -127,10 +144,15 @@
             // Показываем секцию в зависимости от выбранной роли
             if (selectedRole === 'client') {
                 market.style.display = 'none';
+                support.style.display = 'block'
             } else if (selectedRole === 'market') {
                 market.style.display = 'block';
+                support.style.display = 'block'
             } else if (selectedRole === 'agent') {
                 market.style.display = 'none';
+                support.style.display = 'block'
+            } else if (selectedRole === 'support'){
+                support.style.display = 'none'
             }
         });
 

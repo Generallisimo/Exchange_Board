@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
+use App\Models\Client;
+use App\Models\Market;
+use App\Models\Platform;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
@@ -34,12 +38,26 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $userFind = Auth::user()->hash_id;
+        $userId = User::where('hash_id', $userFind)->first();
+        if($userId->hasRole('admin')){
+            $user = Platform::where('hash_id', $userId->hash_id)->first();
+            // dd($user);
+            return view('dashboard', compact('user'));
+        }elseif($userId->hasRole('agent')){
+            $user = Agent::where('hash_id', $userId->hash_id)->first();
+            // dd($user);
+            return view('dashboard', compact('user'));
+        }elseif($userId->hasRole('market')){
+            $user = Market::where('hash_id', $userId->hash_id)->first();
+            // dd($user);
+            return view('dashboard', compact('user'));
+        }elseif($userId->hasRole('client')){
+            $user = Client::where('hash_id', $userId->hash_id)->first();
+            // dd($user);
+            return view('dashboard', compact('user'));
+        }
+        
 
-        // $id = 8;
-        // $test = User::find($id);
-        // $testRole = $test->hasRole('agent');
-        // dd($testRole);
-
-        return view('dashboard');
     }
 }

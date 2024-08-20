@@ -48,6 +48,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Private key for withdrawal </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                        <i class="tim-icons icon-single-02"></i>
+                                    </div>          
+                                </div>
+                                <input type="text" name="private_key" class="form-control" value="{{$user->private_key}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label>Balance</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">

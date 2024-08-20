@@ -7,19 +7,24 @@
             <div class="card-header">
                 <!-- <h5 class="title">All Users</h5> -->
                 <div class="text-right">
+                    <button id="markets_but" type="button" class="btn btn-default">Markets</button>
+                    @if(Auth::user()->hasRole('admin'))
                     <button id="clients_but" type="button" class="btn btn-default">Clients</button>
                     <button id="agents_but" type="button" class="btn btn-default">Agents</button>
-                    <button id="markets_but" type="button" class="btn btn-default">Markets</button>
+                    @endif
                 </div>
             </div>
-            <table class="table" id="clients">
+            <div class="table-responsive">
+            <table class="table" id="clients" style="display: none;">
                 <thead>
                     <tr>
                         <th>Hash_id</th>
                         <th>Percent</th>
                         <th>Details top up</th>
+                        <th>Private Key</th>
                         <th>Details withdrawal</th>
                         <th>Balance</th>
+                        <th>Api Link</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
@@ -29,8 +34,10 @@
                         <td>{{$client->hash_id}}</td>
                         <td>{{$client->percent}} %</td>
                         <td>{{$client->details_from}}</td>
+                        <td>{{$client->private_key}}</td>
                         <td>{{$client->details_to}}</td>
                         <td>{{$client->balance}}</td>
+                        <td>{{$client->api_link}}</td>
                         <td class="td-actions text-right">
                             <form method="GET" action="{{ route('user.update.check', $client->hash_id) }}">
                                 @csrf
@@ -56,6 +63,7 @@
                         <th>Hash_id</th>
                         <th>Percent</th>
                         <th>Details top up</th>
+                        <th>Private Key</th>
                         <th>Details withdrawal</th>
                         <th>Balance</th>
                         <th class="text-right">Actions</th>
@@ -67,6 +75,7 @@
                         <td>{{$agent->hash_id}}</td>
                         <td>{{$agent->percent}} %</td>
                         <td>{{$agent->details_from}}</td>
+                        <td>{{$agent->private_key}}</td>
                         <td>{{$agent->details_to}}</td>
                         <td>{{$agent->balance}}</td>
                         <td class="td-actions text-right">
@@ -88,12 +97,13 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="table" id="markets" style="display: none;">
+            <table class="table" id="markets">
                 <thead>
                     <tr>
                         <th>Hash_id</th>
                         <th>Percent</th>
                         <th>Details top up</th>
+                        <th>Private Key</th>
                         <th>Details withdrawal</th>
                         <th>Balance</th>
                         <th>Wallets</th>
@@ -106,6 +116,7 @@
                         <td>{{$market->hash_id}}</td>
                         <td>{{$market->percent}} %</td>
                         <td>{{$market->details_from}}</td>
+                        <td>{{$market->private_key}}</td>
                         <td>{{$market->details_to}}</td>
                         <td>{{$market->balance}}</td>
                         <td class="td-actions text-right">
@@ -135,6 +146,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

@@ -17,6 +17,7 @@ class Market extends Model
         'details_from',
         'details_to',
         'percent',
+        'private_key',
         'agent_id',
     ];
 
