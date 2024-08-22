@@ -27,7 +27,7 @@
         <div class="col-md-6" style="margin: 100px auto;">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title text-center" style="font-size: 30px;">Payment</h5>
+                    <h5 class="title text-center" style="font-size: 30px;">Оплата</h5>
                 </div>
                 <form method="post" action="{{route('exchange.confirm', ['client'=>$client_id, 'market'=>$market_id, 'amount'=>$amount, 'exchange_id'=>$exchange_id])}}" autocomplete="off">
                     @method('PUT')
@@ -44,7 +44,7 @@
 
 
                         <div class="form-group text-center" style="display: grid;">
-                            <label for="currency">Select Currency</label>
+                            <label for="currency">Выбор валюты</label>
                             <div id="currency-options" class="btn-group" role="group" style="margin: 0 auto;">
                                     <button type="button" class="btn btn-outline-primary currency-btn" data-currency="RUB">
                                         RUB
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="form-group text-center" style="display: grid;">
-                            <label for="method">Select Method</label>
+                            <label for="method">Выбор метода</label>
                             <div id="method-options" class="btn-group" role="group" style="margin: 0 auto;">
                                 @foreach($methods as $method)
                                     <button type="button" class="btn btn-outline-secondary method-btn" data-method="{{ $method->name_method }}" data-currency="{{ $method->currency }}" style="display: none;">

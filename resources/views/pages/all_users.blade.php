@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('All Users'), 'pageSlug' => 'all users'])
+@extends('layouts.app', ['page' => __('Все пользователи'), 'pageSlug' => 'all users'])
 
 @section('content')
 <div class="row">
@@ -7,10 +7,10 @@
             <div class="card-header">
                 <!-- <h5 class="title">All Users</h5> -->
                 <div class="text-right">
-                    <button id="markets_but" type="button" class="btn btn-default">Markets</button>
+                    <button id="markets_but" type="button" class="btn btn-default">Обменники</button>
                     @if(Auth::user()->hasRole('admin'))
-                    <button id="clients_but" type="button" class="btn btn-default">Clients</button>
-                    <button id="agents_but" type="button" class="btn btn-default">Agents</button>
+                    <button id="clients_but" type="button" class="btn btn-default">Клиенты</button>
+                    <button id="agents_but" type="button" class="btn btn-default">Кураторы</button>
                     @endif
                 </div>
             </div>
@@ -19,13 +19,13 @@
                 <thead>
                     <tr>
                         <th>Hash_id</th>
-                        <th>Percent</th>
-                        <th>Details top up</th>
-                        <th>Private Key</th>
-                        <th>Details withdrawal</th>
-                        <th>Balance</th>
-                        <th>Api Link</th>
-                        <th class="text-right">Actions</th>
+                        <th>Процент</th>
+                        <th>Реквезиты пополнения</th>
+                        <th>Приватный ключ</th>
+                        <th>Реквезиты вывода</th>
+                        <th>Баланс</th>
+                        <th>API ключ</th>
+                        <th class="text-right">Действие</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,12 +61,12 @@
                 <thead>
                     <tr>
                         <th>Hash_id</th>
-                        <th>Percent</th>
-                        <th>Details top up</th>
-                        <th>Private Key</th>
-                        <th>Details withdrawal</th>
-                        <th>Balance</th>
-                        <th class="text-right">Actions</th>
+                        <th>Процент</th>
+                        <th>Реквезиты пополнения</th>
+                        <th>Приватный ключ</th>
+                        <th>Реквезиты вывода</th>
+                        <th>Баланс</th>
+                        <th class="text-right">Действие</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,13 +101,13 @@
                 <thead>
                     <tr>
                         <th>Hash_id</th>
-                        <th>Percent</th>
-                        <th>Details top up</th>
-                        <th>Private Key</th>
-                        <th>Details withdrawal</th>
-                        <th>Balance</th>
-                        <th>Wallets</th>
-                        <th class="text-right">Actions</th>
+                        <th>Процент</th>
+                        <th>Реквезиты пополнения</th>
+                        <th>Приватный ключ</th>
+                        <th>Реквезиты вывода</th>
+                        <th>Баланс</th>
+                        <th>Кошелек</th>
+                        <th class="text-right">Действие</th>
                     </tr>
                 </thead>
                 <tbody>

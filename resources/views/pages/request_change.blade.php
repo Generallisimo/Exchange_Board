@@ -27,7 +27,7 @@
         <div class="col-md-6" style="margin: 100px auto;">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title text-center">Confrim Payment</h5>
+                    <h5 class="title text-center">Подтверждение платежа</h5>
                 </div>
                 <form method="post" action="{{route('exchange.success')}}" autocomplete="off">
                     @method('PUT')
@@ -44,20 +44,20 @@
 
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Amount to send</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$responseUser}}" style="pointer-events: none;">
+                        <label for="exampleInputEmail1">Сумма к отправлению</label>
+                        <input  class="form-control" value="{{$responseUser}}" style="pointer-events: none;">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Send to address</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$wallet->details_market_to}}" style="pointer-events: none;">
+                        <label for="exampleInputEmail1">Адресс получателя</label>
+                        <input  class="form-control" value="{{$wallet->details_market_to}}" style="pointer-events: none;">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Comment</label>
-                        <input  class="form-control" id="exampleInputEmail1" value="{{$wallet->comment}}" style="pointer-events: none;">
+                        <label for="exampleInputEmail1">Комментарий от получателя</label>
+                        <input  class="form-control" value="{{$wallet->comment}}" style="pointer-events: none;">
                     </div>
                         
                         <div class="card-footer text-center">
-                            <button type="submit" class="btn btn-fill btn-primary">Next</button>
+                            <button type="submit" class="btn btn-fill btn-primary">Продолжить</button>
                         </div>
                     </div>
                 </form>

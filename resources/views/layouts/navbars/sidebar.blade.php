@@ -17,7 +17,7 @@
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="tim-icons icon-settings" ></i>
-                    <span class="nav-link-text" >{{ __('Space') }}</span>
+                    <span class="nav-link-text" >{{ __('Дополнительно') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
                 <div class="collapse show" id="laravel-examples">
@@ -26,7 +26,7 @@
                         <li @if ($pageSlug == 'create users') class="active " @endif>
                             <a href="{{ route('pages.create.users') }}">
                                 <i class="tim-icons icon-single-02"></i>
-                                <p>{{ __('Create Users') }}</p>
+                                <p>{{ __('Создать пользователя') }}</p>
                             </a>
                         </li>
                         @endif
@@ -34,7 +34,7 @@
                         <li @if ($pageSlug == 'add details') class="active " @endif>
                             <a href="{{ route('add.details') }}">
                                 <i class="tim-icons icon-wallet-43"></i>
-                                <p>{{ __('Add Details') }}</p>
+                                <p>{{ __('Добавить реквезиты') }}</p>
                             </a>
                         </li>
                         @endif
@@ -42,7 +42,7 @@
                         <li @if ($pageSlug == 'all users') class="active " @endif>
                             <a href="{{ route('check.users') }}">
                                 <i class="tim-icons icon-notes"></i>
-                                <p>{{ __('All Users') }}</p>
+                                <p>{{ __('Все пользователи') }}</p>
                             </a>
                         </li>
                         @endif
@@ -54,7 +54,7 @@
             <li @if ($pageSlug == 'market board') class="active " @endif>
                 <a href="{{ route('market.board')  }}">
                     <i class="tim-icons icon-components"></i>
-                    <p>{{ __('Market Board') }}</p>
+                    <p>{{ __('Транзакции') }}</p>
                 </a>
             </li>
             @endif
@@ -62,7 +62,7 @@
             <li @if ($pageSlug == 'top up') class="active " @endif>
                 <a href="{{ route('top_up')  }}">
                     <i class="tim-icons icon-money-coins"></i>
-                    <p>{{ __('Top Up') }}</p>
+                    <p>{{ __('Пополнение') }}</p>
                 </a>
             </li>
             @endif
@@ -70,7 +70,7 @@
             <li @if ($pageSlug == 'withdrawal') class="active " @endif>
                 <a href="{{ route('withdrawal')  }}">
                     <i class="tim-icons icon-coins"></i>
-                    <p>{{ __('Withdrawal') }}</p>
+                    <p>{{ __('Вывод') }}</p>
                 </a>
             </li>
             @endif

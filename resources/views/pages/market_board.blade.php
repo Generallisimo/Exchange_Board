@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Market Board'), 'pageSlug' => 'market board'])
+@extends('layouts.app', ['page' => __('Транзакции'), 'pageSlug' => 'market board'])
 
 @section('content')
 <div class="row">
@@ -7,9 +7,9 @@
             <div class="card-header">
                 <!-- <h5 class="title">All Users</h5> -->
                 <div class="text-right">
-                    <button id="await_but" type="button" class="btn btn-default">Awaiting</button>
-                    <button id="success_but" type="button" class="btn btn-default">Successful</button>
-                    <button id="archive_but" type="button" class="btn btn-default">Archive</button>
+                    <button id="await_but" type="button" class="btn btn-default">Ожидание</button>
+                    <button id="success_but" type="button" class="btn btn-default">Успешные</button>
+                    <button id="archive_but" type="button" class="btn btn-default">Архивированные</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -17,15 +17,15 @@
                 <thead>
                     <tr>
                         <th>Exchange ID</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Currency</th>
-                        <th>Details for user</th>
-                        <th>Status</th>
-                        <th>Market Percent</th>
-                        <th>Agent Percent</th>
-                        <th>Client Percent</th>
-                        <th class="text-right">Actions</th>
+                        <th>Сумма</th>
+                        <th>Метод оплаты</th>
+                        <th>Валюта</th>
+                        <th>Реквезиты обменника</th>
+                        <th>Статус платежа</th>
+                        <th>Процент Обменника</th>
+                        <th>Процент Куратора</th>
+                        <th>Процент Клиента</th>
+                        <th class="text-right">Действие</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,16 +62,16 @@
             </table>
             <table class="table" id="success" style="display: none;">
                 <thead>
-                    <tr>
+                <tr>
                         <th>Exchange ID</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Currency</th>
-                        <th>Details for user</th>
-                        <th>Status</th>
-                        <th>Market Percent</th>
-                        <th>Agent Percent</th>
-                        <th>Client Percent</th>
+                        <th>Сумма</th>
+                        <th>Метод оплаты</th>
+                        <th>Валюта</th>
+                        <th>Реквезиты обменника</th>
+                        <th>Статус платежа</th>
+                        <th>Процент Обменника</th>
+                        <th>Процент Куратора</th>
+                        <th>Процент Клиента</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,17 +92,17 @@
             </table>
             <table class="table" id="archive" style="display: none;">
             <thead>
-                    <tr>
-                        <th>Exchange ID</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Currency</th>
-                        <th>Details for user</th>
-                        <th>Status</th>
-                        <th>Market Percent</th>
-                        <th>Agent Percent</th>
-                        <th>Client Percent</th>
-                    </tr>
+                <tr>
+                    <th>Exchange ID</th>
+                    <th>Сумма</th>
+                    <th>Метод оплаты</th>
+                    <th>Валюта</th>
+                    <th>Реквезиты обменника</th>
+                    <th>Статус платежа</th>
+                    <th>Процент Обменника</th>
+                    <th>Процент Куратора</th>
+                    <th>Процент Клиента</th>
+                </tr>
                 </thead>
                 <tbody>
                     @foreach ($exchangesArchive as $exchange)

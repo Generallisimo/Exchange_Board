@@ -27,10 +27,10 @@
         <div class="col-md-6" style="margin: 100px auto;">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title text-center">Status payment</h5>
+                    <h5 class="title text-center">Статус платежа</h5>
                 </div>
                 <div class="status">
-                    <h1 class="status-text text-center">Transaction await</h1>
+                    <h1 class="status-text text-center">Платеж обрабатывается</h1>
                 </div>
             </div>
         </div>
@@ -43,13 +43,13 @@
                     .then(response=>response.json())
                     .then(data => {
                         if(data.status === 'success'){
-                            status.innerText = 'Transaction successful';
+                            status.innerText = 'Платеж успешно обработан';
                             // clearInterval(requestFetch);
                         }else if(data.status === 'archive'){
-                            status.innerText = 'Transaction error, go to support';
+                            status.innerText = 'Ошибка, обратитесь в тех поддержку';
                             // clearInterval(requestFetch);
                         }else if(data.status === 'await'){
-                            status.innerText = 'Transaction await';
+                            status.innerText = 'Платеж обрабатывается';
                             // clearInterval(requestFetch);
                         }
                     })

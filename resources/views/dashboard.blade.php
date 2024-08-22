@@ -19,7 +19,7 @@
         <div class="col-lg-4">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Balance</h5>
+                    <h5 class="card-category">Баланс</h5>
                     <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$user->balance}}</h3>
                 </div>
                 <!-- <div class="card-body">

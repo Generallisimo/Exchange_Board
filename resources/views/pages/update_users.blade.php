@@ -1,11 +1,11 @@
-@extends('layouts.app', ['page' => __('Update Users'), 'pageSlug' => 'update users'])
+@extends('layouts.app', ['page' => __('Обновление пользователя'), 'pageSlug' => 'update users'])
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">Update User</h5>
+                <h5 class="title">Обновление пользователя</h5>
             </div>
             <form method="post" action="{{route('user.update.change', $hash_id)}}" autocomplete="off">
                 @method('PUT')
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Details for top up</label>
+                            <label>Реквезиты пополнения</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Details for withdrawal </label>
+                            <label>Реквезиты вывода </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Private key for withdrawal </label>
+                            <label>Приватный ключ реквезитов пополнения </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Balance</label>
+                            <label>Баланс</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Percent</label>
+                            <label>Процент</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -88,7 +88,7 @@
                     
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-fill btn-primary">Update</button>
+                    <button type="submit" class="btn btn-fill btn-primary">Обновить</button>
                 </div>
             </form>
         </div>

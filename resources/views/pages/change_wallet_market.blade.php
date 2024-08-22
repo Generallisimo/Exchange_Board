@@ -1,11 +1,11 @@
-@extends('layouts.app', ['page' => __('Change wallet for market'), 'pageSlug' => 'change wallet for market'])
+@extends('layouts.app', ['page' => __('Изменить реквезиты маркета'), 'pageSlug' => 'change wallet for market'])
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">Change wallet for market</h5>
+                <h5 class="title">Изменить реквезиты маркета</h5>
             </div>
             <form method="post" action="{{route('user.update.change.details', $market_details->id)}}" autocomplete="off">
                 @method('PUT')
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Details for top up</label>
+                            <label>Реквезиты пополнения</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -37,7 +37,7 @@
                     
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-fill btn-primary">Update</button>
+                    <button type="submit" class="btn btn-fill btn-primary">Обновить</button>
                 </div>
             </form>
         </div>

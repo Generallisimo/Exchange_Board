@@ -1,11 +1,11 @@
-@extends('layouts.app', ['page' => __('Create Users'), 'pageSlug' => 'create users'])
+@extends('layouts.app', ['page' => __('Создать пользователя'), 'pageSlug' => 'create users'])
 
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">Create User</h5>
+                <h5 class="title">Создание Пользователя</h5>
             </div>
             <form method="post" action="{{route('create.new.users')}}" autocomplete="off">
                 @csrf
@@ -19,31 +19,31 @@
                                 <i class="tim-icons icon-single-02"></i>
                             </div>          
                         </div>
-                        <input type="text" name="hash_id" class="form-control" placeholder="Name" value="{{$hash_id}}" style="pointer-events: none;">
+                        <input type="text" name="hash_id" class="form-control" value="{{$hash_id}}" style="pointer-events: none;">
                     </div>
 
                     <div class="form-group">
-                        <label>Password</label>
+                        <label>Пароль</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                     <i class="tim-icons icon-single-02"></i>
                                 </div>          
                             </div>
-                            <input type="text" name="password" class="form-control" placeholder="enter password" required>
+                            <input type="text" name="password" class="form-control" placeholder="введите пароль" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Role select</label>
+                        <label for="exampleFormControlSelect1">Выбрать роль</label>
                         <select class="form-control" id="role" name="role">
                             @if(Auth::user()->hasRole('admin'))
-                            <option value="client">Client</option>
-                            <option value="agent">Agent</option>
-                            <option value="market">Market</option>
-                            <option value="support">Support</option>
+                            <option value="client">Клиент</option>
+                            <option value="agent">Куратор</option>
+                            <option value="market">Обменник</option>
+                            <option value="support">Поддержка</option>
                             @elseif(Auth::user()->hasRole('agent'))
-                            <option value="market">Market</option>
+                            <option value="market">Обменник</option>
                             @endif
                         </select>
                     </div>
@@ -51,67 +51,67 @@
                     <div id="unsupport">
                     
                         <div class="form-group">
-                            <label>Details for top up</label>
+                            <label>Реквезиты пополнения</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="details_from" class="form-control" placeholder="enter details for top up" required>
+                                <input type="text" name="details_from" class="form-control" placeholder="введите реквезиты пополнения" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Details for withdrawal </label>
+                            <label>Реквезиты получения </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="details_to" class="form-control" placeholder="enter details for withdrawal" required>
+                                <input type="text" name="details_to" class="form-control" placeholder="введите реквезиты получения" required>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>Private key for withdrawal </label>
+                            <label>Приватный ключ реквезитов пополнения</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="private_key" class="form-control" placeholder="enter private key for withdrawal" required>
+                                <input type="text" name="private_key" class="form-control" placeholder="введите приватый ключ" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Balance</label>
+                            <label>Баланс</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="balance" class="form-control" placeholder="enter if need balance">
+                                <input type="text" name="balance" class="form-control" placeholder="введите баланс для пользователя">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Percent</label>
+                            <label>Процент</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                         <i class="tim-icons icon-single-02"></i>
                                     </div>          
                                 </div>
-                                <input type="text" name="percent" class="form-control" placeholder="enter percent" requiredd>
+                                <input type="text" name="percent" class="form-control" placeholder="введите процент для пользователя" requiredd>
                             </div>
                         </div>
 
                         <div class="form-group" id="market" >
-                            <label for="exampleFormControlSelect1">Agent select</label>
+                            <label for="exampleFormControlSelect1">Выбор куратора</label>
                             <select class="form-control" name="agent_id">
                                 @foreach($agents as $agent)
                                     <option value="{{$agent->hash_id}}">{{$agent->hash_id}}</option>
@@ -123,7 +123,7 @@
                     
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-fill btn-primary">Create</button>
+                    <button type="submit" class="btn btn-fill btn-primary">Создать</button>
                 </div>
             </form>
         </div>
