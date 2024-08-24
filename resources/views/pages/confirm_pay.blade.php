@@ -39,7 +39,7 @@
         document.addEventListener('DOMContentLoaded', function(){
             const status = document.querySelector('.status-text');
             function checkStatus(exchange){
-                fetch(`http://195.2.85.68/api/payment/${exchange}`)
+                fetch(`http://localhost:8000/api/payment/${exchange}`)
                     .then(response=>response.json())
                     .then(data => {
                         if(data.status === 'success'){

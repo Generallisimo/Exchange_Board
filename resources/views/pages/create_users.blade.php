@@ -49,18 +49,6 @@
                     </div>
 
                     <div id="unsupport">
-                    
-                        <div class="form-group">
-                            <label>Реквезиты пополнения</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
-                                    </div>          
-                                </div>
-                                <input type="text" name="details_from" class="form-control" placeholder="введите реквезиты пополнения" required>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label>Реквезиты получения </label>
@@ -71,30 +59,6 @@
                                     </div>          
                                 </div>
                                 <input type="text" name="details_to" class="form-control" placeholder="введите реквезиты получения" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Приватный ключ реквезитов пополнения</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
-                                    </div>          
-                                </div>
-                                <input type="text" name="private_key" class="form-control" placeholder="введите приватый ключ" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Баланс</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
-                                    </div>          
-                                </div>
-                                <input type="text" name="balance" class="form-control" placeholder="введите баланс для пользователя">
                             </div>
                         </div>
 

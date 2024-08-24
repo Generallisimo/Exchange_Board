@@ -46,23 +46,24 @@
                         <div class="form-group text-center" style="display: grid;">
                             <label for="currency">Выбор валюты</label>
                             <div id="currency-options" class="btn-group" role="group" style="margin: 0 auto;">
-                                    <button type="button" class="btn btn-outline-primary currency-btn" data-currency="RUB">
-                                        RUB
+                                @foreach($details_market_currency_find as $item)
+                                    <button type="button" class="btn btn-outline-primary currency-btn" data-currency="{{$item}}">
+                                        {{$item}}
                                     </button>
-                                    <button type="button" class="btn btn-outline-primary currency-btn" data-currency="UAH">
-                                        UAH
-                                    </button>
+                                @endforeach
                             </div>
                         </div>
 
                         <div class="form-group text-center" style="display: grid;">
                             <label for="method">Выбор метода</label>
                             <div id="method-options" class="btn-group" role="group" style="margin: 0 auto;">
-                                @foreach($methods as $method)
-                                    <button type="button" class="btn btn-outline-secondary method-btn" data-method="{{ $method->name_method }}" data-currency="{{ $method->currency }}" style="display: none;">
-                                        {{ $method->name_method }}
+
+                                @foreach($unique_details as $name)
+                                    <button type="button" class="btn btn-outline-secondary method-btn" data-method="{{ $name->name_method }}" data-currency="{{ $name->currency }}" style="display: none;">
+                                        {{ $name->name_method }}
                                     </button>
                                 @endforeach
+
                             </div>
                             <!-- Скрытое поле для отправки выбранного метода -->
                             <input type="hidden" name="method" id="selected_method">
@@ -95,6 +96,7 @@
 
                 // Получаем выбранную валюту
                 const selectedCurrency = this.getAttribute('data-currency');
+                console.log(selectedCurrency)
 
                 // Фильтруем и отображаем методы, соответствующие выбранной валюте
                 methodButtons.forEach(methodButton => {

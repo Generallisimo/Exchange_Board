@@ -7,8 +7,16 @@
             <div class="card-header">
                 <h5 class="title">Пополнение</h5>
             </div>
-            <form method="post" action="#" autocomplete="off">
+            <form method="post" action="{{route('top_up.check')}}" autocomplete="off">
+                @csrf
                 <div class="card-body">
+
+                    <input hidden value="{{$top_up->hash_id}}" name="hash_id">
+
+                    <div class="form-group">
+                        <label>Реквезиты пополнения</label>
+                        <input type="text" name="wallet" class="form-control" placeholder="введите сумму для пополнения" value="{{$top_up->details_from}}" style="pointer-events: none;">
+                    </div>
 
                     <div class="form-group">
                         <label>Сумма пополнения</label>
@@ -19,7 +27,7 @@
                         <label for="exampleFormControlSelect1">Выбор валюты</label>
                         <select class="form-control" id="get_currency" name="get_currency">
                             <option value="USDT">USDT</option>
-                            <option value="XMR">XMR</option>
+                            <!-- <option value="XMR">XMR</option> -->
                         </select>
                     </div>
                     

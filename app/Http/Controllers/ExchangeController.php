@@ -30,13 +30,9 @@ class ExchangeController extends Controller
         $percent_agent_find = Agent::where('hash_id', $percent_market_find->agent_id)->first();
         $percent_agent = $percent_agent_find->percent;
         
-        $details_market_payment_find = AddMarketDetails::where('hash_id', $percent_market_find->hash_id)->inRandomOrder()->first();
-        $details_market_payment = $details_market_payment_find->details_market_to;
-        
-        $details_market_find = Market::where('hash_id', $percent_market_find->hash_id)->first();
-        $details_market = $details_market_find->details_from;
-        $details_client_find = Client::where('hash_id', $percent_client_find->hash_id)->first();
-        $details_client = $details_client_find->details_from;
+        $details_market_currency_find = AddMarketDetails::where('hash_id', $percent_market_find->hash_id)->select('currency')->distinct()->pluck('currency');
+        $details_market_name_method_find = AddMarketDetails::where('hash_id', $percent_market_find->hash_id)->get();
+        $unique_details = $details_market_name_method_find->unique('name_method');
 
         Exchange::create([
             'exchange_id' => $exchange_id,
@@ -46,16 +42,9 @@ class ExchangeController extends Controller
             'percent_client' => $percent_client,
             'percent_market' => $percent_market,
             'percent_agent' => $percent_agent,
-            'details_market_payment' => $details_market_payment,
-            'details_market' => $details_market,
-            'details_client' => $details_client,
-            // 'result',
-            // 'message',
         ]);
 
-        $methods = MethodPayments::all();
-
-        return view('pages.exchange', compact('methods', 'client_id', 'market_id', 'amount', 'exchange_id'));
+        return view('pages.exchange', compact('client_id', 'market_id', 'amount', 'exchange_id', 'details_market_currency_find', 'unique_details'));
     }
 
     public function exchange(Request $request){
@@ -65,14 +54,6 @@ class ExchangeController extends Controller
         $get_currency = $currency_find->currency;
 
         $exchange_id = $request->input('exchange_id');
-
-        // dd($method);
-
-        Exchange::where('exchange_id', $exchange_id)->update([
-            'method' => $method,
-            'currency' => $get_currency,
-        ]);;
-        
         
         
         $client_id = $request->input('client_id');
@@ -81,7 +62,7 @@ class ExchangeController extends Controller
         $market_id = $request->input('market_id');
         $market = Market::where('hash_id', $market_id)->first();
         
-        $wallet = AddMarketDetails::where('hash_id', $market->hash_id)->first();
+        $wallet = AddMarketDetails::where('name_method', $method)->inRandomOrder()->first();
 
         $agent = Agent::where('hash_id', $market->agent_id)->first();
 
@@ -112,14 +93,18 @@ class ExchangeController extends Controller
             
             
             $amountExchange = $response * $client_percent;
-            // dd($amountExchange);
             $amountMarket = $response * $market_percent;
             $amountAgent = $response * $agent_percent;
             $amountClient = $response - ($amountExchange + $amountMarket + $amountAgent);
             
             $responseUser = $amount * $curseReverse['price'];
 
-            // dd($responseReverse, $response, $curseReverse['price'], $client_percent, $market_percent, $agent_percent, $responseUser);
+            Exchange::where('exchange_id', $exchange_id)->update([
+                'method' => $method,
+                'currency' => $get_currency,
+                'amount_users'=>$responseUser,
+                'details_market_payment'=>$wallet->details_market_to
+            ]);;
 
             return view('pages.request_change', compact(
                 'wallet', 'responseUser', 'amountExchange', 
@@ -140,20 +125,50 @@ class ExchangeController extends Controller
         $agent_id = $request->input('agent');
         $agent = Agent::where('hash_id', $agent_id)->first();
 
-        // $exchange_id = '9QuyE4bzdz2J';
-        $exchange_id = 'admin';
+        $exchange_id = '9QuyE4bzdz2J';
+        // $exchange_id = 'admin';
         $exchange = Platform::where('hash_id', $exchange_id)->first();
 
         $amountExchange = $request->input('amountExchange');
         $amountAgent = $request->input('amountAgent');
         $amountClient = $request->input('amountClient');
 
-        $client->balance = $client->balance + $amountClient;
+        $this->sendTronTrxToUsdt($amountExchange, $exchange->details_from, $market->details_from, $market->private_key);
+        $this->sendTronTrxToUsdt($amountAgent, $agent->details_from, $market->details_from, $market->private_key);
+        $this->sendTronTrxToUsdt($amountClient, $client->details_from, $market->details_from, $market->private_key);
+
+        $checkBalanceClient = Http::get('http://localhost:3000/check_balance', [
+            'ownerAddress'=>$client->details_from,
+        ]);
+        $responseBalance = $checkBalanceClient->json();
+        $amountUpdateClient = $responseBalance['balance'];
+        $client->balance = $amountUpdateClient;
         $client->save();
-        $agent->balance = $agent->balance + $amountAgent;
+
+        $checkBalanceAgent = Http::get('http://localhost:3000/check_balance', [
+            'ownerAddress'=>$agent->details_from,
+        ]);
+        $responseBalance = $checkBalanceAgent->json();
+        $amountUpdateAgent = $responseBalance['balance'];
+        $agent->balance = $amountUpdateAgent;
         $agent->save();
-        $exchange->balance = $exchange->balance + $amountExchange;
+
+        $checkBalanceExchange = Http::get('http://localhost:3000/check_balance', [
+            'ownerAddress'=>$exchange->details_from,
+        ]);
+        $responseBalance = $checkBalanceExchange->json();
+        $amountUpdateExchange = $responseBalance['balance'];
+        $exchange->balance = $amountUpdateExchange;
         $exchange->save();
+        
+        $checkBalanceMarket = Http::get('http://localhost:3000/check_balance', [
+            'ownerAddress'=>$market->details_from,
+        ]);
+        $responseBalance = $checkBalanceMarket->json();
+        $amountUpdateMarket = $responseBalance['balance'];
+        $market->balance = $amountUpdateMarket;
+        $market->save();
+        
 
         $exchange_id_user = $request->input('exchange_id');
         return view('pages.confirm_pay', compact('exchange_id_user'));
@@ -166,20 +181,20 @@ class ExchangeController extends Controller
 
     
     
-    // private function sendTronTrxToUsdt($amount, $addressTo, $ownerAddress, $ownerKey){
-    //     $urlSend = 'http://localhost:3000/sendTronUSDT';
+    private function sendTronTrxToUsdt($amount, $addressTo, $ownerAddress, $ownerKey){
+        $urlSend = 'http://localhost:3000/sendTronUSDT';
 
-    //     $amountInSun = bcmul($amount, '1000000', 0);
+        $amountInSun = bcmul($amount, '1000000', 0);
         
-    //     Http::withHeaders([
-    //         'Content-Type' => 'application/json'
-    //         ])->post($urlSend, [
-    //             'addressTo' => $addressTo,
-    //             'amount' => $amountInSun,
-    //             'ownerAddress' => $ownerAddress,
-    //             'privateKey' => $ownerKey,
-    //         ]);
-    //     }
+        Http::withHeaders([
+            'Content-Type' => 'application/json'
+            ])->post($urlSend, [
+                'addressTo' => $addressTo,
+                'amount' => $amountInSun,
+                'ownerAddress' => $ownerAddress,
+                'privateKey' => $ownerKey,
+            ]);
+        }
 
 
 

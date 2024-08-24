@@ -29,7 +29,7 @@ Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exc
 Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
 Route::get('api/payment/{exchange}', ['as' => 'exchange.status', 'uses' => 'App\Http\Controllers\ExchangeController@checkStatus']);
 
-
+Route::get('api/top_up/{wallet}/{amount}/{hash_id}', ['as' => 'api.top_up', 'uses' => 'App\Http\Controllers\TopUpController@checkTopUp']);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'role']);
 
@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('withdrawal/check', ['as' => 'withdrawal.check', 'uses' => 'App\Http\Controllers\WithdrawalController@withdrawal']);
 		
 		Route::get('top_up', ['as' => 'top_up', 'uses' => 'App\Http\Controllers\TopUpController@index']);
+		Route::post('top_up/check', ['as' => 'top_up.check', 'uses' => 'App\Http\Controllers\TopUpController@topUp']);
+		
 
 		Route::get('market_board', ['as' => 'market.board', 'uses' => 'App\Http\Controllers\MarketBoardController@index']);
 		Route::put('market_board/{exchange}', ['as' => 'market.success', 'uses' => 'App\Http\Controllers\MarketBoardController@success']);

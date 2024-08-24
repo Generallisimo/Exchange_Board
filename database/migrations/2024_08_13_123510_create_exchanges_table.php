@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('percent_client');
             $table->string('percent_market');
             $table->string('percent_agent');
-            $table->string('details_market_payment');
-            $table->string('details_market');
-            $table->string('details_client');
+            $table->string('details_market_payment')->nullable();
+            // $table->string('details_market');
+            // $table->string('details_client');
             $table->timestamps();
         });
     }

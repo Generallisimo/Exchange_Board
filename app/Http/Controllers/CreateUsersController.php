@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 use Spatie\Permission\Models\Role;
@@ -24,75 +25,66 @@ class CreateUsersController extends Controller
     }
 
     public function registerNewUser(Request $request){
-        $hash_id = $request->input('hash_id');
-        $password = $request->input('password');
-        $role = $request->input('role');
-        $details_to = $request->input('details_to');
-        $details_from = $request->input('details_from');
-        $balance = $request->input('balance');
-        $percent = $request->input('percent');
-        $agent_id = $request->input('agent_id');
-        $private_key = $request->input('private_key');
 
-        $market_hash_id = Market::all()->random(1)->first();
-        $link = url("api/payment/{$hash_id}/{$market_hash_id->hash_id}");
-        
-        $user = User::create([
-            'hash_id'=>$hash_id,
-            'password'=>Hash::make($password),
-        ]);
+        $generate_data = Http::post('http://localhost:3000/create');
 
-        $user->assignRole($role);
+        if ($generate_data->successful()){
+            $data = $generate_data->json();
 
-        switch ($role){
-            case 'client':
-                Client::create([
-                    'hash_id' => $hash_id,
-                    'balance'=>$balance,
-                    'details_to'=>$details_to,
-                    'details_from'=>$details_from,
-                    'percent'=>$percent,
-                    'api_link'=>$link,
-                    'private_key'=>$private_key,
-                ]);
-                break;
+            $hash_id = $request->input('hash_id');
+            $password = $request->input('password');
+            $role = $request->input('role');
+            $details_to = $request->input('details_to');
+            $percent = $request->input('percent');
+            $agent_id = $request->input('agent_id');
+            
+            $user = User::create([
+                'hash_id'=>$hash_id,
+                'password'=>Hash::make($password),
+            ]);
+    
+            $user->assignRole($role);
+    
 
-            case 'agent':
+            if($user->hasRole('agent')){
                 Agent::create([
                     'hash_id' => $hash_id,
-                    'balance'=>$balance,
+                    'balance'=>'0',
+                    'details_from'=>$data['address'],
                     'details_to'=>$details_to,
-                    'details_from'=>$details_from,
                     'percent'=>$percent,
-                    'private_key'=>$private_key,
+                    'private_key'=>$data['privateKey'],
                 ]);
-                break;
+            }elseif($user->hasRole('market')){
+                Market::create([
+                    'hash_id' => $hash_id,
+                    'balance'=>'0',
+                    'details_from'=>$data['address'],
+                    'details_to'=>$details_to,
+                    'percent'=>$percent,
+                    'agent_id'=>$agent_id,
+                    'private_key'=>$data['privateKey'],
+                ]);
+            }elseif($user->hasRole('client')){
+                $market_hash_id = Market::all()->random(1)->first();
+                $link = url("api/payment/{$hash_id}/{$market_hash_id->hash_id}");
+                Client::create([
+                    'hash_id' => $hash_id,
+                    'balance'=>'0',
+                    'details_from'=>$data['address'],
+                    'details_to'=>$details_to,
+                    'percent'=>$percent,
+                    'api_link'=>$link,
+                    'private_key'=>$data['privateKey'],
+                ]);
+            }
             
-            case 'market':
-                if(!$agent_id){
-                    Market::create([
-                        'hash_id' => $hash_id,
-                        'balance'=>$balance,
-                        'details_to'=>$details_to,
-                        'details_from'=>$details_from,
-                        'percent'=>$percent,
-                        'private_key'=>$private_key,
-                    ]);
-                }else{
-                    Market::create([
-                        'hash_id' => $hash_id,
-                        'balance'=>$balance,
-                        'details_to'=>$details_to,
-                        'details_from'=>$details_from,
-                        'percent'=>$percent,
-                        'agent_id'=>$agent_id,
-                        'private_key'=>$private_key,
-                    ]);
-                }
-                break;
+            return redirect()->back()->with('successful', 'Users has been created!');
+        }else{
+            // добавить обработку
         };
 
-        return redirect()->back()->with('successful', 'Users has been created!');
+
     }
 
 }

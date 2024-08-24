@@ -5,7 +5,7 @@
         <h3 class="mb-5">Log in to see how you can speed up your web development with out of the box CRUD for #User Management and more.</h3>
     </div>
     <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-        <form class="form" method="post" action="{{ route('loginCustom') }}">
+        <form class="form" method="post" action="{{ route('login') }}">
             @csrf
 
             <div class="card card-login card-white">
