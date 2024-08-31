@@ -10,6 +10,7 @@
                     <button id="await_but" type="button" class="btn btn-default">Ожидание</button>
                     <button id="success_but" type="button" class="btn btn-default">Успешные</button>
                     <button id="archive_but" type="button" class="btn btn-default">Архивированные</button>
+                    <button id="dispute_but" type="button" class="btn btn-default">Диспуты</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -32,7 +33,7 @@
                     @foreach ($exchanges as $exchange)
                     <tr>
                         <td>{{$exchange->exchange_id}}</td>
-                        <td>{{$exchange->amount}} $</td>
+                        <td>{{$exchange->amount_users}}</td>
                         <td>{{$exchange->method}}</td>
                         <td>{{$exchange->currency}}</td>
                         <td>{{$exchange->details_market_payment}}</td>
@@ -78,7 +79,7 @@
                     @foreach ($exchangesSuccess as $exchange)
                     <tr>
                         <td>{{$exchange->exchange_id}}</td>
-                        <td>{{$exchange->amount}} $</td>
+                        <td>{{$exchange->amount_users}}</td>
                         <td>{{$exchange->method}}</td>
                         <td>{{$exchange->currency}}</td>
                         <td>{{$exchange->details_market_payment}}</td>
@@ -108,7 +109,37 @@
                     @foreach ($exchangesArchive as $exchange)
                     <tr>
                         <td>{{$exchange->exchange_id}}</td>
-                        <td>{{$exchange->amount}} $</td>
+                        <td>{{$exchange->amount_users}}</td>
+                        <td>{{$exchange->method}}</td>
+                        <td>{{$exchange->currency}}</td>
+                        <td>{{$exchange->details_market_payment}}</td>
+                        <td>{{$exchange->result}}</td>
+                        <td>{{$exchange->percent_market}}</td>
+                        <td>{{$exchange->percent_agent}}</td>
+                        <td>{{$exchange->percent_client}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <table class="table" id="dispute" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Exchange ID</th>
+                    <th>Сумма</th>
+                    <th>Метод оплаты</th>
+                    <th>Валюта</th>
+                    <th>Реквезиты обменника</th>
+                    <th>Статус платежа</th>
+                    <th>Процент Обменника</th>
+                    <th>Процент Куратора</th>
+                    <th>Процент Клиента</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach ($exchangesDispute as $exchange)
+                    <tr>
+                        <td>{{$exchange->exchange_id}}</td>
+                        <td>{{$exchange->amount_users}}</td>
                         <td>{{$exchange->method}}</td>
                         <td>{{$exchange->currency}}</td>
                         <td>{{$exchange->details_market_payment}}</td>
@@ -131,24 +162,35 @@
         const await = document.getElementById('await');
         const success = document.getElementById('success');
         const archive = document.getElementById('archive');
+        const dispute = document.getElementById('dispute');
         const await_but = document.getElementById('await_but');
         const archive_but = document.getElementById('archive_but');
         const success_but = document.getElementById('success_but');
+        const dispute_but = document.getElementById('dispute_but');
 
         await_but.addEventListener('click', function(){
             await.style.display = 'table';
             archive.style.display = 'none';
             success.style.display = 'none';
+            dispute.style.display = 'none';
         })
         archive_but.addEventListener('click', function(){
             await.style.display = 'none';
             archive.style.display = 'table';
             success.style.display = 'none';
+            dispute.style.display = 'none';
         })
         success_but.addEventListener('click', function(){
             archive.style.display = 'none';
             success.style.display = 'table';
             await.style.display = 'none';
+            dispute.style.display = 'none';
+        })
+        dispute_but.addEventListener('click', function(){
+            archive.style.display = 'none';
+            success.style.display = 'none';
+            await.style.display = 'none';
+            dispute.style.display = 'table';
         })
 
 

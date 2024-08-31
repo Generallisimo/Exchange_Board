@@ -11,7 +11,8 @@ class MarketBoardController extends Controller
         $exchanges = Exchange::where('result', 'await')->get();
         $exchangesSuccess = Exchange::where('result', 'success')->get();
         $exchangesArchive = Exchange::where('result', 'archive')->get();
-        return view('pages.market_board', compact('exchanges', 'exchangesSuccess', 'exchangesArchive'));
+        $exchangesDispute = Exchange::where('result', 'dispute')->get();
+        return view('pages.market_board', compact('exchanges', 'exchangesSuccess', 'exchangesArchive', 'exchangesDispute'));
     }
 
     public function success ($exchange){
@@ -27,7 +28,14 @@ class MarketBoardController extends Controller
             'result'=>'archive',
             'message'=>'Send message to Support'
         ]);
+        return redirect()->back(); 
+    }
+    
+    public function dispute($exchange){
+        Exchange::where('exchange_id', $exchange)->update([
+            'result'=>'dispute',
+            'message'=>'Send message to Support'
+        ]);
         return redirect()->back();
-
     }
 }

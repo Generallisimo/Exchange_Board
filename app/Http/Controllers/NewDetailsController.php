@@ -14,8 +14,6 @@ class NewDetailsController extends Controller
         $markets = Market::all();
         $methods = MethodPayments::all();
 
-        // dd($markets);
-
         return view ('pages.add_details', compact('markets', 'methods'));
     }
 
@@ -25,8 +23,6 @@ class NewDetailsController extends Controller
         $details_to = $request->input('details_market_to');
         $name_method = $request->input('name_method');
         $comment = $request->input('comment');
-
-        // dd($request->all());
 
         $currencyMethod = MethodPayments::where('name_method', $name_method)->first();
         

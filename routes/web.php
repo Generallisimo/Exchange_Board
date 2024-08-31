@@ -39,15 +39,17 @@ Route::group(['middleware' => 'auth'], function () {
 		
 		Route::get('add_details', ['as' => 'add.details', 'uses' => 'App\Http\Controllers\NewDetailsController@index']);
 		Route::post('add_details/post', ['as'=>'create.new.wallets', 'uses'=> 'App\Http\Controllers\NewDetailsController@addWallets']);
-
+		
 		Route::get('users', ['as' => 'check.users', 'uses' => 'App\Http\Controllers\UsersCheckController@index']);
 		Route::delete('users/delete/{id}', ['as' => 'user.delete', 'uses' => 'App\Http\Controllers\UsersCheckController@deleteUser']);
 		Route::get('users/update/{id}', ['as' => 'user.update.check', 'uses' => 'App\Http\Controllers\UsersCheckController@update']);
 		Route::put('users/update/change{id}', ['as' => 'user.update.change', 'uses' => 'App\Http\Controllers\UsersCheckController@updateUser']);
+		Route::put('users/update/change{id}/status', ['as' => 'user.update.change.status', 'uses' => 'App\Http\Controllers\UsersCheckController@updateUserStatus']);
 		Route::get('users/update/change_details/view{id}', ['as' => 'user.update.check.details', 'uses' => 'App\Http\Controllers\UsersCheckController@walletMarket']);
 		Route::get('users/update/change_details/view/change{id}', ['as' => 'user.update.check.details.view', 'uses' => 'App\Http\Controllers\UsersCheckController@wallet']);
 		Route::put('users/update/change_details/view/update{id}', ['as' => 'user.update.change.details', 'uses' => 'App\Http\Controllers\UsersCheckController@changeWalletMarkets']);
-
+		Route::put('users/update/change_details/view/status', ['as'=>'change.status.wallet', 'uses'=> 'App\Http\Controllers\UsersCheckController@changeStatus']);
+		
 		Route::get('withdrawal', ['as' => 'withdrawal', 'uses' => 'App\Http\Controllers\WithdrawalController@index']);
 		Route::post('withdrawal/check', ['as' => 'withdrawal.check', 'uses' => 'App\Http\Controllers\WithdrawalController@withdrawal']);
 		
@@ -58,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('market_board', ['as' => 'market.board', 'uses' => 'App\Http\Controllers\MarketBoardController@index']);
 		Route::put('market_board/{exchange}', ['as' => 'market.success', 'uses' => 'App\Http\Controllers\MarketBoardController@success']);
 		Route::put('market_board/archive/{exchange}', ['as' => 'market.archive', 'uses' => 'App\Http\Controllers\MarketBoardController@archive']);
+		Route::put('market_board/dispute/{exchange}', ['as' => 'market.dispute', 'uses' => 'App\Http\Controllers\MarketBoardController@dispute']);
 		
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
 		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);

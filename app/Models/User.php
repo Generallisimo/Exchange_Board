@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'hash_id',
         'password',
+        'last_seen',
     ];
 
     /**

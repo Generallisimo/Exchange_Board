@@ -101,6 +101,7 @@
                 <thead>
                     <tr>
                         <th>Hash_id</th>
+                        <th>Статус</th>
                         <th>Процент</th>
                         <th>Реквезиты пополнения</th>
                         <th>Приватный ключ</th>
@@ -114,6 +115,7 @@
                     @foreach($markets as $market)
                     <tr>
                         <td>{{$market->hash_id}}</td>
+                        <td>{{$market->status}}</td>
                         <td>{{$market->percent}} %</td>
                         <td>{{$market->details_from}}</td>
                         <td>{{$market->private_key}}</td>
@@ -152,8 +154,32 @@
 </div>
 
 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // if (typeof Echo !== 'undefined') {
+        //     Echo.channel('board-change')
+        //         .listen('.board-change', res => {
+        //             console.log(res.users )
+        //             console.log(res.isOnline )
+        //             const userElement = document.getElementById(`market-${res.users.hash_id}`);
+        //             // Теперь используйте правильную структуру данных
+        //             console.log(userElement )
+        //             if (userElement) {
+        //                 console.log(`Before update: ${userElement.innerText}`); // Лог перед обновлением
+        //                 userElement.innerText = res.isOnline ? 'Online' : 'Offline';
+        //                 console.log(`After update: ${userElement.innerText}`);
+        //             } else {
+        //                 console.error(`Element with ID market-${res.users.hash_id} not found.`);
+        //             }
+        //         })
+        // } else {
+        //     console.error('Echo is not defined');
+        // }
+        
+        
+        // Остальной код для переключения таблиц
         const clients = document.getElementById('clients');
         const agents = document.getElementById('agents');
         const markets = document.getElementById('markets');
@@ -165,19 +191,20 @@
             clients.style.display = 'table';
             markets.style.display = 'none';
             agents.style.display = 'none';
-        })
+        });
+
         agentsBut.addEventListener('click', function(){
             clients.style.display = 'none';
             markets.style.display = 'none';
             agents.style.display = 'table';
-        })
+        });
+
         marketsBut.addEventListener('click', function(){
             clients.style.display = 'none';
             markets.style.display = 'table';
             agents.style.display = 'none';
-        })
+        });
 
-
-    })
+    });
 </script>
 @endsection

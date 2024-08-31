@@ -17,6 +17,7 @@ class AddMarketDetails extends Model
         'name_method',
         'currency',
         'comment',
+        'online'
     ];
 
     public function markets():BelongsTo

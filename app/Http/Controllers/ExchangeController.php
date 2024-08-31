@@ -62,7 +62,8 @@ class ExchangeController extends Controller
         $market_id = $request->input('market_id');
         $market = Market::where('hash_id', $market_id)->first();
         
-        $wallet = AddMarketDetails::where('name_method', $method)->inRandomOrder()->first();
+        $wallet = AddMarketDetails::where('name_method', $method)->where('hash_id', $market->hash_id)->where('online', 'online')->inRandomOrder()->first();
+        // dd($wallet);
 
         $agent = Agent::where('hash_id', $market->agent_id)->first();
 

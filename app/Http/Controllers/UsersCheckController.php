@@ -15,8 +15,9 @@ class UsersCheckController extends Controller
         $clients = Client::all();
         $agents = Agent::all();
         $markets = Market::all();
+        $users = User::all();
 
-        return view('pages.all_users', compact('clients', 'agents', 'markets'));
+        return view('pages.all_users', compact('clients', 'agents', 'markets', 'users'));
     }
 
     public function deleteUser($hash_id){
@@ -52,6 +53,20 @@ class UsersCheckController extends Controller
 
     }
 
+    public function updateUserStatus(Request $request, $hash_id){
+        $status = Market::where('hash_id', $hash_id)->first();
+        if($status->status === 'offline'){
+            Market::where('hash_id', $hash_id)->update([
+                'status'=> 'online',
+            ]);
+            return redirect()->back();
+        }elseif($status->status === 'online'){
+            Market::where('hash_id', $hash_id)->update([
+                'status'=> 'offline',
+            ]);
+            return redirect()->back();
+        }
+    }
     public function updateUser(Request $request, $hash_id){
         
         $role = User::where('hash_id', $hash_id)->first();
@@ -102,7 +117,8 @@ class UsersCheckController extends Controller
 
     public function walletMarket($hash_id){
         $market_details = AddMarketDetails::where('hash_id', $hash_id)->get();
-        return view('pages.wallets_market', compact('market_details', 'hash_id'));
+        $market = Market::where('hash_id', $hash_id)->first();
+        return view('pages.wallets_market', compact('market_details', 'hash_id', 'market'));
     }
     
     public function wallet($id){
@@ -111,12 +127,30 @@ class UsersCheckController extends Controller
     }
 
     public function changeWalletMarkets(Request $request, $id){
-        $details_from = $request->input('details_from');
+        $details_to = $request->input('details_to');
 
         AddMarketDetails::where('id', $id)->update([
-            'details_market_from'=>$details_from,
+            'details_market_to'=>$details_to,
         ]);
 
         return redirect()->route('check.users');
+    }
+
+    public function changeStatus(Request $request){
+        $status = $request->input('status');
+        $details_to = $request->input('details_market_to');
+
+        if($status === 'online'){
+            AddMarketDetails::where('details_market_to', $details_to)->update([
+                'online'=>'disabled',
+            ]);
+        }elseif($status === 'disabled'){
+            AddMarketDetails::where('details_market_to', $details_to)->update([
+                'online'=>'online',
+            ]);
+        }
+
+        return redirect()->back();
+        // $status = $request->input('status');
     }
 }
