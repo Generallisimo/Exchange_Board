@@ -14,37 +14,38 @@ class MarketStatusUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $users;
-    public $isOnline;
+    // public $users;
+    // public $isOnline;
     /**
      * Create a new event instance.
      */
-    public function __construct($users, $isOnline = false)
-    {
-        $this->users = $users;
-        $this->isOnline = $isOnline;
-    }
+    // public function __construct($users, $isOnline = false)
+    // {
+    //     $this->users = $users;
+    //     $this->isOnline = $isOnline;
+    // }
 
     /**
      * Get the channels the event should broadcast on.
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn()
-    {
-        return new Channel('board-change');
-    }
+    // public function broadcastOn()
+    // {
+    //     return new Channel('board-change');
+    // }
 
-    public function broadcastAs(){
+    // public function broadcastAs(){
 
-        return 'board-change';
-    }
+    //     return 'board-change';
+    // }
 
-    public function broadcastWith()
-    {
-        return [
-            'users' => $this->users,
-            'isOnline' => $this->isOnline
-        ];
-    }
+//     public function broadcastWith()
+//     {
+//         return [
+//             'users' => $this->users,
+//             'isOnline' => $this->isOnline
+//         ];
+//     }
+// }
 }

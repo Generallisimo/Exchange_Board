@@ -126,8 +126,8 @@ class ExchangeController extends Controller
         $agent_id = $request->input('agent');
         $agent = Agent::where('hash_id', $agent_id)->first();
 
-        $exchange_id = '9QuyE4bzdz2J';
-        // $exchange_id = 'admin';
+        // $exchange_id = '9QuyE4bzdz2J';
+        $exchange_id = 'admin';
         $exchange = Platform::where('hash_id', $exchange_id)->first();
 
         $amountExchange = $request->input('amountExchange');
@@ -185,7 +185,7 @@ class ExchangeController extends Controller
     private function sendTronTrxToUsdt($amount, $addressTo, $ownerAddress, $ownerKey){
         $urlSend = 'http://localhost:3000/sendTronUSDT';
 
-        $amountInSun = bcmul($amount, '1000000', 0);
+        $amountInSun = $amount * '1000000';
         
         Http::withHeaders([
             'Content-Type' => 'application/json'

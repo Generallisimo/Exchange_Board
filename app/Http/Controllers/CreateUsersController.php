@@ -27,6 +27,7 @@ class CreateUsersController extends Controller
     public function registerNewUser(Request $request){
 
         $generate_data = Http::post('http://localhost:3000/create');
+        // dd($generate_data->json());
 
         if ($generate_data->successful()){
             $data = $generate_data->json();

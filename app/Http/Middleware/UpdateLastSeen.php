@@ -17,15 +17,15 @@ class UpdateLastSeen
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user->last_seen = Carbon::now();
-            $user->save();
-            // Log::info();
-            event(new MarketStatusUpdated($user, true));
-        }
-        return $next($request);
-    }
+    // public function handle(Request $request, Closure $next): Response
+    // {
+    //     if (Auth::check()) {
+    //         $user = Auth::user();
+    //         $user->last_seen = Carbon::now();
+    //         $user->save();
+    //         // Log::info();
+    //         event(new MarketStatusUpdated($user, true));
+    //     }
+    //     return $next($request);
+    // }
 }
