@@ -56,6 +56,13 @@
                                     <i class="tim-icons icon-simple-remove"></i>
                                 </button>
                             </form>
+                            <form method="POST" action="{{route('market.dispute', $exchange->exchange_id)}}">
+                                @csrf
+                                @method("PUT")
+                                <button type="submit" rel="tooltip" class="btn btn-warning btn-sm btn-icon">
+                                    <i class="tim-icons icon-chat-33"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

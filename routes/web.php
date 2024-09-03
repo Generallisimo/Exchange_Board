@@ -24,7 +24,7 @@ Route::get('/', function () {
 // Route::post('/login/custom', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@showLoginCustom']);
 // Route::post('/login/custom/to_home', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@login']);
 
-Route::get('api/payment/{client}/{market}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
+Route::get('api/payment/{client}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
 Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@exchange']);
 Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
 Route::get('api/payment/{exchange}', ['as' => 'exchange.status', 'uses' => 'App\Http\Controllers\ExchangeController@checkStatus']);

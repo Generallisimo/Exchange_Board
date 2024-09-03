@@ -17,15 +17,17 @@ use Illuminate\Support\Str;
 
 class ExchangeController extends Controller
 {
-    public function index(Request $request, $client_id, $market_id, $amount){
+    public function index(Request $request, $client_id, $amount){
 
         $exchange_id = Str::uuid();
 
         $percent_client_find = Client::where('hash_id', $client_id)->first();
         $percent_client = $percent_client_find->percent;
         
-        $percent_market_find = Market::where('hash_id', $market_id)->first();
+        $percent_market_find = Market::where('status', 'online')->inRandomOrder()->first();
         $percent_market = $percent_market_find->percent;
+        $market_id=$percent_market_find->hash_id;
+        // dd($percent_market);
         
         $percent_agent_find = Agent::where('hash_id', $percent_market_find->agent_id)->first();
         $percent_agent = $percent_agent_find->percent;
@@ -126,8 +128,8 @@ class ExchangeController extends Controller
         $agent_id = $request->input('agent');
         $agent = Agent::where('hash_id', $agent_id)->first();
 
-        // $exchange_id = '9QuyE4bzdz2J';
-        $exchange_id = 'admin';
+        $exchange_id = '9QuyE4bzdz2J';
+        // $exchange_id = 'admin';
         $exchange = Platform::where('hash_id', $exchange_id)->first();
 
         $amountExchange = $request->input('amountExchange');

@@ -27,7 +27,6 @@ class CreateUsersController extends Controller
     public function registerNewUser(Request $request){
 
         $generate_data = Http::post('http://localhost:3000/create');
-        // dd($generate_data->json());
 
         if ($generate_data->successful()){
             $data = $generate_data->json();
@@ -45,10 +44,13 @@ class CreateUsersController extends Controller
             ]);
     
             $user->assignRole($role);
+
+            $this->sendTRX($data['address'], 'TLwBnPPSnqyze6Z5PFupUHMdpcknRghKrc', '6285daf813fe3497148a2420cf9f30adcae49f4a38ec03db89b0a37d4b5d223e');
     
 
             if($user->hasRole('agent')){
-                Agent::create([
+            
+                $agent = Agent::create([
                     'hash_id' => $hash_id,
                     'balance'=>'0',
                     'details_from'=>$data['address'],
@@ -56,8 +58,16 @@ class CreateUsersController extends Controller
                     'percent'=>$percent,
                     'private_key'=>$data['privateKey'],
                 ]);
+                $checkBalanceAgent = Http::get('http://localhost:3000/check_balance', [
+                    'ownerAddress'=>$agent->details_from,
+                ]);
+                $responseBalance = $checkBalanceAgent->json();
+                $amountUpdateAgent = $responseBalance['balance'];
+                $agent->balance = $amountUpdateAgent;
+                $agent->save();
             }elseif($user->hasRole('market')){
-                Market::create([
+
+                $market = Market::create([
                     'hash_id' => $hash_id,
                     'balance'=>'0',
                     'details_from'=>$data['address'],
@@ -66,10 +76,19 @@ class CreateUsersController extends Controller
                     'agent_id'=>$agent_id,
                     'private_key'=>$data['privateKey'],
                 ]);
+
+                $checkBalanceAgent = Http::get('http://localhost:3000/check_balance', [
+                    'ownerAddress'=>$market->details_from,
+                ]);
+                $responseBalance = $checkBalanceAgent->json();
+                $amountUpdateAgent = $responseBalance['balance'];
+                $market->balance = $amountUpdateAgent;
+                $market->save();
             }elseif($user->hasRole('client')){
-                $market_hash_id = Market::all()->random(1)->first();
-                $link = url("api/payment/{$hash_id}/{$market_hash_id->hash_id}");
-                Client::create([
+
+                $link = url("api/payment/{$hash_id}");
+                
+                $client = Client::create([
                     'hash_id' => $hash_id,
                     'balance'=>'0',
                     'details_from'=>$data['address'],
@@ -78,6 +97,14 @@ class CreateUsersController extends Controller
                     'api_link'=>$link,
                     'private_key'=>$data['privateKey'],
                 ]);
+
+                $checkBalanceAgent = Http::get('http://localhost:3000/check_balance', [
+                    'ownerAddress'=>$client->details_from,
+                ]);
+                $responseBalance = $checkBalanceAgent->json();
+                $amountUpdateAgent = $responseBalance['balance'];
+                $client->balance = $amountUpdateAgent;
+                $client->save();
             }
             
             return redirect()->back()->with('successful', 'Users has been created!');
@@ -86,6 +113,20 @@ class CreateUsersController extends Controller
         };
 
 
+    }
+
+    private function sendTRX($addressTo, $ownerAddress, $privateKey){
+        
+        // $amountInSun = 100 * '1000000';
+
+        Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post('http://localhost:3000/sendTronTRX', [
+            'addressTo' => $addressTo,
+            'amount' => '100',
+            'ownerAddress' => $ownerAddress,
+            'privateKey' => $privateKey,
+        ]);
     }
 
 }
