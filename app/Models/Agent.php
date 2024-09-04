@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agent extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
 
-    protected $fillable = [
-        'hash_id',
-        'balance',
-        'details_from',
-        'details_to',
-        'private_key',
-        'percent',
-    ];
+    protected $guarded = false;
 
     public function users(): BelongsTo
     {

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('markets', function (Blueprint $table) {
-            $table->string('status')->default('offline');
+            $table->string('status')->default('offline')->after('hash_id');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('markets', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
         });
     }
 };

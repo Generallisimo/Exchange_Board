@@ -5,20 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = [
-        'hash_id',
-        'balance',
-        'details_from',
-        'details_to',
-        'percent',
-        'private_key',
-        'api_link',
-    ];
+    protected $guarded = false;
 
     public function users(): BelongsTo
     {

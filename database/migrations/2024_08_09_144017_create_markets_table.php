@@ -29,6 +29,7 @@ return new class extends Migration
             $table->foreign('hash_id')->references('hash_id')->on('users')->onDelete('cascade');
             $table->foreign('agent_id')->references('hash_id')->on('agents')->onDelete('cascade');
 
+            $table->softDeletes();
         });
     }
 

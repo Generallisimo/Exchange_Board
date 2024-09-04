@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name_method')->unique();
             $table->string('currency')->index();
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

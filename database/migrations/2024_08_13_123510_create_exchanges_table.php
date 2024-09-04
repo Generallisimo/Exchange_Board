@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('amount');
             $table->string('result')->nullable()->default('await');
             $table->string('message')->nullable();
-            $table->string('percent_client');
-            $table->string('percent_market');
-            $table->string('percent_agent');
+            $table->string('percent_client')->nullable();
+            $table->string('percent_market')->nullable();
+            $table->string('percent_agent')->nullable();
             $table->string('details_market_payment')->nullable();
             // $table->string('details_market');
             // $table->string('details_client');

@@ -23,6 +23,7 @@ return new class extends Migration
             
             $table->foreign('hash_id')->references('hash_id')->on('users')->onDelete('cascade');
 
+            $table->softDeletes();
         });
     }
 

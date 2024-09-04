@@ -10,14 +10,8 @@ class Platform extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'hash_id',
-        'balance',
-        'details_from',
-        'private_key',
-        'details_to',
-    ];
-
+    protected $guarded = false;
+    
     public function users(): BelongsTo
     {
         return $this->belongsTo(User::class);
