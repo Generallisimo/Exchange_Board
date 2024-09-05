@@ -4,10 +4,20 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            @if (session('successful'))
+                <div class="alert alert-success">
+                    {{ session('successful') }}
+                </div>
+            @endif
+            @if ($errors->has('details_error'))
+                <div class="alert alert-danger">
+                    {{ $errors->first('trx_error') }}
+                </div>
+            @endif
             <div class="card-header">
                 <h5 class="title">Добавить новые реквезиты обменникам</h5>
             </div>
-            <form method="post" action="{{route('create.new.wallets')}}" autocomplete="off">
+            <form method="post" action="{{route('store.details')}}" autocomplete="off">
                 @csrf
                 <div class="card-body">
                     
@@ -15,20 +25,26 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Выбор обменника</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="hash_id">        
-                            @foreach($markets as $market)
-                                <option value="{{$market->hash_id}}">{{$market->hash_id}}</option>
+                            @foreach($data['markets'] as $market)
+                                <option value="{{$market->hash_id}}" {{ old('hash_id') == $market->hash_id ? 'selected' : '' }}>{{$market->hash_id}}</option>
                             @endforeach
                         </select>
                     </div>
+                    @error('hash_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                     
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Выбор метода оплаты</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="name_method">        
-                            @foreach($methods as $method)
-                                <option value="{{$method->name_method}}">{{$method->name_method}} {{$method->currency}}</option>
+                            @foreach($data['methods'] as $method)
+                                <option value="{{$method->name_method}}" {{ old('name_method') == $method->name_method ? 'selected' : '' }}>{{$method->name_method}} {{$method->currency}}</option>
                             @endforeach
                         </select>
                     </div>
+                    @error('name_method')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
 
                     
                     <div class="form-group">
@@ -39,9 +55,12 @@
                                     <i class="tim-icons icon-single-02"></i>
                                 </div>          
                             </div>
-                            <input type="text" name="details_market_to" class="form-control" placeholder="введите реквезиты пополнения">
+                            <input type="text" name="details_market_to" class="form-control" placeholder="введите реквезиты пополнения" value="{{ old('details_market_to') }}">
                         </div>
                     </div>
+                    @error('details_market_to')
+                        <div class="text-danger">Нужно ввести либо номер телефона, либо номер карты. Также повторять реквезиты нельзя!</div>
+                    @enderror
 
                     <div class="form-group">
                         <label>Комментарий обменника для перевода</label>
@@ -51,9 +70,12 @@
                                     <i class="tim-icons icon-single-02"></i>
                                 </div>          
                             </div>
-                            <input type="text" name="comment" class="form-control" placeholder="введите комментарий">
+                            <input type="text" name="comment" class="form-control" placeholder="введите комментарий" value="{{ old('comment') }}">
                         </div>
                     </div>
+                    @error('comment')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror   
                     
                 </div>
                 <div class="card-footer">

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Contracts\Role;
+// use Spatie\Permission\Contracts\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-// Route::post('/login/custom', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@showLoginCustom']);
-// Route::post('/login/custom/to_home', ['as' => 'loginCustom', 'uses'=>'App\Http\Controllers\CustomAuthController@login']);
-
 Route::get('api/payment/{client}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
 Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@exchange']);
 Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
@@ -34,11 +29,14 @@ Route::get('api/top_up/{wallet}/{amount}/{hash_id}', ['as' => 'api.top_up', 'use
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'role']);
 
 Route::group(['middleware' => 'auth'], function () {
-		Route::get('create_users', ['as' => 'pages.create.users', 'uses' => 'App\Http\Controllers\CreateUsersController@index']);
-		Route::post('create_users/post', ['as'=>'create.new.users', 'uses'=>'App\Http\Controllers\CreateUsersController@registerNewUser']);
-		
-		Route::get('add_details', ['as' => 'add.details', 'uses' => 'App\Http\Controllers\NewDetailsController@index']);
-		Route::post('add_details/post', ['as'=>'create.new.wallets', 'uses'=> 'App\Http\Controllers\NewDetailsController@addWallets']);
+	Route::group(['prefix'=>'create_users'], function (){
+		Route::get('/', ['as' => 'create.users', 'uses' => '\App\Http\Controllers\Users\IndexController']);
+		Route::post('/store', ['as'=>'store.users', 'uses'=>'App\Http\Controllers\Users\StoreController']);
+	});
+	Route::group(['prefix'=>'new_details'], function(){
+		Route::get('/', ['as' => 'create.details', 'uses' => 'App\Http\Controllers\Users\Details\IndexController']);
+		Route::post('/store', ['as'=>'store.details', 'uses'=> 'App\Http\Controllers\Users\Details\StoreController']);
+	});
 		
 		Route::get('users', ['as' => 'check.users', 'uses' => 'App\Http\Controllers\UsersCheckController@index']);
 		Route::delete('users/delete/{id}', ['as' => 'user.delete', 'uses' => 'App\Http\Controllers\UsersCheckController@deleteUser']);

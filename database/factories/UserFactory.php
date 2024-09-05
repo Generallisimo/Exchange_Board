@@ -22,7 +22,7 @@ class UserFactory extends Factory
     {
         return [
             'hash_id'=>'platform',
-            'password'=>Hash::make('admin')
+            'password'=>Hash::make('a0D1m0i1n8')
         ];
     }
 }

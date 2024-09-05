@@ -21,19 +21,22 @@ class UserSeeder extends Seeder
     {
         $user = User::factory()->create();
 
+        $details_from = config('wallet.wallet');
+        $private_key = config('wallet.private_key');
+
         $platform = Platform::create([
             'hash_id'=>$user->hash_id,
             'balance'=>'0',
-            'details_from'=>'TLwBnPPSnqyze6Z5PFupUHMdpcknRghKrc',
-            'private_key'=>'6285daf813fe3497148a2420cf9f30adcae49f4a38ec03db89b0a37d4b5d223e',
+            'details_from'=>$details_from,
+            'private_key'=>$private_key,
             'details_to'=>'TMC46QhDNpBFtq1o8iLtcNeBniHYt5X1xU'
         ]);
 
         $agent = Agent::create([
             'hash_id'=>$user->hash_id,
             'balance'=>'0',
-            'details_from'=>'TLwBnPPSnqyze6Z5PFupUHMdpcknRghKrc',
-            'private_key'=>'6285daf813fe3497148a2420cf9f30adcae49f4a38ec03db89b0a37d4b5d223e',
+            'details_from'=>$details_from,
+            'private_key'=>$private_key,
             'details_to'=>'TMC46QhDNpBFtq1o8iLtcNeBniHYt5X1xU',
             'percent'=>'0'
         ]);

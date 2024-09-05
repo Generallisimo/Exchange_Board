@@ -24,7 +24,7 @@
                     <ul class="nav pl-4">
                         @if(Auth::user()->hasRole('admin') ||  Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'create users') class="active " @endif>
-                            <a href="{{ route('pages.create.users') }}">
+                            <a href="{{ route('create.users') }}">
                                 <i class="tim-icons icon-single-02"></i>
                                 <p>{{ __('Создать пользователя') }}</p>
                             </a>
@@ -32,7 +32,7 @@
                         @endif
                         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'add details') class="active " @endif>
-                            <a href="{{ route('add.details') }}">
+                            <a href="{{ route('create.details') }}">
                                 <i class="tim-icons icon-wallet-43"></i>
                                 <p>{{ __('Добавить реквезиты') }}</p>
                             </a>
