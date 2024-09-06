@@ -5,6 +5,16 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                @if (session('successful'))
+                    <div class="alert alert-success">
+                        {{ session('successful') }}
+                    </div>
+                @endif
+                @if ($errors->has('destroy_user'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('destroy_user') }}
+                    </div>
+                @endif
                 <!-- <h5 class="title">All Users</h5> -->
                 <div class="text-right">
                     <button id="markets_but" type="button" class="btn btn-default">Обменники</button>
@@ -29,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($clients as $client)
+                    @foreach($data['clients'] as $client)
                     <tr>
                         <td>{{$client->hash_id}}</td>
                         <td>{{$client->percent}} %</td>
@@ -39,13 +49,13 @@
                         <td>{{$client->balance}}</td>
                         <td>{{$client->api_link}}</td>
                         <td class="td-actions text-right">
-                            <form method="GET" action="{{ route('user.update.check', $client->hash_id) }}">
+                            <form method="GET" action="{{ route('table.user.edit', ['hash_id'=>$client->hash_id]) }}">
                                 @csrf
                                 <button type="submit" rel="tooltip" class="btn btn-success btn-sm btn-icon">
                                     <i class="tim-icons icon-settings"></i>
                                 </button>
                             </form>
-                            <form method="POST" action="{{ route('user.delete', $client->hash_id) }}">
+                            <form method="POST" action="{{ route('table.user.destroy', ['hash_id'=>$client->hash_id]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
@@ -70,7 +80,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($agents as $agent)
+                    @foreach($data['agents'] as $agent)
                     <tr>
                         <td>{{$agent->hash_id}}</td>
                         <td>{{$agent->percent}} %</td>
@@ -79,13 +89,13 @@
                         <td>{{$agent->details_to}}</td>
                         <td>{{$agent->balance}}</td>
                         <td class="td-actions text-right">
-                            <form method="GET" action="{{ route('user.update.check', $agent->hash_id) }}">
+                            <form method="GET" action="{{ route('table.user.edit', ['hash_id'=>$agent->hash_id]) }}">
                                 @csrf
                                 <button type="submit" rel="tooltip" class="btn btn-success btn-sm btn-icon">
                                     <i class="tim-icons icon-settings"></i>
                                 </button>
                             </form>
-                            <form method="POST" action="{{ route('user.delete', $agent->hash_id) }}">
+                            <form method="POST" action="{{ route('table.user.destroy', ['hash_id'=>$agent->hash_id]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
@@ -112,7 +122,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($markets as $market)
+                    @foreach($data['markets'] as $market)
                     <tr>
                         <td>{{$market->hash_id}}</td>
                         <td>{{$market->status}}</td>
@@ -122,7 +132,7 @@
                         <td>{{$market->details_to}}</td>
                         <td>{{$market->balance}}</td>
                         <td class="td-actions text-right">
-                            <form method="GET" action="{{route('user.update.check.details', $market->hash_id)}}">
+                            <form method="GET" action="{{route('table.user.market.show', ['hash_id'=>$market->hash_id])}}">
                                 @csrf
                                 <button type="submit" rel="tooltip" class="btn btn-info btn-sm btn-icon">
                                     <i class="tim-icons icon-single-02"></i>
@@ -130,13 +140,13 @@
                             </form>
                         </td>
                         <td class="td-actions text-right">
-                            <form method="GET" action="{{ route('user.update.check', $market->hash_id) }}">
+                            <form method="GET" action="{{ route('table.user.edit',['hash_id'=>$market->hash_id]) }}">
                                 @csrf
                                 <button type="submit" rel="tooltip" class="btn btn-success btn-sm btn-icon">
                                     <i class="tim-icons icon-settings"></i>
                                 </button>
                             </form>
-                            <form method="POST" action="{{ route('user.delete', $market->hash_id) }}">
+                            <form method="POST" action="{{ route('table.user.destroy', ['hash_id'=>$market->hash_id]) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
@@ -155,56 +165,5 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-        // if (typeof Echo !== 'undefined') {
-        //     Echo.channel('board-change')
-        //         .listen('.board-change', res => {
-        //             console.log(res.users )
-        //             console.log(res.isOnline )
-        //             const userElement = document.getElementById(`market-${res.users.hash_id}`);
-        //             // Теперь используйте правильную структуру данных
-        //             console.log(userElement )
-        //             if (userElement) {
-        //                 console.log(`Before update: ${userElement.innerText}`); // Лог перед обновлением
-        //                 userElement.innerText = res.isOnline ? 'Online' : 'Offline';
-        //                 console.log(`After update: ${userElement.innerText}`);
-        //             } else {
-        //                 console.error(`Element with ID market-${res.users.hash_id} not found.`);
-        //             }
-        //         })
-        // } else {
-        //     console.error('Echo is not defined');
-        // }
-        
-        
-        // Остальной код для переключения таблиц
-        const clients = document.getElementById('clients');
-        const agents = document.getElementById('agents');
-        const markets = document.getElementById('markets');
-        const clientsBut = document.getElementById('clients_but');
-        const agentsBut = document.getElementById('agents_but');
-        const marketsBut = document.getElementById('markets_but');
-
-        clientsBut.addEventListener('click', function(){
-            clients.style.display = 'table';
-            markets.style.display = 'none';
-            agents.style.display = 'none';
-        });
-
-        agentsBut.addEventListener('click', function(){
-            clients.style.display = 'none';
-            markets.style.display = 'none';
-            agents.style.display = 'table';
-        });
-
-        marketsBut.addEventListener('click', function(){
-            clients.style.display = 'none';
-            markets.style.display = 'table';
-            agents.style.display = 'none';
-        });
-
-    });
-</script>
+<script src="{{ asset('js') }}/users/SelectTableIndex.js"></script>
 @endsection

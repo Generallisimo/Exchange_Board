@@ -11,7 +11,7 @@
             @endif
             @if ($errors->has('details_error'))
                 <div class="alert alert-danger">
-                    {{ $errors->first('trx_error') }}
+                    {{ $errors->first('details_error') }}
                 </div>
             @endif
             <div class="card-header">
@@ -52,7 +52,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                    <i class="tim-icons icon-single-02"></i>
+                                    <i class="tim-icons icon-wallet-43"></i>
                                 </div>          
                             </div>
                             <input type="text" name="details_market_to" class="form-control" placeholder="введите реквезиты пополнения" value="{{ old('details_market_to') }}">
@@ -67,7 +67,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                    <i class="tim-icons icon-single-02"></i>
+                                    <i class="tim-icons icon-pencil"></i>
                                 </div>          
                             </div>
                             <input type="text" name="comment" class="form-control" placeholder="введите комментарий" value="{{ old('comment') }}">

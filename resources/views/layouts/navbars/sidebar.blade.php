@@ -40,7 +40,7 @@
                         @endif
                         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent'))
                         <li @if ($pageSlug == 'all users') class="active " @endif>
-                            <a href="{{ route('check.users') }}">
+                            <a href="{{ route('table.users.index') }}">
                                 <i class="tim-icons icon-notes"></i>
                                 <p>{{ __('Все пользователи') }}</p>
                             </a>

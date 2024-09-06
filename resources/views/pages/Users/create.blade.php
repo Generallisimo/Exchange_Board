@@ -42,7 +42,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <i class="tim-icons icon-single-02"></i>
+                                    <i class="tim-icons icon-lock-circle"></i>
                                 </div>
                             </div>
                             <input type="text" name="password" class="form-control" placeholder="введите пароль" value="{{ old('password') }}" required>
@@ -76,7 +76,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
+                                        <i class="tim-icons icon-wallet-43"></i>
                                     </div>
                                 </div>
                                 <input type="text" name="details_to" class="form-control" placeholder="Введите реквизиты получения, начинающтеся на T..." value="{{ old('details_to') }}" required>
@@ -91,7 +91,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
-                                        <i class="tim-icons icon-single-02"></i>
+                                        <i class="tim-icons icon-bank"></i>
                                     </div>
                                 </div>
                                 <input type="text" name="percent" class="form-control" placeholder="Введите процент для пользователя" value="{{ old('percent') }}" required>

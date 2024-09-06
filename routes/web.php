@@ -33,20 +33,30 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', ['as' => 'create.users', 'uses' => '\App\Http\Controllers\Users\IndexController']);
 		Route::post('/store', ['as'=>'store.users', 'uses'=>'App\Http\Controllers\Users\StoreController']);
 	});
+	
 	Route::group(['prefix'=>'new_details'], function(){
 		Route::get('/', ['as' => 'create.details', 'uses' => 'App\Http\Controllers\Users\Details\IndexController']);
 		Route::post('/store', ['as'=>'store.details', 'uses'=> 'App\Http\Controllers\Users\Details\StoreController']);
 	});
+	
+	Route::group(['prefix'=>'users'], function(){
+		Route::get('/', ['as' => 'table.users.index', 'uses' => 'App\Http\Controllers\Users\Table\IndexController']);
+		Route::delete('/delete/{hash_id}', ['as' => 'table.user.destroy', 'uses' => 'App\Http\Controllers\Users\Table\DestroyController']);
+		Route::get('/edit/{hash_id}', ['as' => 'table.user.edit', 'uses' => 'App\Http\Controllers\Users\Table\EditController']);
+		Route::put('/update/{hash_id}', ['as' => 'table.user.update', 'uses' => 'App\Http\Controllers\Users\Table\UpdateController']);
 		
-		Route::get('users', ['as' => 'check.users', 'uses' => 'App\Http\Controllers\UsersCheckController@index']);
-		Route::delete('users/delete/{id}', ['as' => 'user.delete', 'uses' => 'App\Http\Controllers\UsersCheckController@deleteUser']);
-		Route::get('users/update/{id}', ['as' => 'user.update.check', 'uses' => 'App\Http\Controllers\UsersCheckController@update']);
-		Route::put('users/update/change{id}', ['as' => 'user.update.change', 'uses' => 'App\Http\Controllers\UsersCheckController@updateUser']);
-		Route::put('users/update/change{id}/status', ['as' => 'user.update.change.status', 'uses' => 'App\Http\Controllers\UsersCheckController@updateUserStatus']);
-		Route::get('users/update/change_details/view{id}', ['as' => 'user.update.check.details', 'uses' => 'App\Http\Controllers\UsersCheckController@walletMarket']);
-		Route::get('users/update/change_details/view/change{id}', ['as' => 'user.update.check.details.view', 'uses' => 'App\Http\Controllers\UsersCheckController@wallet']);
-		Route::put('users/update/change_details/view/update{id}', ['as' => 'user.update.change.details', 'uses' => 'App\Http\Controllers\UsersCheckController@changeWalletMarkets']);
-		Route::put('users/update/change_details/view/status', ['as'=>'change.status.wallet', 'uses'=> 'App\Http\Controllers\UsersCheckController@changeStatus']);
+		Route::group(['prefix'=>'market'], function(){
+			Route::get('/{hash_id}', ['as' => 'table.user.market.show', 'uses' => 'App\Http\Controllers\Users\Table\Market\ShowController']);
+			Route::put('/status/update/{hash_id}', ['as' => 'table.user.market.update', 'uses' => 'App\Http\Controllers\Users\Table\Market\UpdateController']);
+			
+			Route::group(['prefix'=>'wallet'], function(){
+				Route::get('/edit/{id}', ['as' => 'table.user.market.edit', 'uses' => 'App\Http\Controllers\Users\Table\Market\EditController']);
+				Route::put('/update', ['as' => 'table.user.market.wallet.update', 'uses' => 'App\Http\Controllers\Users\Table\Market\Wallet\UpdateController']);
+				Route::put('/update/status/{id}', ['as'=>'table.user.market.wallet.status.update', 'uses'=> 'App\Http\Controllers\Users\Table\Market\Wallet\UpdateStatusController']);
+			});
+		});
+	});
+	
 		
 		Route::get('withdrawal', ['as' => 'withdrawal', 'uses' => 'App\Http\Controllers\WithdrawalController@index']);
 		Route::post('withdrawal/check', ['as' => 'withdrawal.check', 'uses' => 'App\Http\Controllers\WithdrawalController@withdrawal']);
