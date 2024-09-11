@@ -12,7 +12,7 @@ class MethodPayments extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = false;
+    protected $guarded = [];
 
     public function market_details():BelongsTo
     {

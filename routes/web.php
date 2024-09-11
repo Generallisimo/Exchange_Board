@@ -18,28 +18,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('api/payment/{client}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
-Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@exchange']);
-Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
-Route::get('api/payment/{exchange}', ['as' => 'exchange.status', 'uses' => 'App\Http\Controllers\ExchangeController@checkStatus']);
-
-Route::get('api/top_up/{wallet}/{amount}/{hash_id}', ['as' => 'api.top_up', 'uses' => 'App\Http\Controllers\TopUpController@checkTopUp']);
-
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'role']);
+//exchange
+// Route::get('api/payment/{client}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
+// Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@exchange']);
+// Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
+// Route::get('api/payment/{exchange}', ['as' => 'exchange.status', 'uses' => 'App\Http\Controllers\ExchangeController@checkStatus']);
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::group(['prefix'=>'create_users'], function (){
-		Route::get('/', ['as' => 'create.users', 'uses' => '\App\Http\Controllers\Users\IndexController']);
-		Route::post('/store', ['as'=>'store.users', 'uses'=>'App\Http\Controllers\Users\StoreController']);
-	});
-	
-	Route::group(['prefix'=>'new_details'], function(){
-		Route::get('/', ['as' => 'create.details', 'uses' => 'App\Http\Controllers\Users\Details\IndexController']);
+	Route::get('/home',['as'=>'home', 'uses'=> 'App\Http\Controllers\HomeController@index']);
+
+	Route::group(['prefix'=>'market_details'], function(){
+		Route::get('/create', ['as' => 'create.details', 'uses' => 'App\Http\Controllers\Users\Details\IndexController']);
 		Route::post('/store', ['as'=>'store.details', 'uses'=> 'App\Http\Controllers\Users\Details\StoreController']);
 	});
 	
 	Route::group(['prefix'=>'users'], function(){
+		Route::get('/create', ['as' => 'create.users', 'uses' => '\App\Http\Controllers\Users\IndexController']);
+		Route::post('/store', ['as'=>'store.users', 'uses'=>'App\Http\Controllers\Users\StoreController']);
+
 		Route::get('/', ['as' => 'table.users.index', 'uses' => 'App\Http\Controllers\Users\Table\IndexController']);
 		Route::delete('/delete/{hash_id}', ['as' => 'table.user.destroy', 'uses' => 'App\Http\Controllers\Users\Table\DestroyController']);
 		Route::get('/edit/{hash_id}', ['as' => 'table.user.edit', 'uses' => 'App\Http\Controllers\Users\Table\EditController']);
@@ -57,28 +53,23 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	
-		
-		Route::get('withdrawal', ['as' => 'withdrawal', 'uses' => 'App\Http\Controllers\WithdrawalController@index']);
-		Route::post('withdrawal/check', ['as' => 'withdrawal.check', 'uses' => 'App\Http\Controllers\WithdrawalController@withdrawal']);
-		
-		Route::get('top_up', ['as' => 'top_up', 'uses' => 'App\Http\Controllers\TopUpController@index']);
-		Route::post('top_up/check', ['as' => 'top_up.check', 'uses' => 'App\Http\Controllers\TopUpController@topUp']);
-		
+	Route::group(['prefix'=>'transactions'], function(){
+		Route::get('/', ['as' => 'transaction.index', 'uses' => 'App\Http\Controllers\Transactions\IndexController']);
+		Route::put('/{exchange_id}/{status}/{message}', ['as' => 'transaction.update', 'uses' => 'App\Http\Controllers\Transactions\UpdateController']);
+	});
 
-		Route::get('market_board', ['as' => 'market.board', 'uses' => 'App\Http\Controllers\MarketBoardController@index']);
-		Route::put('market_board/{exchange}', ['as' => 'market.success', 'uses' => 'App\Http\Controllers\MarketBoardController@success']);
-		Route::put('market_board/archive/{exchange}', ['as' => 'market.archive', 'uses' => 'App\Http\Controllers\MarketBoardController@archive']);
-		Route::put('market_board/dispute/{exchange}', ['as' => 'market.dispute', 'uses' => 'App\Http\Controllers\MarketBoardController@dispute']);
-		
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
-		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);
-});
+	Route::group(['prefix'=>'withdrawal'], function(){
+		Route::get('/', ['as' => 'withdrawal.index', 'uses' => 'App\Http\Controllers\Withdrawal\IndexController']);
+		Route::post('/update', ['as' => 'withdrawal.update', 'uses' => 'App\Http\Controllers\Withdrawal\UpdateController']);
+	});
 
-Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::group(['prefix'=>'top_up'], function(){
+		Route::get('/', ['as' => 'top_up.index', 'uses' => 'App\Http\Controllers\TopUp\IndexController']);
+		Route::post('/show', ['as' => 'top_up.show', 'uses' => 'App\Http\Controllers\TopUp\ShowController']);
+		// Route::post('/update', ['as' => 'top_up.update', 'uses' => 'App\Http\Controllers\Withdrawal\UpdateController']);
+	});
+		
+	Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);		
 });
 
 Auth::routes();

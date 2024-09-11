@@ -25,12 +25,13 @@ class TableServices
     }
 
     public function edit($hash_id){
-
         $userRole = User::where('hash_id', $hash_id)->first();
+        // dd($userRole);
 
         if($userRole->hasRole('client')){
             $user = Client::where('hash_id', $hash_id)->first();
-        }elseif ($userRole->hasRole('agent')){
+        }elseif ($userRole->hasRole('agent') || $userRole->hasRole('admin')){
+             //add validate for admin user
             $user = Agent::where('hash_id', $hash_id)->first();
         }elseif($userRole->hasRole('market')){
             $user = Market::where('hash_id', $hash_id)->first();
@@ -52,7 +53,8 @@ class TableServices
                 'private_key'=> $data_request['private_key'],
             ]);
 
-        }elseif($role->hasRole('agent')){
+            //add validate for admin user
+        }elseif($role->hasRole('agent') || $role->hasRole('admin')){
             
             Agent::where('hash_id', $hash_id)->update([
                 'details_from'=> $data_request['details_from'],

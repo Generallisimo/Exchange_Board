@@ -15,9 +15,8 @@ class SendTRX
         $this->addressTo = $addressTo;
         $this->ownerAddress = config('wallet.wallet');
         $this->privateKey = config('wallet.private_key');
-
-        // $this->sendTRX($addressTo, $this->ownerAddress, $this->privateKey);
     }
+    
     public function sendTRX(){
 
         $response = Http::withHeaders([

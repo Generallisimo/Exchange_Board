@@ -20,9 +20,9 @@ class Market extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function agents(): HasMany
+    public function agents(): BelongsTo
     {
-        return $this->hasMany(Agent::class);
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
 
     public function marketDetails():HasMany

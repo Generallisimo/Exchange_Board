@@ -2,15 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Components\checkBalance\CheckBalanceAgent;
-use App\Components\checkBalance\CheckBalancePlatform;
-use App\Components\CheckBalanceUsers;
+use App\Components\checkBalance\CheckBalance;
 use App\Models\Agent;
 use App\Models\Platform;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -41,8 +37,8 @@ class UserSeeder extends Seeder
             'percent'=>'0'
         ]);
 
-        new CheckBalancePlatform($platform);
-        new CheckBalanceAgent($agent);                
+        new CheckBalance($platform);
+        new CheckBalance($agent);                
 
     }
 }

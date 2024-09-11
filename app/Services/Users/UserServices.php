@@ -3,9 +3,7 @@
 
 namespace App\Services\Users;
 
-use App\Components\checkBalance\CheckBalanceAgent;
-use App\Components\checkBalance\CheckBalanceClient;
-use App\Components\checkBalance\CheckBalanceMarket;
+use App\Components\checkBalance\CheckBalance;
 use App\Components\GenerateWallet\GenerateWallet;
 use App\Components\SendToUserTRX\SendTRX;
 use App\Http\Requests\Users\StoreUsersRequest;
@@ -95,7 +93,7 @@ class UserServices
             'private_key'=>$private_key,
         ]);
 
-        new CheckBalanceAgent($agent);
+        new CheckBalance($agent);
     }
 
     
@@ -110,7 +108,7 @@ class UserServices
             'private_key'=>$private_key,
         ]);
 
-        new CheckBalanceMarket($market);
+        new CheckBalance($market);
     }
 
     
@@ -128,7 +126,7 @@ class UserServices
             'private_key'=>$private_key,
         ]);
 
-        new CheckBalanceClient($client);
+        new CheckBalance($client);
     }
 
 }

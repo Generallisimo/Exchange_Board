@@ -19,8 +19,8 @@ class MethodPaymentsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name_method'=>'default',
-            'currency'=>'default'
+            'name_method' => $this->faker->word,
+            'currency' => $this->faker->word,
         ];
     }
 }

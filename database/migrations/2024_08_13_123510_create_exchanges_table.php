@@ -19,15 +19,21 @@ return new class extends Migration
             $table->string('client_id');
             $table->string('market_id');
             $table->string('amount');
+            $table->string('amount_users')->nullable();
             $table->string('result')->nullable()->default('await');
             $table->string('message')->nullable();
             $table->string('percent_client')->nullable();
+            $table->string('amount_client')->nullable();
             $table->string('percent_market')->nullable();
+            $table->string('amount_market')->nullable();
             $table->string('percent_agent')->nullable();
+            $table->string('amount_agent')->nullable();
             $table->string('details_market_payment')->nullable();
+
             // $table->string('details_market');
             // $table->string('details_client');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
