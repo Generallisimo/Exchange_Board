@@ -20,14 +20,21 @@ class ExchangeServices
     public function index($client_id, $amount, $currency){
         $exchange_id = Str::uuid();
 
-        //add validate for online
         $market = Market::where('status', 'online')->inRandomOrder()->first();
+
+        if($market === null){
+            return [
+                'success'=>false
+            ];
+        }
+
         $market_id=$market->hash_id;
          
         $market_method = AddMarketDetails::where('hash_id', $market->hash_id)->where('currency', $currency)->get();
         $unique_method = $market_method->unique('name_method');
-
+        
         return [
+            'success'=>true,
             'client_id'=>$client_id,
             'market_id'=>$market_id,
             'amount'=>$amount,
@@ -35,6 +42,7 @@ class ExchangeServices
             'currency'=>$currency,
             'unique_method'=>$unique_method,
         ];
+        
     
     }
 
@@ -44,12 +52,17 @@ class ExchangeServices
 
         $market = Market::where('hash_id', $market_id)->first();
 
-        //add validate on online status
         $wallet = AddMarketDetails::where('name_method', $data['method'])
             ->where('hash_id', $market->hash_id)
             ->where('online', 'online')
             ->inRandomOrder()
             ->first();
+
+        if($wallet === null){
+            return [
+                'success'=>false
+            ];
+        }
 
         $agent = Agent::where('hash_id', $market->agent_id)->first();
 
@@ -128,7 +141,7 @@ class ExchangeServices
 
     public function update($exchange){
         $response = Exchange::where('exchange_id', $exchange)->first();
-        UpdateExchangeJob::dispatch($exchange);
+
         return ['message'=>$response->result];
     }
 }

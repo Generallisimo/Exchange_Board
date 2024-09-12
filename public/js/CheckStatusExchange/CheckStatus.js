@@ -9,12 +9,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 if(data.status === 'success'){
                     status.innerText = 'Платеж успешно обработан';
                     // clearInterval(requestFetch);
+                }else if(data.status === 'to_success'){
+                    status.innerText = 'Платеж успешно обработан';
                 }else if(data.status === 'archive'){
                     status.innerText = 'Ошибка, обратитесь в тех поддержку';
                 }else if(data.status === 'await'){
                     status.innerText = 'Платеж обрабатывается';
                 }else if(data.status === 'error'){
-                    status.innerText = 'Обратитесь в поддержку, ошибка на стороне сервера';
+                    status.innerText = 'Платеж успешно обработан';
                 }else if(data.status === 'dispute'){
                     status.innerText = 'Обратитесь в поддержку, произошла ошибка при переводе';
                 }

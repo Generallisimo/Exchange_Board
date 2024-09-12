@@ -2,6 +2,11 @@
 
 namespace App\Services\Transactions;
 
+use App\Jobs\Exchange\AgentJob;
+use App\Jobs\Exchange\ClientJob;
+use App\Jobs\Exchange\PlatformJob;
+use App\Jobs\Exchange\UpdateJob;
+use App\Jobs\UpdateExchangeJob;
 use App\Models\Exchange;
 
 class TransactionServices
@@ -13,12 +18,15 @@ class TransactionServices
         $exchangesSuccess = Exchange::where('result', 'success')->get();
         $exchangesArchive = Exchange::where('result', 'archive')->get();
         $exchangesDispute = Exchange::where('result', 'dispute')->get();
+        $exchangesError = Exchange::where('result', 'error')->get();
+        // dd($exchanges);
 
         return [
             'exchanges'=>$exchanges,
             'exchangesSuccess'=>$exchangesSuccess,
             'exchangesArchive'=>$exchangesArchive, 
-            'exchangesDispute'=>$exchangesDispute
+            'exchangesDispute'=>$exchangesDispute,
+            'exchangesError'=>$exchangesError
         ];
     }
 
@@ -28,6 +36,8 @@ class TransactionServices
             'result'=>$status,
             'message'=>$message
         ]);
+
+        UpdateJob::dispatch($exchange);
 
         return $result ? true : "Ошибка обратитесь в поддержку"; 
 

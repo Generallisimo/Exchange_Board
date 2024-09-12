@@ -13,7 +13,10 @@ class IndexController extends BaseController
     public function __invoke($client_id, $amount, $currency)
     {
         $data = $this->service->index($client_id, $amount, $currency);
-        
-        return view('pages.exchanges.index', compact('data'));
+        if($data['success']){
+            return view('pages.exchanges.index', compact('data'));
+        }else{
+            return view('pages.exchanges.error.error_market');
+        }
     }
 }

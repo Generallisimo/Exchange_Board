@@ -19,7 +19,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class UpdateExchangeJob implements ShouldQueue
+class UpdateJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -152,4 +152,4 @@ class UpdateExchangeJob implements ShouldQueue
             'status'=>$status
         ]);
     }
-}                   
+}
