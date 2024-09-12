@@ -18,11 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//exchange
-// Route::get('api/payment/{client}/{amount}', ['as' => 'exchange', 'uses' => 'App\Http\Controllers\ExchangeController@index']);
-// Route::put('api/payment/{client}/{market}/{amount}/{exchange_id}', ['as' => 'exchange.confirm', 'uses' => 'App\Http\Controllers\ExchangeController@exchange']);
-// Route::put('api/payment/', ['as' => 'exchange.success', 'uses' => 'App\Http\Controllers\ExchangeController@transaction']);
-// Route::get('api/payment/{exchange}', ['as' => 'exchange.status', 'uses' => 'App\Http\Controllers\ExchangeController@checkStatus']);
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/home',['as'=>'home', 'uses'=> 'App\Http\Controllers\HomeController@index']);
@@ -73,3 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+Route::group(['prefix'=>'support'], function(){
+	Route::get('/', ['as'=>'support.index', 'uses'=>'App\Http\Controllers\Support\IndexController']);
+	Route::post('/store', ['as'=>'support.store', 'uses'=>'App\Http\Controllers\Support\StoreController']);
+});
