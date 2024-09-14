@@ -35,6 +35,7 @@
                         <th>Реквезиты вывода</th>
                         <th>Баланс</th>
                         <th>API ключ</th>
+                        <th>API ссылка</th>
                         <th class="text-right">Действие</th>
                     </tr>
                 </thead>
@@ -47,6 +48,7 @@
                         <td>{{$client->private_key}}</td>
                         <td>{{$client->details_to}}</td>
                         <td>{{$client->balance}}</td>
+                        <td>{{$client->api_key}}</td>
                         <td>{{$client->api_link}}</td>
                         <td class="td-actions text-right">
                             <form method="GET" action="{{ route('table.user.edit', ['hash_id'=>$client->hash_id]) }}">

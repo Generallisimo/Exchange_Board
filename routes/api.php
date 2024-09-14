@@ -26,3 +26,11 @@ Route::group(['prefix'=>'payment', 'middleware' => ['web']], function(){
     Route::put('/{exchange_id}', ['as' => 'payment.store', 'uses' => 'App\Http\Controllers\Exchanges\StoreController']);
     Route::get('/update/{exchange}', ['as' => 'exchange.update', 'uses' => 'App\Http\Controllers\Exchanges\UpdateController']);
 });
+
+Route::group(['prefix'=>'support'], function(){
+    Route::post('/store', ['as'=>'support.store', 'uses'=>'App\Http\Controllers\Support\StoreController']);
+});
+
+Route::group(['prefix'=>'key'], function(){
+    Route::get('/{currency}/{amount}/{api_key}', ['as'=>'api_key.store', 'uses'=>'App\Http\Controllers\ApiExchange\StoreController']);
+});

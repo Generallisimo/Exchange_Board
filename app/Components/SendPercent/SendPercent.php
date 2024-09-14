@@ -51,7 +51,7 @@ class SendPercent
             return [
                 'success'=>true,
                 'message'=>'successful transaction',
-                'transaction'=>$result['success'],
+                'transaction'=>$send['message'],
                 'owner'=>$this->details_from,
                 'address_to'=>$this->details_to,
                 'amount'=>$this->amount
@@ -60,7 +60,7 @@ class SendPercent
             return [
                 'success'=>false,
                 'message'=>'error with transaction',
-                'transaction'=>$result['success'],
+                'transaction'=>$send['message'],
                 'owner'=>$this->details_from,
                 'address_to'=>$this->details_to,
                 'amount'=>$this->amount

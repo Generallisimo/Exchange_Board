@@ -32,7 +32,7 @@ class SendMessage implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('message'),
+                new  Channel('chat_' . $this->message->chat_id),
         ];
     }
 

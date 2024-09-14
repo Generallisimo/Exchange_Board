@@ -27,60 +27,70 @@ class UserServices
     }
 
     public function store(array $data_request){
-        $response = new GenerateWallet();
-        $generate_data = $response->createWallet();
 
-        
-        if ($generate_data->successful()){
-            $data = $generate_data->json();
+        if($data_request['role'] === 'support'){
+            $user = User::create([
+                'hash_id'=>$data_request['hash_id'],
+                'password'=>$data_request['password']
+            ]);
+            $user->assignRole($data_request['role']);
 
-            $sendTRX = new SendTRX($data['address']);
-            $resultTrx = $sendTRX->sendTRX();
+            return true;
+        }else{
 
-            if($resultTrx === true){
-                
-                $user = User::create([
-                    'hash_id'=>$data_request['hash_id'],
-                    'password'=>$data_request['password']
-                ]);
-        
-                $user->assignRole($data_request['role']);
+            $response = new GenerateWallet();
+            $generate_data = $response->createWallet();
+    
+            
+            if ($generate_data->successful()){
+                $data = $generate_data->json();
+    
+                $sendTRX = new SendTRX($data['address']);
+                $resultTrx = $sendTRX->sendTRX();
+    
+                if($resultTrx === true){
+                    
+                    $user = User::create([
+                        'hash_id'=>$data_request['hash_id'],
+                        'password'=>$data_request['password']
+                    ]);
+            
+                    $user->assignRole($data_request['role']);
+    
+                    if($user->hasRole('agent')){
+                        $this->createAgent(
+                            $data_request['hash_id'], 
+                            $data['address'], 
+                            $data_request['details_to'], 
+                            $data_request['percent'],
+                            $data['privateKey']    
+                        );
+                    }elseif($user->hasRole('market')){
+                        $this->createMarket(
+                            $data_request['hash_id'], 
+                            $data['address'], 
+                            $data_request['details_to'], 
+                            $data_request['percent'],
+                            $data_request['agent_id'],
+                            $data['privateKey']    
+                        );
+                    }elseif($user->hasRole('client')){
+                        $this->createClient(
+                            $data_request['hash_id'], 
+                            $data['address'], 
+                            $data_request['details_to'], 
+                            $data_request['percent'],
+                            $data['privateKey']    
+                        );
+                    };
+    
+                    return true;
+                }else{
+                    return 'Ошибка при отправке TRX: ';
+                }
 
-                if($user->hasRole('agent')){
-                    $this->createAgent(
-                        $data_request['hash_id'], 
-                        $data['address'], 
-                        $data_request['details_to'], 
-                        $data_request['percent'],
-                        $data['privateKey']    
-                    );
-                }elseif($user->hasRole('market')){
-                    $this->createMarket(
-                        $data_request['hash_id'], 
-                        $data['address'], 
-                        $data_request['details_to'], 
-                        $data_request['percent'],
-                        $data_request['agent_id'],
-                        $data['privateKey']    
-                    );
-                }elseif($user->hasRole('client')){
-                    $this->createClient(
-                        $data_request['hash_id'], 
-                        $data['address'], 
-                        $data_request['details_to'], 
-                        $data_request['percent'],
-                        $data['privateKey']    
-                    );
-                };
-
-                return true;
-            }else{
-                return 'Ошибка при отправке TRX: ';
             }
-        }
-            
-            
-        
+        }        
     }
 
     protected function createAgent($hash_id, $details_from, $details_to, $percent, $private_key){
@@ -115,6 +125,7 @@ class UserServices
     protected function createClient($hash_id, $details_from, $details_to, $percent, $private_key){
         
         $link = url("api/payment/{$hash_id}");
+        $api_key = Str::random(15);
 
         $client = Client::create([
             'hash_id' => $hash_id,
@@ -123,6 +134,7 @@ class UserServices
             'details_to'=>$details_to,
             'percent'=>$percent,
             'api_link'=>$link,
+            'api_key'=>$api_key,
             'private_key'=>$private_key,
         ]);
 

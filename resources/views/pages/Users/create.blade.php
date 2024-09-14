@@ -79,7 +79,7 @@
                                         <i class="tim-icons icon-wallet-43"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="details_to" class="form-control" placeholder="Введите реквизиты получения, начинающтеся на T..." value="{{ old('details_to') }}" required>
+                                <input type="text" name="details_to" class="form-control" placeholder="Введите реквизиты получения, начинающтеся на T..." value="{{ old('details_to') }}" >
                             </div>
                         </div>
                         @error('details_to')
@@ -94,7 +94,7 @@
                                         <i class="tim-icons icon-bank"></i>
                                     </div>
                                 </div>
-                                <input type="text" name="percent" class="form-control" placeholder="Введите процент для пользователя" value="{{ old('percent') }}" required>
+                                <input type="text" name="percent" class="form-control" placeholder="Введите процент для пользователя" value="{{ old('percent') }}" >
                             </div>
                         </div>
                         @error('percent')

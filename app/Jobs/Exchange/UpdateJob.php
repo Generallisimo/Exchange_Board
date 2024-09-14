@@ -24,7 +24,7 @@ class UpdateJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $exchange;
-    public $timeout = 620;
+    public $timeout = 310;
     public $tries = 1;
 
     public function __construct($exchange)

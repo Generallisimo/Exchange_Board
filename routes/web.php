@@ -68,7 +68,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
-Route::group(['prefix'=>'support'], function(){
+
+Route::group(['prefix'=>'support', 'middleware' => ['guest']], function(){
 	Route::get('/', ['as'=>'support.index', 'uses'=>'App\Http\Controllers\Support\IndexController']);
-	Route::post('/store', ['as'=>'support.store', 'uses'=>'App\Http\Controllers\Support\StoreController']);
+	Route::get('/show/{chat_id}', ['as'=>'support.show', 'uses'=>'App\Http\Controllers\Support\ShowController']);
 });
+
+
+
+// a0D1m0i1n8

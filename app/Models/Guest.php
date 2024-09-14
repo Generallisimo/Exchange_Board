@@ -7,18 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Message extends Model
+class Guest extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $guarded = false;
 
-    public function chats(): BelongsTo
-    {
-        return $this->belongsTo(Chat::class);
-    }
-    
-    public function users():BelongsTo
+    public function users(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
