@@ -28,4 +28,10 @@ class WalletServices
             ]);
         }
     }
+
+    public function deleteFake($id){
+        AddMarketDetails::where('id', $id)->update([
+            'online'=>'deleted'
+        ]);
+    }
 }

@@ -35,7 +35,10 @@ class CheckBalance{
                 $this->user->save(); 
             }
             // add validate error
-            return ['success'=> true];
+            return [
+                'success'=> true,
+                'balance'=> $amountUpdate
+            ];
            
         }catch(Exception $e){
             return [

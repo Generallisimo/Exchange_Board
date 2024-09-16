@@ -4,6 +4,7 @@
 namespace App\Components\WithdrawalTRON;
 
 use App\Components\checkBalance\CheckBalance;
+use App\Components\SendToUserTRON\SendTRON;
 use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
@@ -63,6 +64,14 @@ class WithdrawalTRON
                 $hash_id_find = User::where('hash_id', $hash_id)->first();
     
                 if($response->successful()){
+                     
+                    (new SendTRON(
+                        '5',
+                        config('wallet.wallet'),
+                        $hash_id_find->details_from,
+                        $hash_id_find->private_key
+                    ))->send();
+
                     $this->user($hash_id_find);
                     return ['success'=>true];
                 }elseif($response->failed()){

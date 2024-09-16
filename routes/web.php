@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(['prefix'=>'market'], function(){
 			Route::get('/{hash_id}', ['as' => 'table.user.market.show', 'uses' => 'App\Http\Controllers\Users\Table\Market\ShowController']);
 			Route::put('/status/update/{hash_id}', ['as' => 'table.user.market.update', 'uses' => 'App\Http\Controllers\Users\Table\Market\UpdateController']);
+			Route::put('/delete/{id}', ['as' => 'table.user.market.delete', 'uses' => 'App\Http\Controllers\Users\Table\Market\Wallet\DeleteController']);
 			
 			Route::group(['prefix'=>'wallet'], function(){
 				Route::get('/edit/{id}', ['as' => 'table.user.market.edit', 'uses' => 'App\Http\Controllers\Users\Table\Market\EditController']);

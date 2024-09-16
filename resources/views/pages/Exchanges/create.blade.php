@@ -74,11 +74,11 @@
                         
                     <div class="form-group">
                         <label for="photo">Загрузить фото подтверждения</label>
-                        <input type="file" class="form-control" name="photo">
+                        <input type="file" class="form-control" name="photo" id="photoInput">
                     </div>
-                    @error('photo')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <div class="form-group">
+                        <img id="photoPreview" src="#" alt="Preview" style="display: none; max-width: 200px;">
+                    </div>
 
                         <div class="card-footer text-center">
                             <button type="submit" class="btn btn-fill btn-primary">Оплатил</button>
@@ -90,4 +90,26 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('photoInput').addEventListener('change', function(event) {
+        var input = event.target;
+        var file = input.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                var preview = document.getElementById('photoPreview');
+                preview.src = e.target.result;
+                preview.style.display = 'block'; // Показываем изображение
+            };
+            
+            reader.readAsDataURL(file); // Читаем файл как Data URL
+        } else {
+            var preview = document.getElementById('photoPreview');
+            preview.src = '#';
+            preview.style.display = 'none'; // Скрываем изображение, если файл не выбран
+        }
+    });
+    </script>
 @endsection

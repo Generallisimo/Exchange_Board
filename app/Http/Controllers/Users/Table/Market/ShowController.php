@@ -13,7 +13,7 @@ class ShowController extends BaseController
     public function __invoke($hash_id)
     {
         $data = $this->service->show($hash_id);
-        
+
         return view('pages.users.table.market.show', compact('data', 'hash_id'));
     }
 }

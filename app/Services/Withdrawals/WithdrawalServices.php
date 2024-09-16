@@ -2,6 +2,8 @@
 
 namespace App\Services\Withdrawals;
 
+use App\Components\checkBalance\CheckBalance;
+use App\Components\SendToUserTRON\SendTRON;
 use App\Components\WithdrawalTRON\WithdrawalTRON;
 use App\Models\Agent;
 use App\Models\Client;
@@ -9,6 +11,7 @@ use App\Models\Market;
 use App\Models\Platform;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class WithdrawalServices
 {
@@ -26,6 +29,8 @@ class WithdrawalServices
         
         $userID = $this->user($role, $hash_id);
 
+        $initialBalance = (new CheckBalance($userID))->checkBalanceUser();
+
         $result = (new WithdrawalTRON(
             $data_request['you_send'],
             $data_request['you_send_details'],
@@ -34,7 +39,16 @@ class WithdrawalServices
             $data_request['hash_id']
         ))->store();
 
-        return $result['success'] ? true : $result['message'];
+        $newBalance  = (new CheckBalance($userID))->checkBalanceUser();
+
+
+        if ($initialBalance !== $newBalance) {
+
+            return true;
+        } else {
+            Log::info('Transaction failed');
+            return $result['message'] ?? 'Транзакция не прошла успешно';
+        }
     }
 
     protected function user($role, $hash_id){

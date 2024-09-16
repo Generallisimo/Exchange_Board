@@ -9,11 +9,13 @@ class MarketServices
 {
     public function show($hash_id){
 
-        $market_details = AddMarketDetails::where('hash_id', $hash_id)->get();
+        $market_details = AddMarketDetails::where('hash_id', $hash_id)->where('online', ['online', 'offline'])->get();
+        $market_details_delete =AddMarketDetails::where('hash_id', $hash_id)->where('online', 'deleted')->get();
         $market = Market::where('hash_id', $hash_id)->first();
 
         return [
             'market_details'=>$market_details,
+            'market_details_delete'=>$market_details_delete,
             'market'=>$market
         ];
     }

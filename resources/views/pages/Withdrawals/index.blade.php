@@ -41,7 +41,7 @@
                     @enderror
 
                     <div class="form-group">
-                        <label>Сумма для вывода</label>
+                        <label>Сумма для вывода, комиссия 5 долларов </label>
                         <input type="text" name="you_send" class="form-control" placeholder="введите сумму для вывода">
                     </div>
                     @error('you_send')
