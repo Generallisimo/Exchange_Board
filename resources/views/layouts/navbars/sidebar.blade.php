@@ -50,11 +50,19 @@
                 </div>
             </li>
             @endif
-            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent') ||  Auth::user()->hasRole('support'))
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('market') ||  Auth::user()->hasRole('agent') || Auth::user()->hasRole('support' ))
             <li @if ($pageSlug == 'market board') class="active " @endif>
                 <a href="{{ route('transaction.index')  }}">
                     <i class="tim-icons icon-components"></i>
                     <p>{{ __('Транзакции') }}</p>
+                </a>
+            </li>
+            @endif
+            @if(Auth::user()->hasRole('admin'))
+            <li @if ($pageSlug == 'send') class="active " @endif>
+                <a href="{{ route('transaction.index')  }}">
+                    <i class="tim-icons icon-single-copy-04"></i>
+                    <p>{{ __('Переводы') }}</p>
                 </a>
             </li>
             @endif
@@ -71,6 +79,14 @@
                 <a href="{{ route('withdrawal.index')  }}">
                     <i class="tim-icons icon-coins"></i>
                     <p>{{ __('Вывод') }}</p>
+                </a>
+            </li>
+            @endif
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('support'))
+            <li @if ($pageSlug == 'support') class="active " @endif>
+                <a href="{{ route('support.index')  }}">
+                    <i class="tim-icons icon-chat-33"></i>
+                    <p>{{ __('Поддержка') }}</p>
                 </a>
             </li>
             @endif

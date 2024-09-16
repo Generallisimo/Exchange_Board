@@ -18,7 +18,7 @@ class TransactionServices
         
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('admin') || $user->hasRole('support')) {
             $exchanges = Exchange::where('result', 'await')->get();
             $exchangesSuccess = Exchange::where('result', 'success')->get();
             $exchangesArchive = Exchange::where('result', 'archive')->get();
@@ -32,7 +32,13 @@ class TransactionServices
             $exchangesDispute = Exchange::where('market_id', $user->hash_id)->where('result', 'dispute')->get();
             $exchangesError = Exchange::where('market_id', $user->hash_id)->where('result', 'error')->get();
             $exchangesFraud = Exchange::where('market_id', $user->hash_id)->where('result', 'fraud')->get();
-
+        }elseif($user->hasRole('agent')){
+            $exchanges = Exchange::where('agent_id', $user->hash_id)->where('result', 'await')->get();
+            $exchangesSuccess = Exchange::where('agent_id', $user->hash_id)->where('result', 'success')->get();
+            $exchangesArchive = Exchange::where('agent_id', $user->hash_id)->where('result', 'archive')->get();
+            $exchangesDispute = Exchange::where('agent_id', $user->hash_id)->where('result', 'dispute')->get();
+            $exchangesError = Exchange::where('agent_id', $user->hash_id)->where('result', 'error')->get();
+            $exchangesFraud = Exchange::where('agent_id', $user->hash_id)->where('result', 'fraud')->get();
         }
         return [
             'exchanges'=>$exchanges,

@@ -4,6 +4,7 @@
     <thead>
         <tr>
             <th>Exchange ID</th>
+            <th>Market ID</th>
             <th>Фото подтверждения</th>
             <th>Сумма</th>
             <th>Метод оплаты</th>
@@ -22,6 +23,7 @@
         @foreach ($exchangesError as $exchange)
         <tr>
             <td>{{$exchange->exchange_id}}</td>
+            <td>{{$exchange->market_id}}</td>
             <td>
                 <img src="{{ asset($exchange->photo) }}" alt="Фото подтверждения" style="max-width: 150px; max-height: 150px;">
             </td>

@@ -5,6 +5,7 @@ namespace App\Services\Users\Table;
 use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
+use App\Models\Support;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,7 @@ class TableServices
         $clients = Client::all();
         $agents = Agent::all();
         $users = User::all();
+        $supports = Support::all();
         
         $user = Auth::user();
 
@@ -27,6 +29,7 @@ class TableServices
             'agents'=>$agents,
             'markets'=>$markets,
             'users'=>$users,
+            'supports'=>$supports,
         ];
 
     }

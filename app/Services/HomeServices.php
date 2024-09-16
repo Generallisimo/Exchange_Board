@@ -18,6 +18,7 @@ class HomeServices
     public function index(){
         $userFindAll = Auth::user();
         $userFind = $userFindAll->hash_id;
+        // dd($userFind);
         $user = $this->user($userFind);
         
         $exchangeArchive = $this->exchange('archive');
@@ -41,10 +42,15 @@ class HomeServices
         $client = null;
         if ($userFindAll->hasRole('client')) {
             $client = Client::where('hash_id', $userFind)->first();
+        }elseif($userFindAll->hasRole('support')){
+            return [
+                'success' => false
+            ];
         }
 
 
         return [
+            'success'=>true,
             'user'=>$user,
             'exchangeArchive'=>$exchangeArchive['exchange'],
             'exchangeDispute'=>$exchangeDispute['exchange'],

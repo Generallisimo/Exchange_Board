@@ -1,10 +1,26 @@
-@extends('layouts.support.app')
+@extends('layouts.app', ['page' => __('Поддержка'), 'pageSlug' => 'support'])
 
 @section('content')
     <div class="container mt-4">
+                @if (session('successful'))
+                    <div class="alert alert-success">
+                        {{ session('successful') }}
+                    </div>
+                @endif
+                @if ($errors->has('destroy_chat'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('destroy_chat') }}
+                    </div>
+                @endif
         <!-- Фильтрация чатов -->
         <div class="mb-3 d-flex justify-content-between align-items-center">
             <h2>Чаты поддержки</h2>
+
+            <form id="supportForm" method="GET" class="d-flex">
+                <input type="text" name="chat_id" placeholder="Введите ID пользователя" id="chat_id_input" class="form-control" style="margin-top: 2px; background-color: #242340;">
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 4px; overflow:visible">Перейти</button>
+            </form>
+
 
             <!-- Кнопки для фильтрации -->
             <div class="btn-group" role="group" aria-label="Фильтр чатов">
@@ -24,7 +40,7 @@
                         @endphp
 
                         <div class="list-group-item justify-content-between align-items-center chat-item {{ $statusClass }}" style="background-color: #27293d; border: #27293d; display:flex">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <!-- Кружок статуса -->
                                 <span class="status-circle {{ $statusClass === 'read' ? 'bg-success' : 'bg-warning' }}"></span>
                                 <div class="ml-2">
@@ -32,7 +48,20 @@
                                     <p class="mb-1">{{$item->name}}</p>
                                 </div>
                             </div>
-                            <a href="{{ route('support.show', $item->chat_id) }}" class="btn btn-primary" style="color: white;">Перейти</a>
+                            <div class="d-flex">
+                                <form method="GET" action="{{ route('support.show', ['chat_id'=>$item->chat_id]) }}">
+                                    <button class="btn btn-primary btn-sm btn-icon" style="color: white;">
+                                        <i class="tim-icons icon-send"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('chat.destroy', ['chat_id'=>$item->chat_id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                                        <i class="tim-icons icon-trash-simple"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -98,6 +127,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.style.display = 'none';
             }
         });
+    });
+
+    document.getElementById('supportForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Останавливаем стандартную отправку формы
+        var chat_id = document.getElementById('chat_id_input').value;
+        if (chat_id) {
+            var actionUrl = "{{ url('support/show') }}/" + chat_id;
+            window.location.href = actionUrl; // Перенаправляем на динамический URL
+        }
     });
 });
 </script>

@@ -10,6 +10,7 @@ use App\Http\Requests\Users\StoreUsersRequest;
 use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
+use App\Models\Support;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -41,7 +42,12 @@ class UserServices
                 'hash_id'=>$data_request['hash_id'],
                 'password'=>$data_request['password']
             ]);
+            
             $user->assignRole($data_request['role']);
+
+            $this->createSupport(
+                $data_request['hash_id']   
+            );
 
             return true;
         }else{
@@ -64,7 +70,7 @@ class UserServices
                     ]);
             
                     $user->assignRole($data_request['role']);
-    
+                    
                     if($user->hasRole('agent')){
                         $this->createAgent(
                             $data_request['hash_id'], 
@@ -127,6 +133,12 @@ class UserServices
         ]);
 
         new CheckBalance($market);
+    }
+
+    protected function createSupport($hash_id){
+        Support::create([
+            'hash_id' => $hash_id,
+        ]);
     }
 
     

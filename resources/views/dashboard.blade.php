@@ -11,7 +11,20 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Баланс кошелька</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$data['user']->balance}} USDT</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-bank text-info"></i> {{$data['user']->balance}} USDT</h3>
+                    </div>
+                    <div class="card-body" >
+                        <div class="chart-area ml-2" style="height: auto;">
+                        @if(Auth::user()->hasRole('market'))
+                            <h5 class="card-category">Настройки</h5>
+                            <form method="GET" action="{{route('table.user.market.show', ['hash_id'=>$data['user']->hash_id])}}">
+                                @csrf
+                                <button type="submit" rel="tooltip" class="btn btn-info btn-sm btn-icon">
+                                    <i class="tim-icons icon-single-02"></i>
+                                </button>
+                            </form>
+                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -20,7 +33,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Кошелёк пополнения</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$data['user']->details_from}}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-money-coins text-info"></i> {{$data['user']->details_from}}</h3>
                     </div>
                 </div>
             </div>
@@ -28,11 +41,15 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Кошелёк вывода</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$data['user']->details_to}}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-coins text-info"></i> {{$data['user']->details_to}}</h3>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
         @if($data['client'] !== null)
         <div class="row mb-4">
             <div class="col-12">
@@ -42,7 +59,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">API ключ</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{config('url.api_local')}}/api/pay/{currency}/{amount}/{{$data['client']->api_key}}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i> {{config('url.api_local')}}/api/pay/{currency}/{amount}/{{$data['client']->api_key}}</h3>
                     </div>
                 </div>
             </div>
@@ -51,12 +68,13 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">API ссылка</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{config('url.api_local')}}/api/payment/{{$data['client']->api_link}}/{amount}/{currency}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i> {{config('url.api_local')}}/api/payment/{{$data['client']->api_link}}/{amount}/{currency}</h3>
                     </div>
                 </div>
             </div>
         </div>
         @endif
+
 
         @if(Auth::user()->hasRole('admin'))
         <div class="row mb-4">
@@ -67,7 +85,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Общий баланс обменников</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$data['sumMarket']}}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-chart-bar-32 text-info"></i> {{$data['sumMarket']}}</h3>
                     </div>
                 </div>
             </div>
@@ -75,7 +93,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Общий баланс клиентов</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> {{$data['sumClient']}}</h3>
+                        <h3 class="card-title"><i class="tim-icons icon-chart-bar-32 text-info"></i> {{$data['sumClient']}}</h3>
                     </div>
                 </div>
             </div>
@@ -83,7 +101,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Общий баланс кураторов</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['sumAgent']}} </h3>
+                    <h3 class="card-title"><i class="tim-icons icon-chart-bar-32 text-info"></i>{{$data['sumAgent']}} </h3>
                 </div>
             </div>
         </div>
@@ -108,6 +126,28 @@
             </div>
         </div>
 
+
+        @if($data['client'] !== null)
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>Стата машенников</h3>
+            </div>
+            <div class="col-lg-4">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Количество машенников</h5>
+                        @if($data['client']->fraud === null)
+                        <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i>0</h3>
+                        @else
+                        <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i> {{$data['client']->fraud}}</h3>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
         @if(Auth::user()->hasRole('admin'))
         <div class="row mb-4">
             <div class="col-12">
@@ -117,7 +157,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Обменники онлайн</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['marketOnlineCount']}} </h3>
+                        <h3 class="card-title"><i class="tim-icons icon-check-2 text-info"></i>{{$data['marketOnlineCount']}} </h3>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
@@ -138,7 +178,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Обменники офлайн</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['marketOfflineCount']}} </h3>
+                        <h3 class="card-title"><i class="tim-icons icon-alert-circle-exc text-info"></i>{{$data['marketOfflineCount']}} </h3>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
@@ -166,7 +206,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Количество заявок в обработке</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['exchangeAwaitCount']}} </h3>
+                    <h3 class="card-title"><i class="tim-icons icon-bell-55 text-info"></i>{{$data['exchangeAwaitCount']}} </h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -175,8 +215,11 @@
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>
                             @else
                                 @foreach($data['exchangeAwait'] as $exchange)
-                                    <li style="list-style: auto; color: #cfcdcd;">{{$exchange->exchange_id}}</li>
+                                    <li style="list-style: auto; color: #cfcdcd;">{{$exchange->exchange_id}}</li>                                   
                                 @endforeach
+                                <div class="text-center">
+                                    <a href="{{ route('transaction.index')  }}" class="mt-5 btn btn-primary btn-sm" style="margin: 0 auto;">Посмотреть больше...</a>
+                                </div>
                             @endif
                         </ul>
                     </div>
@@ -187,7 +230,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Список диспутов</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['exchangeDisputeCount']}}</h3>
+                    <h3 class="card-title"><i class="tim-icons icon-alert-circle-exc text-info"></i>{{$data['exchangeDisputeCount']}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -198,6 +241,9 @@
                                 @foreach($data['exchangeDispute'] as $exchange)
                                     <li style="list-style: auto; color: #cfcdcd;">{{ $exchange->exchange_id }}</li>
                                 @endforeach
+                                <div class="text-center">
+                                    <a href="{{ route('transaction.index')  }}" class="mt-5 btn btn-primary btn-sm" style="margin: 0 auto;">Посмотреть больше...</a>
+                                </div>
                             @endif
                         </ul>
                     </div>
@@ -208,7 +254,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Список архива</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['exchangeArchiveCount']}}</h3>
+                    <h3 class="card-title"><i class="tim-icons icon-book-bookmark text-info"></i>{{$data['exchangeArchiveCount']}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -218,7 +264,10 @@
                             @else
                                 @foreach($data['exchangeArchive'] as $exchange)
                                     <li style="list-style: auto; color: #cfcdcd;">{{$exchange->exchange_id}}</li>
-                                @endforeach
+                                    @endforeach
+                                    <div class="text-center">
+                                        <a href="{{ route('transaction.index')  }}" class="mt-5 btn btn-primary btn-sm" style="margin: 0 auto;">Посмотреть больше...</a>
+                                    </div>
                             @endif
                         </ul>
                     </div>
@@ -231,7 +280,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Список успешных</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['exchangeSuccessCount']}}</h3>
+                    <h3 class="card-title"><i class="tim-icons icon-heart-2 text-info"></i>{{$data['exchangeSuccessCount']}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -242,6 +291,9 @@
                                 @foreach($data['exchangeSuccess'] as $exchange)
                                     <li style="list-style: auto; color: #cfcdcd;">{{$exchange->exchange_id}}</li>
                                 @endforeach
+                                <div class="text-center">
+                                    <a href="{{ route('transaction.index')  }}" class="mt-5 btn btn-primary btn-sm" style="margin: 0 auto;">Посмотреть больше...</a>
+                                </div>
                             @endif
                         </ul>
                     </div>
@@ -252,7 +304,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Список транзакций с ошибками</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>{{$data['exchangeErrorCount']}}</h3>
+                    <h3 class="card-title"><i class="tim-icons icon-button-power text-info"></i>{{$data['exchangeErrorCount']}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -263,6 +315,9 @@
                                 @foreach($data['exchangeError'] as $exchange)
                                     <li style="list-style: auto; color: #cfcdcd;">{{$exchange->exchange_id}}</li>
                                 @endforeach
+                                <div class="text-center">
+                                    <a href="{{ route('transaction.index')  }}" class="mt-5 btn btn-primary btn-sm" style="margin: 0 auto;">Посмотреть больше...</a>
+                                </div>
                             @endif
                         </ul>
                     </div>

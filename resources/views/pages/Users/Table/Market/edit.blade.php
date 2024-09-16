@@ -12,7 +12,9 @@
             <div class="card-header">
                 <h5 class="title">Изменить реквезиты маркета</h5>
             </div>
-            
+            <div class="card-footer">
+                <button onclick="window.history.back()" class="btn btn-primary btn-round">Назад</button>
+            </div>
             <!-- Первая форма для обновления реквизитов -->
             <form method="post" action="{{ route('table.user.market.wallet.update') }}" autocomplete="off">
                 @method('PUT')

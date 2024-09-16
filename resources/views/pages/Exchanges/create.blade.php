@@ -2,6 +2,26 @@
 
 
 @section('content')
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+                
+                    @if($result['exchange_id'])
+                        <form action="{{ route('support.show', ['chat_id' => $result['exchange_id']]) }}">
+                            <li class="search-bar input-group">
+                                <p class="mt-2">Техническая поддержка</p>
+                                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
+                                    <i class="tim-icons icon-chat-33"></i>
+                                </button>
+                            </li>
+                        </form>
+                    @endif
+                
+            </ul>
+        </div>
+    </div>
+</nav>
     <div class="row">
         <div class="col-md-6" style="margin: 100px auto;">
             <div class="card">
@@ -16,6 +36,9 @@
                 @endif
                 <div class="card-header">
                     <h5 class="title text-center">Подтверждение платежа</h5>
+                </div>
+                <div class="card-footer">
+                    <button onclick="window.history.back()" class="btn btn-primary btn-round">Назад</button>
                 </div>
                 <form method="POST" action="{{route('payment.store', ['exchange_id'=>$result['exchange_id']])}}" enctype="multipart/form-data" autocomplete="off">
                     @csrf
@@ -62,6 +85,7 @@
                         </div>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>

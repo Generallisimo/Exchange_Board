@@ -24,6 +24,7 @@
 
 <body class="{{ $class ?? '' }}">
 
+
     @yield('content')
 
     <script src="{{ asset('black') }}/js/core/jquery.min.js"></script>

@@ -17,7 +17,12 @@ class HomeController extends Controller
     public function index()
     {
         $data = $this->service->index();
-        return view('dashboard', compact('data'));
+     
+        if($data['success']){
+            return view('dashboard', compact('data'));
+        }else{
+            return redirect()->route('support.index');
+        }
     }
 
     public function show($period, $hash_id){

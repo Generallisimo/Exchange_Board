@@ -2,6 +2,26 @@
 
 
 @section('content')
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+
+                    @if($result['exchange_id'])
+                        <form action="{{ route('support.show', ['chat_id' => $result['exchange_id']]) }}">
+                            <li class="search-bar input-group">
+                                <p class="mt-2">Техническая поддержка</p>
+                                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
+                                    <i class="tim-icons icon-chat-33"></i>
+                                </button>
+                            </li>
+                        </form>
+                    @endif
+                
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="row">
     <div class="col-md-6" style="margin: 100px auto;">
         <div class="card">
@@ -18,11 +38,11 @@
                 action="{{route(
                     'payment.create', 
                     [
-                        'client'=>$data['client_id'], 
-                        'amount'=>$data['amount'], 
-                        'currency'=>$data['currency'],
-                        'market'=>$data['market_id'],
-                        'exchange_id'=>$data['exchange_id']
+                        'client'=>$result['client_id'], 
+                        'amount'=>$result['amount'], 
+                        'currency'=>$result['currency'],
+                        'market'=>$result['market_id'],
+                        'exchange_id'=>$result['exchange_id']
                     ]
                 )}}" 
                 autocomplete="off">
@@ -32,7 +52,7 @@
                     <div class="form-group text-center" style="display: grid;">
                         <label for="method">Выбор метода</label>
                         <div id="method-options" class="btn-group" role="group" style="margin: 0 auto;">
-                            @foreach($data['unique_method'] as $name)
+                            @foreach($result['unique_method'] as $name)
                             <input type="button" class="btn btn-outline-secondary method-btn" value="{{ $name->name_method }}" onclick="setMethod('{{ $name->name_method }}')">
                             @endforeach
                         </div>

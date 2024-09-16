@@ -61,9 +61,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['prefix'=>'top_up'], function(){
 		Route::get('/', ['as' => 'top_up.index', 'uses' => 'App\Http\Controllers\TopUp\IndexController']);
 		Route::post('/show', ['as' => 'top_up.show', 'uses' => 'App\Http\Controllers\TopUp\ShowController']);
-		// Route::post('/update', ['as' => 'top_up.update', 'uses' => 'App\Http\Controllers\Withdrawal\UpdateController']);
 	});
 		
+	Route::get('/transaction', ['as' => 'transaction.index', 'uses' => 'App\Http\Controllers\Money\IndexController']);		
+
+
 	Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);		
 });
 
@@ -72,6 +74,7 @@ Auth::routes();
 Route::group(['prefix'=>'support', 'middleware' => ['guest']], function(){
 	Route::get('/', ['as'=>'support.index', 'uses'=>'App\Http\Controllers\Support\IndexController']);
 	Route::get('/show/{chat_id}', ['as'=>'support.show', 'uses'=>'App\Http\Controllers\Support\ShowController']);
+	Route::delete('/destroy/{chat_id}', ['as'=>'chat.destroy', 'uses'=>'App\Http\Controllers\Support\DestroyController']);
 });
 
 

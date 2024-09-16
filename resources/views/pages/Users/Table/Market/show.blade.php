@@ -12,13 +12,23 @@
             <div class="card-header">
                 <h5 class="title">Кошелек обменника - {{$hash_id}}</h5>
             </div>
-            <form method="post" action="{{route('table.user.market.update', ['hash_id'=>$hash_id])}}" autocomplete="off">
-                @method('PUT')
-                @csrf
+            <div class="d-flex" style="justify-content: space-between;">
+                <form method="post" action="{{route('table.user.market.update', ['hash_id'=>$hash_id])}}" autocomplete="off">
+                    @method('PUT')
+                    @csrf
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-round">{{$data['market']['status']}}</button>
+                    </div>
+                </form>
                 <div class="card-footer">
-                    <button class="btn btn-primary btn-round">{{$data['market']['status']}}</button>
+                    <button onclick="window.history.back()" class="btn btn-primary btn-round">Назад</button>
                 </div>
-            </form>
+            </div>
+            @if($data['market_details']->isEmpty())
+            <div style=" color: #cfcdcd; ">
+                <p class="text-center">Здесь будут ваши реквизиты для оплаты...</p>
+            </div>
+            @else
             <table class="table" id="agents">
                 <thead>
                     <tr>
@@ -44,8 +54,10 @@
                         </td>
                     </tr>
                     @endforeach
+                   
                 </tbody>
             </table>
+            @endif
         </div>
     </div>
 </div>

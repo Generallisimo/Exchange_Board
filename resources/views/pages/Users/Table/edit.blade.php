@@ -7,6 +7,9 @@
             <div class="card-header">
                 <h5 class="title">Обновление данных об пользователе</h5>
             </div>
+            <div class="card-footer">
+                <button onclick="window.history.back()" class="btn btn-primary btn-round">Назад</button>
+            </div>
             <form method="post" action="{{route('table.user.update', ['hash_id'=>$hash_id])}}" autocomplete="off">
                 @method('PUT')
                 @csrf

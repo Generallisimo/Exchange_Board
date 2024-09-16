@@ -46,6 +46,20 @@
                         </li>
                     </ul>
                 </li> -->
+                @if(Auth::check())
+                    @php
+                        $userHashId = Auth::user()->hash_id;
+                    @endphp
+                    @if(!Auth::user()->hasRole('support'))
+                    <form action="{{ route('support.show', ['chat_id' => $userHashId]) }}">
+                        <li class="search-bar input-group">
+                            <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
+                                <i class="tim-icons icon-chat-33"></i>
+                            </button>
+                        </li>
+                    </form>
+                    @endif
+                @endif
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="photo">
