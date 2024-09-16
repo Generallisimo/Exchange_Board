@@ -22,6 +22,7 @@
                     <button id="success_but" type="button" class="btn btn-default">Успешные</button>
                     <button id="archive_but" type="button" class="btn btn-default">Архивированные</button>
                     <button id="error_but" type="button" class="btn btn-default">Ошибка</button>
+                    <button id="fraud_but" type="button" class="btn btn-default">Мошенники</button>
                 </div>
             </div>
             <div class="table-responsive">
@@ -33,6 +34,7 @@
                 @include('pages.transactions.status.success', ['exchangesSuccess'=>$data['exchangesSuccess']])
                 @include('pages.transactions.status.await', ['exchanges'=>$data['exchanges']])
                 @include('pages.transactions.status.error', ['exchangesError'=>$data['exchangesError']])
+                @include('pages.transactions.status.fraud', ['exchangesFraud'=>$data['exchangesFraud']])
            
             </div>
         </div>

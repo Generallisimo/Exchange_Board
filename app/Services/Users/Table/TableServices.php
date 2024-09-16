@@ -6,15 +6,22 @@ use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TableServices
 {
     public function index(){
         $clients = Client::all();
         $agents = Agent::all();
-        $markets = Market::all();
         $users = User::all();
+        
+        $user = Auth::user();
 
+        if ($user->hasRole('agent')) {
+            $markets = Market::where('agent_id', $user->hash_id)->get();    
+        }else{
+            $markets = Market::all();
+        }
         return [
             'clients'=>$clients,
             'agents'=>$agents,

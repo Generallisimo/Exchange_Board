@@ -17,13 +17,13 @@
                 <div class="card-header">
                     <h5 class="title text-center">Подтверждение платежа</h5>
                 </div>
-                <form method="post" action="{{route('payment.store', ['exchange_id'=>$result['exchange_id']])}}" enctype="multipart/form-data" autocomplete="off">
-                    @method('PUT')
+                <form method="POST" action="{{route('payment.store', ['exchange_id'=>$result['exchange_id']])}}" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="card-body">
                     
                     <input hidden name="client_id" value="{{$result['client']}}">
                     <input hidden name="market_id" value="{{$result['market']}}">
+                    <input hidden name="agent_id" value="{{$result['agent']}}">
                     <input hidden name="amount" value="{{$result['amount']}}">
                     <input hidden name="percent_client" value="{{$result['percent_client']}}">
                     <input hidden name="percent_market" value="{{$result['percent_market']}}">

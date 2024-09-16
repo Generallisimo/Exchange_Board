@@ -6,11 +6,18 @@ use App\Http\Requests\Users\Detials\StoreRequest;
 use App\Models\AddMarketDetails;
 use App\Models\Market;
 use App\Models\MethodPayments;
+use Illuminate\Support\Facades\Auth;
 
 class NewDetailsService
 {
     public function create(){
-        $markets = Market::all();
+        $user = Auth::user();
+
+        if ($user->hasRole('admin') || $user->hasRole('agent')) {
+            $markets = Market::all();  // Администратор видит все маркетов
+        } elseif ($user->hasRole('market') ) {
+            $markets = Market::where('hash_id', $user->hash_id)->get(); // Маркет видит только свой маркет
+        }
         $methods = MethodPayments::all();
         
         return [

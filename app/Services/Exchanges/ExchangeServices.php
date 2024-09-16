@@ -21,7 +21,7 @@ class ExchangeServices
         $exchange_id = Str::uuid();
 
         $market = Market::where('status', 'online')->inRandomOrder()->first();
-
+        
         if($market === null){
             return [
                 'success'=>false
@@ -32,7 +32,7 @@ class ExchangeServices
          
         $market_method = AddMarketDetails::where('hash_id', $market->hash_id)->where('currency', $currency)->get();
         $unique_method = $market_method->unique('name_method');
-        
+
         return [
             'success'=>true,
             'client_id'=>$client_id,
@@ -87,6 +87,7 @@ class ExchangeServices
                 'success'=>true,
                 'client'=>$client_id,
                 'market'=>$market_id,
+                'agent'=>$agent->hash_id,
                 'amount_users'=>$amount,
                 'amount'=>$response,
                 'exchange_id'=>$exchange_id,
@@ -119,8 +120,10 @@ class ExchangeServices
 
         $exchange = new Exchange([
             'exchange_id' => $exchange_id,
+            'method_exchanges'=>'api_link',
             'client_id' => $data['client_id'],
             'market_id' => $data['market_id'],
+            'agent_id' => $data['agent_id'],
             'amount' => $data['amount'],
             'amount_users'=> $data['amount_users'],
             'percent_client' => $data['percent_client'] * 100,

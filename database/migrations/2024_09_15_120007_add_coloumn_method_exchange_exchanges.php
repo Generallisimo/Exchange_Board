@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('api_key')->after('api_link');
+        Schema::table('exchanges', function (Blueprint $table) {
+            $table->string('method_exchanges')->after('exchange_id');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('api_key');
+        Schema::table('exchanges', function (Blueprint $table) {
+            $table->dropColumn('method_exchanges');
         });
     }
 };

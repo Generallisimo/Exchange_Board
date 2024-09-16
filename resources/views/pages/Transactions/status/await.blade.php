@@ -48,7 +48,7 @@
                     @csrf
                     @method("PUT")
                     <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                        <i class="tim-icons icon-simple-remove"></i>
+                        <i class="tim-icons icon-trash-simple"></i>
                     </button>
                 </form>
                 <form method="POST" action="{{route('transaction.update',['exchange_id'=> $exchange->exchange_id, 'status'=>'dispute', 'message'=>'Отправлено на спор'])}}">

@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     status.innerText = 'Платеж успешно обработан';
                 }else if(data.status === 'dispute'){
                     status.innerText = 'Обратитесь в поддержку, произошла ошибка при переводе';
+                }else if(data.status === 'fraud'){
+                    status.innerText = 'Обратитесь в поддержку, произошла ошибка при переводе';
                 }
             })
             .catch(error => console.error('Error:', error));

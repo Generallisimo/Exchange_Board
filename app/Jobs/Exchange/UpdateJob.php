@@ -73,7 +73,7 @@ class UpdateJob implements ShouldQueue
                     $sendAgent['owner'],
                     $sendAgent['address_to'],
                     $sendAgent['amount'],
-                    $sendAgent['message']
+                    'success'
                 );
 
                 $this->store(
@@ -82,7 +82,7 @@ class UpdateJob implements ShouldQueue
                     $sendPlatform['owner'],
                     $sendPlatform['address_to'],
                     $sendPlatform['amount'],
-                    $sendPlatform['message']
+                    'success'
                 );
 
                 $this->store(
@@ -91,7 +91,7 @@ class UpdateJob implements ShouldQueue
                     $sendClient['owner'],
                     $sendClient['address_to'],
                     $sendClient['amount'],
-                    $sendClient['message']
+                    'success'
                 );
 
                 new CheckBalance($client);
@@ -110,7 +110,7 @@ class UpdateJob implements ShouldQueue
                     $sendAgent['owner'],
                     $sendAgent['address_to'],
                     $sendAgent['amount'],
-                    $sendAgent['message']
+                    'error'
                 );
 
                 $this->store(
@@ -119,7 +119,7 @@ class UpdateJob implements ShouldQueue
                     $sendPlatform['owner'],
                     $sendPlatform['address_to'],
                     $sendPlatform['amount'],
-                    $sendPlatform['message']
+                    'error'
                 );
 
                 $this->store(
@@ -128,7 +128,7 @@ class UpdateJob implements ShouldQueue
                     $sendClient['owner'],
                     $sendClient['address_to'],
                     $sendClient['amount'],
-                    $sendClient['message']
+                    'error'
                 );
 
                 new CheckBalance($client);

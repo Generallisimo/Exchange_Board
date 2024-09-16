@@ -36,6 +36,7 @@
                         <th>Баланс</th>
                         <th>API ключ</th>
                         <th>API ссылка</th>
+                        <th>Мошенников</th>
                         <th class="text-right">Действие</th>
                     </tr>
                 </thead>
@@ -48,8 +49,9 @@
                         <td>{{$client->private_key}}</td>
                         <td>{{$client->details_to}}</td>
                         <td>{{$client->balance}}</td>
-                        <td>{{$client->api_key}}</td>
-                        <td>{{$client->api_link}}</td>
+                        <td>{{config('url.api_local')}}/api/pay/{currency}/{amount}/{{$client->api_key}}</td>
+                        <td>{{config('url.api_local')}}/api/payment/{{$client->api_link}}/{amount}/{currency}</td>
+                        <td>{{$client->fraud}}</td>
                         <td class="td-actions text-right">
                             <form method="GET" action="{{ route('table.user.edit', ['hash_id'=>$client->hash_id]) }}">
                                 @csrf

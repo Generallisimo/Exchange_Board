@@ -55,34 +55,13 @@ class ApiExchangesServices
             $amount_client = $response -($amount_exchange + $amount_agent + $amount_market);
 
             //add percent if click button client paid
-    
-            $exchange = Exchange::where('exchange_id', $exchange_id)->first();
-
-            if ($exchange) {
-                return [
-                    'success'=>true,
-                    'client'=>$client->hash_id,
-                    'market'=>$market->hash_id,
-                    'amount_users'=>$amount,
-                    'amount'=>$response,
-                    'exchange_id'=>$exchange_id,
-                    'currency'=>$currency,
-                    'method'=>$wallet->name_method,
-                    'percent_client'=>$client_percent,
-                    'percent_market'=>$market_percent,
-                    'percent_agent'=>$agent_percent,
-                    'amount_exchange'=>$amount_exchange,
-                    'amount_market'=>$amount_market,
-                    'amount_agent'=>$amount_agent,
-                    'result_client'=>$amount_client,
-                    'wallet_market'=>$wallet
-                ];
-            }
 
             $exchange = new Exchange([
                 'exchange_id' => $exchange_id,
+                'method_exchanges'=>'api_key',
                 'client_id' => $client->hash_id,
                 'market_id' => $market->hash_id,
+                'agent_id' => $agent->hash_id,
                 'amount' => $response,
                 'amount_users'=> $amount,
                 'percent_client' => $client_percent* 100,
@@ -101,28 +80,23 @@ class ApiExchangesServices
             
             return [
                 'success'=>true,
-                'client'=>$client->hash_id,
-                'market'=>$market->hash_id,
-                'amount_users'=>$amount,
-                'amount'=>$response,
                 'exchange_id'=>$exchange_id,
+                'amount_users'=>$amount,
                 'currency'=>$currency,
                 'method'=>$wallet->name_method,
-                'percent_client'=>$client_percent,
-                'percent_market'=>$market_percent,
-                'percent_agent'=>$agent_percent,
-                'amount_exchange'=>$amount_exchange,
-                'amount_market'=>$amount_market,
-                'amount_agent'=>$amount_agent,
-                'result_client'=>$amount_client,
-                'wallet_market'=>$wallet
+                'wallet_market'=>$wallet->details_market_to
             ];
         }else{
             return [
                 'success'=>false,
-                'message'=>$curse['message']
+                'message'=>'error on server, very soon fixed'
             ];
         }
 
+    }
+
+    public function update($exchange_id){
+        $response = Exchange::where('exchange_id', $exchange_id)->first();
+        return ['message'=>$response->result];
     }
 }

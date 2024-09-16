@@ -19,4 +19,16 @@ class HomeController extends Controller
         $data = $this->service->index();
         return view('dashboard', compact('data'));
     }
+
+    public function show($period, $hash_id){
+        $data = $this->service->show($period, $hash_id);
+
+        // Преобразуйте данные в массив, если это необходимо
+        $dataArray = json_decode($data->getContent(), true);
+    
+        return response()->json([
+            'labels' => $dataArray['labels'] ?? [],
+            'values' => $dataArray['values'] ?? [],
+        ]);
+    }
 }

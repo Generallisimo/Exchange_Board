@@ -13,6 +13,7 @@ class IndexController extends BaseController
     public function __invoke(Request $request)
     {
         $data = $this->service->index();
+        // dd($data);
 
         return view('pages.transactions.index', compact('data'));
     }

@@ -14,7 +14,7 @@
                 <h5 class="title text-center" style="font-size: 30px;">Оплата</h5>
             </div>
             <form 
-                method="post" 
+                method="get" 
                 action="{{route(
                     'payment.create', 
                     [
@@ -26,7 +26,6 @@
                     ]
                 )}}" 
                 autocomplete="off">
-                @method('PUT')
                 @csrf
                 <div class="card-body">
 

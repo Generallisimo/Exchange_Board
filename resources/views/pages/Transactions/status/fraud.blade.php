@@ -1,6 +1,5 @@
 
-
-<table class="table" id="dispute" style="display: none;">
+<table class="table" id="fraud" style="display: none;">
     <thead>
         <tr>
             <th>Exchange ID</th>
@@ -16,11 +15,10 @@
             <th>Заработок Куратора</th>
             <th>Процент Клиента</th>
             <th>Заработок Клиента</th>
-            <th class="text-right">Действие</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($exchangesDispute as $exchange)
+        @foreach ($exchangesFraud as $exchange)
         <tr>
             <td>{{$exchange->exchange_id}}</td>
             <td>
@@ -37,22 +35,6 @@
             <td>{{$exchange->amount_agent}}</td>
             <td>{{$exchange->percent_client}}</td>
             <td>{{$exchange->amount_client}}</td>
-            <td class="td-actions text-right">
-                <form method="POST" action="{{route('transaction.update',['exchange_id'=> $exchange->exchange_id, 'status'=>'to_success', 'message'=>'Ожидания получения суммы'])}}">
-                    @csrf
-                    @method("PUT")
-                    <button type="submit" rel="tooltip" class="btn btn-success btn-sm btn-icon">
-                        <i class="tim-icons icon-check-2"></i>
-                    </button>
-                </form>
-                <form method="POST" action="{{route('transaction.update',['exchange_id'=> $exchange->exchange_id, 'status'=>'fraud', 'message'=>'Кидала'])}}">
-                    @csrf
-                    @method("PUT")
-                    <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                        <i class="tim-icons icon-volume-98"></i>
-                    </button>
-                </form>
-            </td>
         </tr>
         @endforeach
     </tbody>

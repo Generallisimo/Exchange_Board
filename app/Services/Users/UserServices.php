@@ -11,6 +11,7 @@ use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class UserServices
@@ -18,7 +19,14 @@ class UserServices
  
     public function create(){
         $hash_id = Str::random(12);
-        $agents = Agent::all();
+        
+        $user = Auth::user();
+
+        if ($user->hasRole('agent')) {
+            $agents = Agent::where('hash_id', $user->hash_id)->get();
+        }else{
+            $agents = Agent::all();
+        }
 
         return [
             'hash_id'=>$hash_id,
@@ -124,7 +132,6 @@ class UserServices
     
     protected function createClient($hash_id, $details_from, $details_to, $percent, $private_key){
         
-        $link = url("api/payment/{$hash_id}");
         $api_key = Str::random(15);
 
         $client = Client::create([
@@ -133,7 +140,7 @@ class UserServices
             'details_from'=>$details_from,
             'details_to'=>$details_to,
             'percent'=>$percent,
-            'api_link'=>$link,
+            'api_link'=>$hash_id,
             'api_key'=>$api_key,
             'private_key'=>$private_key,
         ]);

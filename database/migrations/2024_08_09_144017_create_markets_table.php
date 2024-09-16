@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('hash_id');
             $table->string('balance')->nullable();
-            $table->string('details_from')->unique();
+            $table->string('details_from');
             $table->string('private_key');
-            $table->string('details_to')->unique();
+            $table->string('details_to');
             $table->string('percent');
             $table->string('agent_id');
 
