@@ -23,6 +23,6 @@ class IndexController extends BaseController
             $chat->status = $status ? $status->status : false;
         }
         // dd($data);
-        return view('pages.support.index', compact('data'));
+        return view('pages.Support.index', compact('data'));
     }
 }

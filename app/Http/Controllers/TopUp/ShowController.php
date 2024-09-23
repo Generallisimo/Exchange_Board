@@ -13,6 +13,6 @@ class ShowController extends BaseController
     {
         $data = $updateRequest->validated();
         // dd($data);
-        return view('pages.topup.show', compact('data'));
+        return view('pages.TopUp.show', compact('data'));
     }
 }

@@ -14,6 +14,6 @@ class IndexController extends BaseController
     {
         $data = $this->service->index();
 
-        return view('pages.users.table.index', compact('data'));
+        return view('pages.Users.Table.index', compact('data'));
     }
 }

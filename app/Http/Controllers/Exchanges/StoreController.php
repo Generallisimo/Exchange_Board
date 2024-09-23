@@ -25,9 +25,8 @@ class StoreController extends BaseController
             $fileUrl = Storage::url($filePath);
         }
         $data['photo'] = $fileUrl;
-
         $result = $this->service->store($exchange_id, $data);
 
-        return view('pages.exchanges.store', compact('result', 'exchange_id'));
+        return view('pages.Exchanges.store', compact('result', 'exchange_id'));
     }
 }

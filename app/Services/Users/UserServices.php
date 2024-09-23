@@ -3,7 +3,7 @@
 
 namespace App\Services\Users;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Components\GenerateWallet\GenerateWallet;
 use App\Components\SendToUserTRX\SendTRX;
 use App\Http\Requests\Users\StoreUsersRequest;

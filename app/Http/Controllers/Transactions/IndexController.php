@@ -15,6 +15,6 @@ class IndexController extends BaseController
         $data = $this->service->index();
         // dd($data);
 
-        return view('pages.transactions.index', compact('data'));
+        return view('pages.Transactions.index', compact('data'));
     }
 }

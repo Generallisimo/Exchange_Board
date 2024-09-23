@@ -13,6 +13,6 @@ class IndexController extends BaseController
     public function __invoke()
     {
         $data = $this->service->index();
-        return view('pages.topup.index', compact('data'));
+        return view('pages.TopUp.index', compact('data'));
     }
 }

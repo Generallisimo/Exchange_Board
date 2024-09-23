@@ -3,7 +3,7 @@
 
 namespace App\Components\WithdrawalTRON;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Components\SendToUserTRON\SendTRON;
 use App\Models\Agent;
 use App\Models\Client;
@@ -12,6 +12,7 @@ use App\Models\Platform;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class WithdrawalTRON
 {
@@ -65,12 +66,16 @@ class WithdrawalTRON
     
                 if($response->successful()){
                      
-                    (new SendTRON(
+                    $test = (new SendTRON(
                         '5',
                         config('wallet.wallet'),
-                        $hash_id_find->details_from,
-                        $hash_id_find->private_key
+                        $ownerAddress,
+                        $ownerKey,
                     ))->send();
+
+                    Log::info("Кошелек вывода ". config('wallet.wallet'));
+                    Log::info("Кошелек пополнения ".  $ownerAddress);
+                    Log::info("Сообщение об переводи комиссии ". $test['message']);
 
                     $this->user($hash_id_find);
                     return ['success'=>true];

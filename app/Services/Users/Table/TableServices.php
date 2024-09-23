@@ -24,6 +24,7 @@ class TableServices
         }else{
             $markets = Market::all();
         }
+
         return [
             'clients'=>$clients,
             'agents'=>$agents,

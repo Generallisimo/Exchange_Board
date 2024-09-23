@@ -209,7 +209,7 @@
                     <h3 class="card-title"><i class="tim-icons icon-bell-55 text-info"></i>{{$data['exchangeAwaitCount']}} </h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div class="chart-area" style="height: 240px;">
                         <ul>
                             @if($data['exchangeAwait']->isEmpty())
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>
@@ -233,7 +233,7 @@
                     <h3 class="card-title"><i class="tim-icons icon-alert-circle-exc text-info"></i>{{$data['exchangeDisputeCount']}}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div class="chart-area" style="height: 240px;">
                         <ul>
                             @if($data['exchangeDispute']->isEmpty())
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>
@@ -253,11 +253,11 @@
         <div class="col-lg-4">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Список архива</h5>
+                    <h5 class="card-category" >Список архива</h5>
                     <h3 class="card-title"><i class="tim-icons icon-book-bookmark text-info"></i>{{$data['exchangeArchiveCount']}}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div class="chart-area" style="height: 240px;">
                         <ul>
                             @if($data['exchangeArchive']->isEmpty())
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>
@@ -283,7 +283,7 @@
                     <h3 class="card-title"><i class="tim-icons icon-heart-2 text-info"></i>{{$data['exchangeSuccessCount']}}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div class="chart-area" style="height: 240px;">
                         <ul>
                             @if($data['exchangeSuccess']->isEmpty())
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>
@@ -307,7 +307,7 @@
                     <h3 class="card-title"><i class="tim-icons icon-button-power text-info"></i>{{$data['exchangeErrorCount']}}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
+                    <div class="chart-area" style="height: 240px;">
                         <ul>
                             @if($data['exchangeError']->isEmpty())
                                 <li style="list-style: none; color: #cfcdcd; ">Пусто...</li>

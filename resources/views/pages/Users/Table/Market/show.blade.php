@@ -24,7 +24,7 @@
                     <button onclick="window.history.back()" class="btn btn-primary btn-round">Назад</button>
                 </div>
             </div>
-            @if($data['market_details']->isEmpty() || $market_detail->online !== 'deleted')
+            @if($data['market_details']->isEmpty())
             <div style=" color: #cfcdcd; ">
                 <p class="text-center">Здесь будут ваши реквизиты для оплаты...</p>
             </div>
@@ -43,7 +43,7 @@
                     <tr>
                         <td>{{$market_detail->id}}</td>
                         <td>{{$market_detail->details_market_to}}</td>
-                        @if($market_detail->online === 'online' ||$market_detail->online === 'offline' )
+                        @if($market_detail->online !== 'deleted')
                         <td>{{$market_detail->online}}</td>
                         @endif
                         <td class="td-actions text-right">
@@ -72,7 +72,7 @@
 
             @if(Auth::user()->hasRole('admin'))
                 @if($data['market_details_delete']->isEmpty())
-                <h1>Пока нет удаленных реквизитов</h1>
+                <p class="text-center mt-4">Пока нет удаленных реквизитов (для админа)</p>
                 @else
                 <h1>Удаленные реквизиты</h1>
                 <table class="table" id="agents">

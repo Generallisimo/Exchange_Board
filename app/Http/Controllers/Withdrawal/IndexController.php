@@ -13,6 +13,6 @@ class IndexController extends BaseController
     {
         $data = $this->service->index();
 
-        return view('pages.withdrawals.index', compact('data'));
+        return view('pages.Withdrawals.index', compact('data'));
     }
 }

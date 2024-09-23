@@ -2,7 +2,7 @@
 
 namespace App\Services\TopUp;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Components\CheckTransaction\CheckTransaction;
 use App\Models\Agent;
 use App\Models\Market;

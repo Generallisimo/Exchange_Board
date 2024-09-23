@@ -24,10 +24,12 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log('Message sent:', data);
+            console.log(data.message)
             messageInput.value = ''; 
         })
         .catch(error => console.error('Error:', error));
     });
+    
 
     let chatId = document.getElementById('chat_id').value;
     let currentUserId = document.getElementById('user_id').value;

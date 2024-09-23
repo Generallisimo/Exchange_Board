@@ -14,9 +14,9 @@ class IndexController extends BaseController
     {
         $result = $this->service->index($client_id, $amount, $currency);
         if($result['success']){
-            return view('pages.exchanges.index', compact('result'));
+            return view('pages.Exchanges.index', compact('result'));
         }else{
-            return view('pages.exchanges.error.error_market');
+            return view('pages.Exchanges.error.error_market');
         }
     }
 }

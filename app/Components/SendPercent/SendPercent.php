@@ -5,6 +5,7 @@ namespace App\Components\SendPercent;
 use App\Components\CheckTXID\CheckTXID;
 use App\Components\SendToUserTRON\SendTRON;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SendPercent
 {
@@ -33,14 +34,19 @@ class SendPercent
             ))->send();
         
         $checkTXID = (new CheckTXID($send['message']));
-        
+        Log::info('Получает в sendPercent 1 или 2', ['transaction' => $send['message']]);
         $isSuccessful = false;
 
         while(time() - $startTime < $timeUot){
             $result = $checkTXID->check();
-
+            Log::info('Получаем ответ от result', ['success' => $result['success']]);
             if($result['success'] === true){
                 $isSuccessful = true;
+                Log::info('Получаем в цикле isSuc', ['isSuccessful' => $isSuccessful]);
+                break;
+            }else if($result['success'] === false){
+                $isSuccessful = false;
+                Log::info('Получаем в цикле isSuc', ['isSuccessful' => $isSuccessful]);
                 break;
             }
 
@@ -48,6 +54,7 @@ class SendPercent
         }
 
         if($isSuccessful){
+            Log::info('send success true');
             return [
                 'success'=>true,
                 'message'=>'successful transaction',
@@ -57,6 +64,7 @@ class SendPercent
                 'amount'=>$this->amount
             ];
         }else{
+            Log::info('send success false');
             return [
                 'success'=>false,
                 'message'=>'error with transaction',

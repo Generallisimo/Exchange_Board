@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Models\Agent;
 use App\Models\Platform;
 use App\Models\User;

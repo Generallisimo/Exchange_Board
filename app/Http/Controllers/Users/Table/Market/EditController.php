@@ -16,6 +16,6 @@ class EditController extends BaseController
         $data = $this->service->edit($id);
         // dd();
         
-        return view('pages.users.table.market.edit', compact('data'));
+        return view('pages.Users.Table.Market.edit', compact('data'));
     }
 }

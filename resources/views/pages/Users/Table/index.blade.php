@@ -49,6 +49,7 @@
                         
                         <td>{{$client->details_to}}</td>
                         <td>{{$client->balance}}</td>
+                        
                         <td>{{config('url.api_local')}}/api/pay/{currency}/{amount}/{{$client->api_key}}</td>
                         <td>{{config('url.api_local')}}/api/payment/{{$client->api_link}}/{amount}/{currency}</td>
                         @if($client->fraud === null)

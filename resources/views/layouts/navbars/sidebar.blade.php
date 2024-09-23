@@ -60,7 +60,7 @@
             @endif
             @if(Auth::user()->hasRole('admin'))
             <li @if ($pageSlug == 'send') class="active " @endif>
-                <a href="{{ route('transaction.index')  }}">
+                <a href="{{ route('money.index')  }}">
                     <i class="tim-icons icon-single-copy-04"></i>
                     <p>{{ __('Переводы') }}</p>
                 </a>
@@ -93,12 +93,12 @@
 
 
 
-            <li @if ($pageSlug == 'icons') class="active " @endif>
+            <!-- <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="{{ route('pages.icons') }}">
                     <i class="tim-icons icon-atom"></i>
                     <p>{{ __('Icons') }}</p>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

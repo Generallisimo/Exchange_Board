@@ -26,7 +26,7 @@ class CreateController extends BaseController
         if($result['success'] === false){
             return redirect()->back()->withErrors(['error'=>"Обратитесь в поддержку, произошла ошибка"]);
         }else{
-            return view('pages.exchanges.create', compact('result'));
+            return view('pages.Exchanges.create', compact('result'));
         }
     }
 }

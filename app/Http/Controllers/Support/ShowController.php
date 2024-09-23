@@ -58,7 +58,7 @@ class ShowController extends BaseController
         $messages = Message::where('chat_id', $chat_id)->get();
         // dd($chat_id);
 
-        return view('pages.support.show', compact('messages', 'chat', 'user_id', 'isSupport'));
+        return view('pages.Support.show', compact('messages', 'chat', 'user_id', 'isSupport'));
     }
 
     protected function user($hash_id){

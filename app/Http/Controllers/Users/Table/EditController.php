@@ -15,7 +15,7 @@ class EditController extends BaseController
         
         $user = $this->service->edit($hash_id);
         
-        return view('pages.users.table.edit', compact('hash_id', 'user'));
+        return view('pages.Users.Table.edit', compact('hash_id', 'user'));
 
         //add to html.blade
         // if ($user === null) {

@@ -15,6 +15,6 @@ class IndexController extends Controller
     {
         $transactions = Transaction::all();
 
-        return view('pages.money.index', compact('transactions'));
+        return view('pages.Money.index', compact('transactions'));
     }
 }

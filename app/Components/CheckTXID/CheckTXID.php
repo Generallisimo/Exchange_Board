@@ -3,6 +3,7 @@
 namespace App\Components\CheckTXID;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CheckTXID
 {
@@ -16,14 +17,14 @@ class CheckTXID
     public function check(){
         $url = 'http://localhost:3000/check_txid';
         
-        $response = Http::post($url, [
+        $response = Http::timeout(300)->post($url, [
             'transactionHash'=>$this->transaction
         ]);
         $data = $response->json();
-
+        Log::info("Из контроллера CheckTXID получаем ответ от node", ['response' => json_encode($data)]);
         if($data['success'] === true){
             return ['success'=>true];
-        }else{
+        }elseif($data['success'] === false){
             return ['success'=>false];
         }
     }

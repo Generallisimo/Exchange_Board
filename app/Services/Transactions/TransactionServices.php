@@ -19,26 +19,29 @@ class TransactionServices
         $user = Auth::user();
 
         if ($user->hasRole('admin') || $user->hasRole('support')) {
-            $exchanges = Exchange::where('result', 'await')->get();
-            $exchangesSuccess = Exchange::where('result', 'success')->get();
-            $exchangesArchive = Exchange::where('result', 'archive')->get();
-            $exchangesDispute = Exchange::where('result', 'dispute')->get();
-            $exchangesError = Exchange::where('result', 'error')->get();
-            $exchangesFraud = Exchange::where('result', 'fraud')->get();
+            $exchanges = Exchange::where('result', 'await')->orderBy('created_at', 'desc')->get();
+            $exchangesSuccess = Exchange::where('result', 'success')->orderBy('created_at', 'desc')->get();
+            $exchangesArchive = Exchange::where('result', 'archive')->orderBy('created_at', 'desc')->get();
+            $exchangesDispute = Exchange::where('result', 'dispute')->orderBy('created_at', 'desc')->get();
+            $exchangesError = Exchange::where('result', 'error')->orderBy('created_at', 'desc')->get();
+            $exchangesFraud = Exchange::where('result', 'fraud')->orderBy('created_at', 'desc')->get();
+
         }elseif($user->hasRole('market')){
-            $exchanges = Exchange::where('market_id', $user->hash_id)->where('result', 'await')->get();
-            $exchangesSuccess = Exchange::where('market_id', $user->hash_id)->where('result', 'success')->get();
-            $exchangesArchive = Exchange::where('market_id', $user->hash_id)->where('result', 'archive')->get();
-            $exchangesDispute = Exchange::where('market_id', $user->hash_id)->where('result', 'dispute')->get();
-            $exchangesError = Exchange::where('market_id', $user->hash_id)->where('result', 'error')->get();
-            $exchangesFraud = Exchange::where('market_id', $user->hash_id)->where('result', 'fraud')->get();
+            $exchanges = Exchange::where('market_id', $user->hash_id)->where('result', 'await')->orderBy('created_at', 'desc')->get();
+            $exchangesSuccess = Exchange::where('market_id', $user->hash_id)->where('result', 'success')->orderBy('created_at', 'desc')->get();
+            $exchangesArchive = Exchange::where('market_id', $user->hash_id)->where('result', 'archive')->orderBy('created_at', 'desc')->get();
+            $exchangesDispute = Exchange::where('market_id', $user->hash_id)->where('result', 'dispute')->orderBy('created_at', 'desc')->get();
+            $exchangesError = Exchange::where('market_id', $user->hash_id)->where('result', 'error')->orderBy('created_at', 'desc')->get();
+            $exchangesFraud = Exchange::where('market_id', $user->hash_id)->where('result', 'fraud')->orderBy('created_at', 'desc')->get();
+
+            // dd($exchangesSuccess);
         }elseif($user->hasRole('agent')){
-            $exchanges = Exchange::where('agent_id', $user->hash_id)->where('result', 'await')->get();
-            $exchangesSuccess = Exchange::where('agent_id', $user->hash_id)->where('result', 'success')->get();
-            $exchangesArchive = Exchange::where('agent_id', $user->hash_id)->where('result', 'archive')->get();
-            $exchangesDispute = Exchange::where('agent_id', $user->hash_id)->where('result', 'dispute')->get();
-            $exchangesError = Exchange::where('agent_id', $user->hash_id)->where('result', 'error')->get();
-            $exchangesFraud = Exchange::where('agent_id', $user->hash_id)->where('result', 'fraud')->get();
+            $exchanges = Exchange::where('agent_id', $user->hash_id)->where('result', 'await')->orderBy('created_at', 'desc')->get();
+            $exchangesSuccess = Exchange::where('agent_id', $user->hash_id)->where('result', 'success')->orderBy('created_at', 'desc')->get();
+            $exchangesArchive = Exchange::where('agent_id', $user->hash_id)->where('result', 'archive')->orderBy('created_at', 'desc')->get();
+            $exchangesDispute = Exchange::where('agent_id', $user->hash_id)->where('result', 'dispute')->orderBy('created_at', 'desc')->get();
+            $exchangesError = Exchange::where('agent_id', $user->hash_id)->where('result', 'error')->orderBy('created_at', 'desc')->get();
+            $exchangesFraud = Exchange::where('agent_id', $user->hash_id)->where('result', 'fraud')->orderBy('created_at', 'desc')->get();
         }
         return [
             'exchanges'=>$exchanges,

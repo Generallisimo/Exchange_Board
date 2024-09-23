@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/show', ['as' => 'top_up.show', 'uses' => 'App\Http\Controllers\TopUp\ShowController']);
 	});
 		
-	Route::get('/transaction', ['as' => 'transaction.index', 'uses' => 'App\Http\Controllers\Money\IndexController']);		
+	Route::get('/transaction', ['as' => 'money.index', 'uses' => 'App\Http\Controllers\Money\IndexController']);		
 
 
 	Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);		

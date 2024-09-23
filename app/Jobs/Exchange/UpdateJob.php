@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Exchange;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Components\CheckTXID\CheckTXID;
 use App\Components\SendPercent\SendPercent;
 use App\Components\SendToUserTRON\SendTRON;
@@ -24,7 +24,7 @@ class UpdateJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $exchange;
-    public $timeout = 310;
+    public $timeout = 350;
     public $tries = 1;
 
     public function __construct($exchange)
@@ -51,7 +51,7 @@ class UpdateJob implements ShouldQueue
                 $market->details_from,
                 $market->private_key
             ))->update();
-
+            Log::info($sendAgent['success']);
             $sendPlatform = (new SendPercent(
                 $response->amount_client,
                 $platform->details_from,

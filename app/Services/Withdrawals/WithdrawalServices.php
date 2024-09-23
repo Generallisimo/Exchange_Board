@@ -2,7 +2,7 @@
 
 namespace App\Services\Withdrawals;
 
-use App\Components\checkBalance\CheckBalance;
+use App\Components\CheckBalance\CheckBalance;
 use App\Components\SendToUserTRON\SendTRON;
 use App\Components\WithdrawalTRON\WithdrawalTRON;
 use App\Models\Agent;

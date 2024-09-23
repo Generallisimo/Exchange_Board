@@ -13,6 +13,6 @@ class IndexController extends BaseController
     {
         $data = $this->service->create();
 
-        return view ('pages.users.details.create', compact('data'));
+        return view ('pages.Users.Details.create', compact('data'));
     }
 }

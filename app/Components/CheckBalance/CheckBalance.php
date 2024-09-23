@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\checkBalance;
+namespace App\Components\CheckBalance;
 
 use App\Models\Agent;
 use App\Models\User;
