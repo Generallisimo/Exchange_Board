@@ -40,7 +40,12 @@
             <div class="col-lg-4">
                 <div class="card card-chart">
                     <div class="card-header">
-                        <h5 class="card-category">Кошелёк вывода</h5>
+                        <h5 class="card-category">
+                            Кошелёк вывода  
+                            <a href="{{route('home.wallet.edit', ['hash_id'=>$data['user']->hash_id])}}" class="btn btn-success btn-sm btn-icon">                                    
+                                <i class="tim-icons icon-settings"></i>
+                            </a>
+                        </h5>
                         <h3 class="card-title"><i class="tim-icons icon-coins text-info"></i> {{$data['user']->details_to}}</h3>
                     </div>
                 </div>
@@ -53,13 +58,22 @@
         @if($data['client'] !== null)
         <div class="row mb-4">
             <div class="col-12">
-                <h3>Ключи для оплат</h3>
+                <h3>API для оплат</h3>
             </div>
             <div class="col-lg-6">
                 <div class="card card-chart">
                     <div class="card-header">
-                        <h5 class="card-category">API ключ</h5>
+                        <h5 class="card-category">REST API</h5>
                         <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i> {{config('url.api_local')}}/api/pay/{currency}/{amount}/{{$data['client']->api_key}}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area" style="height: 240px;">
+                            <ul>
+                                <li style="list-style: auto; color: #cfcdcd;">{{config('url.api_local')}}/api/pay/show/{exchange_id}</br></br>Статус ответа, принимает: {номер транзакции}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает занчение rub, uah</br></br>Пример: {rub}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{amount} - принимает цифровое занчение</br></br>Пример: {2500}</li></br>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,8 +81,16 @@
             <div class="col-lg-6">
                 <div class="card card-chart">
                     <div class="card-header">
-                        <h5 class="card-category">API ссылка</h5>
+                        <h5 class="card-category">SCI - СТРАНИЦА ОПЛАТЫ</h5>
                         <h3 class="card-title"><i class="tim-icons icon-key-25 text-info"></i> {{config('url.api_local')}}/api/payment/{{$data['client']->api_link}}/{amount}/{currency}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area" style="height: 240px;">
+                            <ul>
+                                <li style="list-style: auto; color: #cfcdcd;">{amount} - принимает цифровое занчение</br></br>Пример: {2500}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает занчение rub, uah</br></br>Пример: {rub}</li></br>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

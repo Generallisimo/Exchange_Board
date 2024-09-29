@@ -28,16 +28,17 @@ class HomeServices
         $exchangeAwait = $this->exchange('await');
         $exchangeError = $this->exchange('error');
 
+        $marketOnline = $this->market('online');
+        $marketOnlineCount = $this->market('online');
+        $marketOffline = $this->market('offline');
+        $marketOfflineCount = $this->market('offline');
+
+
         $sumClient = Client::sum('balance');
         $sumMarket = Market::sum('balance');
 
         $platform = Platform::find(1)->hash_id;
         $sumAgent = Agent::where('hash_id', '!=', $platform)->sum('balance');
-
-        $marketOnline = Market::where('status', 'online')->take(10)->get();
-        $marketOnlineCount = Market::where('status', 'online')->count();
-        $marketOffline = Market::where('status', 'offline')->take(10)->get();
-        $marketOfflineCount = Market::where('status', 'offline')->count();
  
         $client = null;
         if ($userFindAll->hasRole('client')) {
@@ -67,10 +68,10 @@ class HomeServices
             'sumClient'=>$sumClient,
             'sumAgent'=>$sumAgent,
             'sumMarket'=>$sumMarket,
-            'marketOnline'=>$marketOnline,
-            'marketOffline'=>$marketOffline,
-            'marketOnlineCount'=>$marketOnlineCount,
-            'marketOfflineCount'=>$marketOfflineCount,
+            'marketOnline'=>$marketOnline['market'],
+            'marketOffline'=>$marketOffline['market'],
+            'marketOnlineCount'=>$marketOnlineCount['marketCount'],
+            'marketOfflineCount'=>$marketOfflineCount['marketCount'],
             'client'=>$client
         ];
 
@@ -97,6 +98,16 @@ class HomeServices
         return [
             'exchange'=>$exchange,
             'exchangeCount'=>$exchangeCount
+        ];
+    }
+
+    protected function market($status){
+        $market = Market::where('status', $status)->take(10)->get();
+        $marketCount = Market::where('status', $status)->count();
+
+        return [
+            'market' => $market,
+            'marketCount' => $marketCount
         ];
     }
 
@@ -204,5 +215,54 @@ class HomeServices
             default:
                 return 'Y-m-d';
         }
+    }
+
+
+    public function edit($hash_id){
+        $user = $this->user($hash_id);
+
+        if(!$user){
+            return[
+                'success'=>false,
+            ];
+        }
+        return [
+            'success'=>true,
+            'user'=>$user
+        ];
+    }
+
+    public function update(array $data){
+        $user = $this->userDetails($data['hash_id'], $data['details_to']);
+        
+        return $user? true: false;
+    }
+
+    protected function userDetails($hash_id, $details_to){
+        $userId = User::where('hash_id', $hash_id)->first();
+
+        if(!$userId){
+            return false;
+        }
+
+        if($userId->hasRole('admin')){
+            $user = Platform::where('hash_id', $userId->hash_id)->update([
+                'details_to'=>$details_to
+            ]);
+        }elseif($userId->hasRole('agent')){
+            $user = Agent::where('hash_id', $userId->hash_id)->update([
+                'details_to'=>$details_to
+            ]); 
+        }elseif($userId->hasRole('market')){
+            $user = Market::where('hash_id', $userId->hash_id)->update([
+                'details_to'=>$details_to
+            ]); 
+        }elseif($userId->hasRole('client')){
+            $user = Client::where('hash_id', $userId->hash_id)->update([
+                'details_to'=>$details_to
+            ]); 
+        }
+
+        return $user? true : false;
     }
 }

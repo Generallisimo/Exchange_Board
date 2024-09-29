@@ -6,10 +6,14 @@ use App\Jobs\Exchange\AgentJob;
 use App\Jobs\Exchange\ClientJob;
 use App\Jobs\Exchange\PlatformJob;
 use App\Jobs\Exchange\UpdateJob;
+use App\Jobs\Transaction\CallbackJob;
+use App\Jobs\TRX\CheckTRXJob;
 use App\Jobs\UpdateExchangeJob;
 use App\Models\Client;
 use App\Models\Exchange;
+use App\Models\Market;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class TransactionServices
 {
@@ -25,6 +29,7 @@ class TransactionServices
             $exchangesDispute = Exchange::where('result', 'dispute')->orderBy('created_at', 'desc')->get();
             $exchangesError = Exchange::where('result', 'error')->orderBy('created_at', 'desc')->get();
             $exchangesFraud = Exchange::where('result', 'fraud')->orderBy('created_at', 'desc')->get();
+            $exchangesToSuccess = Exchange::where('result', 'to_success')->orderBy('created_at', 'desc')->get();
 
         }elseif($user->hasRole('market')){
             $exchanges = Exchange::where('market_id', $user->hash_id)->where('result', 'await')->orderBy('created_at', 'desc')->get();
@@ -33,6 +38,7 @@ class TransactionServices
             $exchangesDispute = Exchange::where('market_id', $user->hash_id)->where('result', 'dispute')->orderBy('created_at', 'desc')->get();
             $exchangesError = Exchange::where('market_id', $user->hash_id)->where('result', 'error')->orderBy('created_at', 'desc')->get();
             $exchangesFraud = Exchange::where('market_id', $user->hash_id)->where('result', 'fraud')->orderBy('created_at', 'desc')->get();
+            $exchangesToSuccess = Exchange::where('result', 'to_success')->orderBy('created_at', 'desc')->get();
 
             // dd($exchangesSuccess);
         }elseif($user->hasRole('agent')){
@@ -42,6 +48,8 @@ class TransactionServices
             $exchangesDispute = Exchange::where('agent_id', $user->hash_id)->where('result', 'dispute')->orderBy('created_at', 'desc')->get();
             $exchangesError = Exchange::where('agent_id', $user->hash_id)->where('result', 'error')->orderBy('created_at', 'desc')->get();
             $exchangesFraud = Exchange::where('agent_id', $user->hash_id)->where('result', 'fraud')->orderBy('created_at', 'desc')->get();
+            $exchangesToSuccess = Exchange::where('result', 'to_success')->orderBy('created_at', 'desc')->get();
+
         }
         return [
             'exchanges'=>$exchanges,
@@ -49,7 +57,8 @@ class TransactionServices
             'exchangesArchive'=>$exchangesArchive, 
             'exchangesDispute'=>$exchangesDispute,
             'exchangesError'=>$exchangesError,
-            'exchangesFraud'=>$exchangesFraud
+            'exchangesFraud'=>$exchangesFraud,
+            'exchangesToSuccess'=>$exchangesToSuccess
         ];
     }
 
@@ -59,15 +68,34 @@ class TransactionServices
             'result'=>$status,
             'message'=>$message
         ]);
-        if($status === 'fraud'){
-            $exchange_id = Exchange::where('exchange_id', $exchange)->first();
+        
+        $exchange_id = Exchange::where('exchange_id', $exchange)->first();
+       
+        $market = Market::where('hash_id', $exchange_id->market_id)->first();
+        CheckTRXJob::dispatch($market->details_from);
+
+        $callback = $exchange_id->callback;
+
+        if($status === 'fraud'){    
             $client = Client::where('hash_id', $exchange_id->client_id)->first();
             $currentFraudValue = $client->fraud;
             $client->update([
                 'fraud' => $currentFraudValue + 1
             ]);
+
+            CallbackJob::dispatch($callback, $status);
+        }elseif($status === 'error'){
+            CallbackJob::dispatch($callback, $status);
+        }elseif($status === 'archive'){
+            CallbackJob::dispatch($callback, $status);
+        }elseif($status === 'to_success'){
+            CallbackJob::dispatch($callback, 'success');
+        }elseif($status === 'fraud'){
+            CallbackJob::dispatch($callback, $status);
         }
+
         UpdateJob::dispatch($exchange);
+
 
         return $result ? true : "Ошибка обратитесь в поддержку"; 
 

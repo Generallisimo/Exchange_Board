@@ -57,6 +57,7 @@
                     <input hidden name="amount_client" value="{{$result['amount_exchange']}}">
                     <input hidden name="amount_market" value="{{$result['amount_market']}}">
                     <input hidden name="amount_agent" value="{{$result['amount_agent']}}">
+                    <input hidden name="callback" value="{{$result['callback']}}">
 
 
                     <div class="form-group">

@@ -59,6 +59,12 @@
             </li>
             @endif
             @if(Auth::user()->hasRole('admin'))
+            <li @if ($pageSlug == 'send_trx') class="active " @endif>
+                <a href="{{ route('send.index')  }}">
+                    <i class="tim-icons icon-single-copy-04"></i>
+                    <p>{{ __('Отправка TRX') }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'send') class="active " @endif>
                 <a href="{{ route('money.index')  }}">
                     <i class="tim-icons icon-single-copy-04"></i>

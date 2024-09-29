@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // use Spatie\Permission\Contracts\Role;
@@ -15,12 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/home',['as'=>'home', 'uses'=> 'App\Http\Controllers\HomeController@index']);
+	Route::get('/',['as'=>'home', 'uses'=> 'App\Http\Controllers\HomeController@index']);
+	
+	Route::group(['prefix'=>'send_trx'], function(){
+		Route::get('/', ['as'=>'send.index', 'uses'=>'App\Http\Controllers\SendTRX\IndexController']);
+		Route::post('/store', ['as'=>'send.store', 'uses'=>'App\Http\Controllers\SendTRX\StoreController']);
+	});
+
+	Route::group(['prefix'=>'wallet'], function(){
+		Route::get('/edit/{hash_id}', ['as'=>'home.wallet.edit', 'uses'=>'App\Http\Controllers\HomeController@edit']);
+		Route::put('/update', ['as'=>'home.wallet.update', 'uses'=>'App\Http\Controllers\HomeController@update']);
+	});
 
 	Route::group(['prefix'=>'market_details'], function(){
 		Route::get('/create', ['as' => 'create.details', 'uses' => 'App\Http\Controllers\Users\Details\IndexController']);
@@ -77,6 +88,8 @@ Route::group(['prefix'=>'support', 'middleware' => ['guest']], function(){
 	Route::get('/show/{chat_id}', ['as'=>'support.show', 'uses'=>'App\Http\Controllers\Support\ShowController']);
 	Route::delete('/destroy/{chat_id}', ['as'=>'chat.destroy', 'uses'=>'App\Http\Controllers\Support\DestroyController']);
 });
+
+
 
 
 

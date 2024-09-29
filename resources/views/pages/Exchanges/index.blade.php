@@ -49,6 +49,12 @@
                 @csrf
                 <div class="card-body">
 
+                    <input hidden value="{{$result['callback']}}" name="callback">
+
+                    @error('callback')
+                        <div class="text-danger text-center">{{$message}}</div>
+                    @enderror
+
                     <div class="form-group text-center" style="display: grid;">
                         <label for="method">Выбор метода</label>
                         <div id="method-options" class="btn-group" role="group" style="margin: 0 auto;">
@@ -60,7 +66,7 @@
                     </div>
 
                     @error('method')
-                        <div class="text-danger">Выберите метод оплаты!</div>
+                        <div class="text-danger text-center">Выберите метод оплаты!</div>
                     @enderror
 
 

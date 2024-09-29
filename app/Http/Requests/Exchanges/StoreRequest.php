@@ -37,7 +37,8 @@ class StoreRequest extends FormRequest
             'amount_client' =>'required',
             'amount_market' =>'required',
             'amount_agent' =>'required',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'callback'=>'required'
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Services\Withdrawals;
 use App\Components\CheckBalance\CheckBalance;
 use App\Components\SendToUserTRON\SendTRON;
 use App\Components\WithdrawalTRON\WithdrawalTRON;
+use App\Jobs\TRX\CheckTRXJob;
 use App\Models\Agent;
 use App\Models\Client;
 use App\Models\Market;
@@ -29,6 +30,8 @@ class WithdrawalServices
         
         $userID = $this->user($role, $hash_id);
 
+        CheckTRXJob::dispatch($userID->details_from);
+        
         $initialBalance = (new CheckBalance($userID))->checkBalanceUser();
 
         $result = (new WithdrawalTRON(

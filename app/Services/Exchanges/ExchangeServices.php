@@ -17,11 +17,11 @@ use Illuminate\Support\Str;
 
 class ExchangeServices
 {
-    public function index($client_id, $amount, $currency){
+    public function index($client_id, $amount, $currency, array $data){
         $exchange_id = Str::uuid();
 
         $market = Market::where('status', 'online')->inRandomOrder()->first();
-        
+        // dd($market);
         if($market === null){
             return [
                 'success'=>false
@@ -30,7 +30,8 @@ class ExchangeServices
 
         $market_id=$market->hash_id;
          
-        $market_method = AddMarketDetails::where('hash_id', $market->hash_id)->where('currency', $currency)->get();
+        //add status online for view method payments
+        $market_method = AddMarketDetails::where('hash_id', $market->hash_id)->where('currency', $currency)->where('online', 'online')->get();
         $unique_method = $market_method->unique('name_method');
 
         return [
@@ -41,6 +42,7 @@ class ExchangeServices
             'exchange_id'=>$exchange_id,
             'currency'=>$currency,
             'unique_method'=>$unique_method,
+            'callback'=>$data['callback']
         ];
         
     
@@ -48,6 +50,7 @@ class ExchangeServices
 
     public function create($client_id,$amount, $currency, $market_id, $exchange_id, array $data){
 
+        // dd($data);
         $client = Client::where('hash_id', $client_id)->first();
 
         $market = Market::where('hash_id', $market_id)->first();
@@ -100,7 +103,8 @@ class ExchangeServices
                 'amount_market'=>$amount_market,
                 'amount_agent'=>$amount_agent,
                 'result_client'=>$amount_client,
-                'wallet_market'=>$wallet
+                'wallet_market'=>$wallet,
+                'callback'=>$data['callback']
             ];
         }else{
             return [
@@ -136,7 +140,8 @@ class ExchangeServices
             'amount_market'=>$data['amount_market'],
             'amount_agent'=>$data['amount_agent'],
             'result_client'=>$data['result_client'],
-            'photo'=>$data['photo']
+            'photo'=>$data['photo'],
+            'callback'=>$data['callback']
         ]);
 
         return $exchange->save() ? true : false;

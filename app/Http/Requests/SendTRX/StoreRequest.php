@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Exchanges;
+namespace App\Http\Requests\SendTRX;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'callback'=>'required',
-            'method'=>'required | string'
+            'user_id'=>'required',
+            'amount'=>'required'
         ];
     }
 }

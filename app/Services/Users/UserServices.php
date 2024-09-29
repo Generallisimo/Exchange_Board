@@ -59,7 +59,7 @@ class UserServices
             if ($generate_data->successful()){
                 $data = $generate_data->json();
     
-                $sendTRX = new SendTRX($data['address']);
+                $sendTRX = new SendTRX($data['address'], '200');
                 $resultTrx = $sendTRX->sendTRX();
     
                 if($resultTrx === true){

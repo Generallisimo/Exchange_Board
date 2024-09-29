@@ -4,7 +4,7 @@ namespace App\Http\Requests\Exchanges;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'callback'=>'required',
-            'method'=>'required | string'
+            'callback'=>'required'
         ];
     }
 }

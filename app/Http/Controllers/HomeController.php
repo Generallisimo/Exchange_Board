@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Home\UpdateRequest;
 use App\Services\HomeServices;
 
 class HomeController extends Controller
@@ -28,7 +29,6 @@ class HomeController extends Controller
     public function show($period, $hash_id){
         $data = $this->service->show($period, $hash_id);
 
-        // Преобразуйте данные в массив, если это необходимо
         $dataArray = json_decode($data->getContent(), true);
     
         return response()->json([
@@ -36,4 +36,23 @@ class HomeController extends Controller
             'values' => $dataArray['values'] ?? [],
         ]);
     }
+
+    public function edit($hash_id){
+        $data = $this->service->edit($hash_id);
+        // dd($data);
+        return view('pages.Users.Home.edit', compact('data'));
+    }
+
+    public function update(UpdateRequest $updateRequest){
+        $data = $updateRequest->validated();
+
+        $result = $this->service->update($data);
+
+        if($result){
+            return redirect()->back()->with('success', 'Данные кошелька успешно обновлнены');
+        }else{
+            return redirect()->back()->withErrors(['error'=>'Ошибка обратитесь в техническую поддержку']);
+        }
+    }
+
 }

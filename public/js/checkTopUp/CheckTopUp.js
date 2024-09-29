@@ -11,8 +11,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return response.json();
             })
             .then(data => {
-                // console.log(data.result)
-                // Делаем проверку на наличие нужных данных
+                console.log(data)
                 if (data.message.result) {
                     const transactionId = data.message.result[0]?.transaction_id;
                     if (transactionId) {
@@ -33,5 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const wallet = document.querySelector('input[name="wallet"]').value;
     const hash_id = document.querySelector('input[name="hash_id"]').value;
 
-    setInterval(() => checkStatus(wallet, hash_id), 3000);
+    checkStatus(wallet, hash_id);
+
+    setInterval(() => checkStatus(wallet, hash_id), 60000);
 });

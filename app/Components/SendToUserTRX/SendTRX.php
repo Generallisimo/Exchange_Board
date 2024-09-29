@@ -9,10 +9,12 @@ class SendTRX
     public $addressTo;
     public $ownerAddress;
     public $privateKey;
+    public $amount;
 
-    public function __construct($addressTo)
+    public function __construct($addressTo, $amount)
     {
         $this->addressTo = $addressTo;
+        $this->amount = $amount;
         $this->ownerAddress = config('wallet.wallet');
         $this->privateKey = config('wallet.private_key');
     }
@@ -23,7 +25,7 @@ class SendTRX
             'Content-Type' => 'application/json'
         ])->post('http://localhost:3000/sendTronTRX', [
             'addressTo' => $this->addressTo,
-            'amount' => '100',
+            'amount' => $this->amount,
             'ownerAddress' => $this->ownerAddress,
             'privateKey' => $this->privateKey,
         ]);
