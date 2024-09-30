@@ -70,7 +70,7 @@
                         <div class="chart-area" style="height: 240px;">
                             <ul>
                                 <li style="list-style: auto; color: #cfcdcd;">{{config('url.api_local')}}/api/pay/show/{exchange_id}</br></br>Статус ответа, принимает: {номер транзакции}</li></br>
-                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает занчение rub, uah</br></br>Пример: {rub}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает значение rub, uah</br></br>Пример: {rub}</li></br>
                                 <li style="list-style: auto; color: #cfcdcd;">{amount} - принимает цифровое занчение</br></br>Пример: {2500}</li></br>
                             </ul>
                         </div>
@@ -87,8 +87,9 @@
                     <div class="card-body">
                         <div class="chart-area" style="height: 240px;">
                             <ul>
-                                <li style="list-style: auto; color: #cfcdcd;">{amount} - принимает цифровое занчение</br></br>Пример: {2500}</li></br>
-                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает занчение rub, uah</br></br>Пример: {rub}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{amount} - принимает цифровое значение</br></br>Пример: {2500}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">{currency} - принимает значение rub, uah</br></br>Пример: {rub}</li></br>
+                                <li style="list-style: auto; color: #cfcdcd;">Передать в JSON - url callback для получения статуса</br></br>Принимает значение: {callback}</li></br>
                             </ul>
                         </div>
                     </div>

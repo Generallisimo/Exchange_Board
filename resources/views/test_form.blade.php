@@ -26,10 +26,14 @@
     <div class="card">
         <div class="card-body">
             <form action="http://localhost:8000/api/payment/LrgwsccgcBYp/200/rub">
-                <h1>TEST FORM</h1>
+                <h1>Тестовый переход на оплату</h1>
                 <div class="form-group">
-                    <label>Callback URL</label>
-                    <input name="callback" class="form-control" value="{{config('url.api_local')}}/api/test/show">
+                    <!-- <label>Callback URL</label> -->
+                    <input name="callback" class="form-control" value="{{config('url.api_local')}}/api/test/show" hidden>
+                </div>
+                <div class="form-group">
+                    <label>Оплата подписки</label>
+                    <input class="form-control" value="200 рублей" style="pointer-events: none;">
                 </div>
                 <button type="submit" class="btn btn-primary">Перейти к оплате</button>
             </form>
