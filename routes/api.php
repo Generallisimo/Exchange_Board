@@ -41,6 +41,22 @@ Route::group(['middleware' => ['web']], function(){
     Route::get('/turnover/{period}/{hash_id}', ['as'=>'home.show', 'uses'=>'App\Http\Controllers\HomeController@show']);
 });
 
+Route::group(['prefix'=>'bot', 'middleware' => ['api']], function(){
+    Route::group(['prefix'=>'transactions'], function(){
+        Route::get('/{status}', ['uses'=>'App\Http\Controllers\Bot\Transactions\IndexController']);
+        Route::get('/id/{exchange_id}', ['uses'=>'App\Http\Controllers\Bot\Transactions\ShowController']);
+    });
+    Route::group(['prefix'=>'personal'], function(){
+        Route::get('/{hash_id}', ['uses'=>'App\Http\Controllers\Bot\Personal\IndexController']);
+        Route::get('/update/{hash_id}', ['uses'=>'App\Http\Controllers\Bot\Personal\UpdateController']);
+        Route::put('/wallet/update/{hash_id}/{details_to}', ['uses'=>'App\Http\Controllers\Bot\Personal\Wallet\UpdateController']);
+        // Route::get('/update/{hash_id}', function(){
+        //     dd('work');
+        // });
+    });
+});
+
+
 
 // test for payment api
 Route::get('/test/index', function(){
