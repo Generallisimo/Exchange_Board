@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AddMarketDetails extends Model
+class AddMarketDetailsUAH extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -28,5 +28,4 @@ class AddMarketDetails extends Model
     public function methodPaymets(): HasMany
     {
         return $this->hasMany(MethodPayments::class);
-    }
-}
+    }}

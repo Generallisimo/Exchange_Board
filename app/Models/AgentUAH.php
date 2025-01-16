@@ -8,25 +8,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AddMarketDetails extends Model
+class AgentUAH extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
+
     protected $guarded = false;
 
-    public function markets():BelongsTo
+    public function users(): BelongsTo
     {
-        return $this->belongsTo(Market::class);
-    }
-    
-    public function marketsUAH():BelongsTo
-    {
-        return $this->belongsTo(MarketUAH::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function methodPaymets(): HasMany
+    public function market(): HasMany
     {
-        return $this->hasMany(MethodPayments::class);
+        return $this->hasMany(MarketUAH::class, 'agent_id');
+    }
+
+    public function client(): HasMany
+    {
+        return $this->hasMany(ClientUAH::class, 'agent_id');
     }
 }
